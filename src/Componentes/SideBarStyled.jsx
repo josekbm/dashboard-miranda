@@ -7,9 +7,10 @@ export const Wrapper = styled.div`
   box-shadow: 13px 3px 40px #00000005;
   gap: 1.8rem;
   align-items: center;
-  width: 100%;
+  max-width: 345px;
   padding-bottom: 5%;
-  height: 100%;
+  height: 100%;  
+  
 `;
 
 export const Logo = styled.div`

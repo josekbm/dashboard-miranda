@@ -2,7 +2,7 @@ import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
 import { HiOutlineLogout, HiOutlineBell, HiOutlineMail } from "react-icons/hi";
 import { Nav, NavItemContainer } from "./TopBarStyled";
 
-export const Topbar = (props) => {
+export const TopBar = (props) => {
     const onClickSideBarHandler = () => {
         if (props.open) {
           props.showSideBar(false);
@@ -22,7 +22,7 @@ export const Topbar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail />
-                <HiOutlineLogout onClick={onLogOutClickHandler} data-testid="logout__button"/>
+                <HiOutlineLogout/>
               </NavItemContainer>
             </Nav>
           </>
@@ -38,7 +38,7 @@ export const Topbar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail />
-                <HiOutlineLogout onClick={onLogOutClickHandler} data-testid="logout__button"/>
+                <HiOutlineLogout/>
               </NavItemContainer>
             </Nav>
           </>
