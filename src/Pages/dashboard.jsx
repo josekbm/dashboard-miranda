@@ -5,7 +5,9 @@ import {
   HiOutlineArrowLeftOnRectangle,
   HiOutlineCalendarDays,
 } from "react-icons/hi2";
-import { KPI, KpiIcon, KpiRow, KpiText} from "./DashboardStyled";
+import { KPI, KpiIcon, KpiRow, KpiText, CalendarRow} from "./DashboardStyled";
+import { LastReviews } from "../Componentes/LastReviews";
+
 
 
 
@@ -25,10 +27,9 @@ export const Dashboard = (props) => {
           <KPI>
             <KpiIcon><HiOutlineArrowLeftOnRectangle /></KpiIcon><KpiText><h2>516</h2><h6>Check Out</h6></KpiText>
           </KPI>
-        </KpiRow>
-    
-    
-    
-    </>
+    </KpiRow>
+        <LastReviews/>
+        
+      </>
   )
 }
