@@ -1,6 +1,7 @@
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs";
 import { HiOutlineLogout, HiOutlineBell, HiOutlineMail } from "react-icons/hi";
 import { Nav, NavItemContainer } from "./TopBarStyled";
+import { useNavigate } from "react-router-dom";
 
 export const TopBar = (props) => {
     const onClickSideBarHandler = () => {
@@ -10,6 +11,18 @@ export const TopBar = (props) => {
           props.showSideBar(true);
         }
     };
+    const navigate = useNavigate()
+    const HandleLogout = () => {
+      
+      // Eliminar los datos de inicio de sesión del almacenamiento local
+      localStorage.removeItem("logged");
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+  
+      // Redirigir al usuario a la página de inicio de sesión
+      navigate("/");
+    };
+    
     
       if (props.open) {
         return (
@@ -22,7 +35,7 @@ export const TopBar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail />
-                <HiOutlineLogout/>
+                <HiOutlineLogout onClick={HandleLogout}/>
               </NavItemContainer>
             </Nav>
           </>
@@ -38,7 +51,7 @@ export const TopBar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail />
-                <HiOutlineLogout/>
+                <HiOutlineLogout onClick={HandleLogout}/>
               </NavItemContainer>
             </Nav>
           </>
