@@ -18,10 +18,12 @@ export function Login ()  {
     console.log(email);
     console.log(password);
 
-    localStorage.setItem('logged', 'true');
-    localStorage.setItem('email', email);
-    localStorage.setItem('password', password);
+    
     if(email === "admin@admin.com" && password === "admin") {
+      localStorage.setItem('logged', 'true');
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+
       navigate("/Dashboard");
     }else {
       navigate("/Login");

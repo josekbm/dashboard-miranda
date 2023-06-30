@@ -22,6 +22,9 @@ export const TopBar = (props) => {
       // Redirigir al usuario a la página de inicio de sesión
       navigate("/");
     };
+    const HandleMail = () => {
+      navigate("/Contact");
+    };
     
     
       if (props.open) {
@@ -34,7 +37,7 @@ export const TopBar = (props) => {
               </NavItemContainer>
               <NavItemContainer>
                 <HiOutlineBell />
-                <HiOutlineMail />
+                <HiOutlineMail onClick={HandleMail}/>
                 <HiOutlineLogout onClick={HandleLogout}/>
               </NavItemContainer>
             </Nav>
@@ -50,7 +53,7 @@ export const TopBar = (props) => {
               </NavItemContainer>
               <NavItemContainer>
                 <HiOutlineBell />
-                <HiOutlineMail />
+                <HiOutlineMail onClick={HandleMail}/>
                 <HiOutlineLogout onClick={HandleLogout}/>
               </NavItemContainer>
             </Nav>

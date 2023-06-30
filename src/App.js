@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/Bookings";
@@ -10,8 +9,6 @@ import { Layout } from "./Componentes/Layout";
 import { PrivateRoute } from "./Componentes/PrivateRoute";
 import './App.css';
 
-
-
 function App() {
   
 
@@ -21,7 +18,6 @@ function App() {
     
     <BrowserRouter>
       <Routes>
-      <Route exact path="/" element={<Login />} />
       <Route element={ <PrivateRoute /> } >
           <Route element={<Layout />}>
             <Route path="/Dashboard" element={<Dashboard />} />
@@ -31,6 +27,7 @@ function App() {
             <Route path="/Users" element={<Users />} />
           </Route>
       </Route>
+      <Route exact path="/" element={<Login />} />
       </Routes>
     </BrowserRouter>
 

@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useMatch } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { TopBar } from "./TopBar";
 import { useState } from "react";
 import { SideBar } from "./Sidebar";
@@ -6,15 +6,13 @@ import { Container, Content, LeftMenu, RightSection } from "./LayoutStyled";
 
 export const Layout = (props) => {
   let location = useLocation();
-  let roomMatch = useMatch("/rooms/:id");
-  let bookingMatch = useMatch("/booking/:bookingId");
-  let userMatch = useMatch("/user/:id");
+  
 
   let title = "";
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const titleChooser = () => {
-    if (location.pathname === "/") {
+    if (location.pathname === "/Dashboard") {
       title = "Dashboard";
     } else if (location.pathname === "/Contact") {
       title = "Contact";
@@ -24,19 +22,7 @@ export const Layout = (props) => {
       title = "Bookings";
     } else if (location.pathname === "/Users") {
       title = "Users";
-    } else if (userMatch != null && location.pathname === userMatch.pathname) {
-      console.log(bookingMatch);
-      title = "User";
-    } else if (
-      bookingMatch != null &&
-      location.pathname === bookingMatch.pathname
-    ) {
-      console.log(userMatch);
-      console.log("booking");
-      title = "Booking detail";
-    } else if (roomMatch != null && location.pathname === roomMatch.pathname) {
-      title = "Room detail";
-    }
+    } 
 
     return title;
   };

@@ -1,66 +1,98 @@
-import React from "react";
-import { TableContainer, LeftActions, StyledLink, RightActions, TableActions, TableTitle, TableItem, TableRow, ImageItem, RoomImageItem } from "../Componentes/TableStyled";
-import { CustomDropdown } from "../Componentes/TableStyled";
-import { Button, StatusButton  } from "../Componentes/Button";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { VscTrash } from "react-icons/vsc"
-import { AiOutlineInfoCircle} from "react-icons/ai";
+import React from 'react'
+import FilterTable from '../Componentes/FilterTable'
+import { FilterContainer } from '../Componentes/FilterTableStyle'
+import { Select } from '../Componentes/Select'
+import { 
+  MainContainer,
+  OptionsContainer,
+  ButtonsContainer,
+  RoomName,
+  RoomImg,
+  RoomInfo,
+  AddRoom,
+  OfferPrice,
+  Available,
+  Booked,
+  Price,
+  NoData,
+  DeleteButton
+} from './RoomStyled'
+import Table from '../Componentes/Table'
+import roomsData from "../Data/roomsData2.json"
 
 export function Rooms() {
-    return (
-      <>
-        <TableActions>
-          <LeftActions></LeftActions>
-          <RightActions>
-            <Button>
-              + New
-            </Button>
-            <CustomDropdown />
-          </RightActions>
-        </TableActions>
-        <TableContainer>
-          <thead>
-            <TableTitle>
-              
-            </TableTitle>
-          </thead>
-          <tbody>
-            <TableRow>
-                <TableItem>
-                  <ImageItem>
-                    <RoomImageItem />
-                    <div>
-                      <p></p>
-                    </div>
-                  </ImageItem>
-                </TableItem>
-                <TableItem>
-                  <p></p>
-                </TableItem>
-                <TableItem>
-                  <p></p>
-                </TableItem>
-                <TableItem>
-                  
-                  <p></p>
-                </TableItem>
-                <TableItem>
-                  <StatusButton>
-                    
-                  </StatusButton>
-                </TableItem>
-                <TableItem>
-                  <StyledLink>
-                    <AiOutlineInfoCircle />
-                  </StyledLink>
-                </TableItem>
-                <TableItem>
-                  <VscTrash/>
-                </TableItem>
-              </TableRow>
-          </tbody>
-        </TableContainer>   
-      </>
-    );
-  } 
+
+  const data = roomsData;
+  
+  const tableFilters = [
+    {name: "All Rooms"},
+    {name: "Available Rooms"},
+    {name: "Booked Rooms"},
+  ]
+  
+  const cols = [
+    {property: 'image', label: 'Room', display: (row) => (
+        <RoomName>
+          <RoomImg>
+            <img src={row.photo} alt={row.id} />
+          </RoomImg>
+            <RoomInfo>
+              <p>
+                #{row.id}
+              </p>
+              <p>
+                {row.number}
+              </p>
+            </RoomInfo>          
+        </RoomName>
+      )},
+      { property: 'type', label: 'Room Type' },
+      { property: 'amenities', label: 'Amenities', display: (row) =>
+        row.amenities?
+          <p>{row.amenities}</p>
+        :  
+          <NoData>No amenities</NoData>
+      },
+      { property: 'price', label: 'Price', display: (row) => 
+        <Price>${row.price} <span>/night</span></Price>
+      },
+      { property: 'offer', label: 'Offer Price', display: (row) => 
+          row.offer?
+            <OfferPrice>
+              <p>{row.offer}%</p>
+              <p>{row.price-(row.price*(row.offer/100))}</p>
+            </OfferPrice>
+          :
+            <NoData>
+              No offer
+            </NoData>
+      },
+      { property: 'status', label: 'Status', display: (row) => 
+        row.status? 
+          <Available>Available</Available>
+        :
+          <Booked>Booked</Booked>  
+      },
+      { property: 'deleteRoom', label: '', display: (row) =>
+        <DeleteButton>Delete</DeleteButton>
+      }
+  ]
+
+  return (
+    <MainContainer>
+    <OptionsContainer>
+      <FilterContainer>
+        <FilterTable filters={tableFilters}/>
+      </FilterContainer>
+      <ButtonsContainer>
+        <AddRoom>
+          + New Room                
+        </AddRoom>
+        <Select />          
+      </ButtonsContainer>
+      </OptionsContainer>
+      <Table data={data} cols={cols} />
+    </MainContainer>
+  )
+}
+
