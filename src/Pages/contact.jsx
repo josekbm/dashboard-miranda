@@ -1,7 +1,7 @@
 import React from 'react'
-import FilterTable from '../Componentes/FilterTable'
-import { FilterContainer } from '../Componentes/FilterTableStyle'
-import { Select } from '../Componentes/Select'
+import FilterTable from '../Components/FilterTable'
+import { FilterContainer } from '../Components/FilterTableStyle'
+import { Select } from '../Components/Select'
 import { 
   MainContainer,
   OptionsContainer,
@@ -17,7 +17,7 @@ import {
   NoData,
   DeleteButton
 } from './RoomStyled'
-import Table from '../Componentes/Table'
+import Table from '../Components/Table'
 import roomsData from "../Data/roomsData2.json"
 
 export function Contact() {

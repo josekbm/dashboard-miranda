@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const TableStyled = styled.table`
+export const TableStyled = styled.table`
     font-size: 16px;
     margin-top: 20px;
     background-color: white;
     border-radius: 20px;
     padding-top: 20px;
-    width: 100%;
+    max-width: 100%;
+    
     thead{
         tr{
             th{
@@ -39,7 +40,3 @@ const TableStyled = styled.table`
         }
     }
 `
-
-export{
-    TableStyled
-}

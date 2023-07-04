@@ -1,38 +1,54 @@
-import React from "react";
-import { useState } from "react";
-import { Logo } from "../Componentes/SideBarStyled";
+import React, { useEffect, useState } from 'react'
+import { Logo } from "../Components/SideBarStyled";
 import { LogContainer } from "./LoginStyled";
 import { LogForm } from "./LoginStyled";
 import { Inputs } from "./LoginStyled";
-import { EditButton } from "../Componentes/Button";
+import { EditButton } from "../Components/Button";
 import logo from "../Assets/Logo.png" 
 import { useNavigate } from "react-router-dom";
+import { useLogin } from '../context/LoginProvider';
 
 export function Login ()  {
+  const login = useLogin()
+
+  const [mail, setMail] = useState("");
+
+  const [pass, setPass] = useState("");
+
   const navigate = useNavigate()
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handlesLogin = (e) => {
-    e.preventDefault();
-    console.log(email);
-    console.log(password);
-
-    
-    if(email === "admin@admin.com" && password === "admin") {
-      localStorage.setItem('logged', 'true');
-      localStorage.setItem('email', email);
-      localStorage.setItem('password', password);
-
-      navigate("/Dashboard");
-    }else {
-      navigate("/Login");
+  useEffect(() => {
+    if(localStorage.getItem("user")){
+      navigate("/")
     }
-  };
+  })
+
+  const handleForm = (event) =>{
+    event.preventDefault();
+    login.dispatch({type: 'login', user: {mail,pass}})
+    setTimeout(() => {
+      if(localStorage.getItem("user")){
+        
+      }
+    },100)
+    setTimeout(() => navigate('/'), 100)
+  }
+  
+
+  const handleMail = (event) => {
+    setMail(event.target.value);
+  }
+
+  const handlePass = (event) => {
+    setPass(event.target.value);
+  }
+
+
+
     
   return (
         <LogContainer>
-          <LogForm onSubmit={handlesLogin} >
+          <LogForm onSubmit={handleForm} >
             <Logo column>
               <img src={logo} alt="logo" />
               <h2>Miranda Dashboard</h2>
@@ -48,8 +64,7 @@ export function Login ()  {
                 type='text' 
                 name='email'
                 id='email'
-                value={email}
-                onChange={(e)=> setEmail(e.target.value)}
+                onChange={handleMail}
                 autoCompleted='off'
                 placeholder="Email"
                 />
@@ -57,8 +72,7 @@ export function Login ()  {
               <input type='password'
                   name='password'
                   id='password'
-                  value={password}
-                  onChange={(e)=> setPassword(e.target.value)}
+                  onChange={handlePass}
                   autoCompleted='off'
                   placeholder="Password"
                   />

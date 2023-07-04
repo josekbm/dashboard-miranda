@@ -1,7 +1,7 @@
 import React from 'react'
-import FilterTable from '../Componentes/FilterTable'
-import { FilterContainer } from '../Componentes/FilterTableStyle'
-import { Select } from '../Componentes/Select'
+import FilterTable from '../Components/FilterTable'
+import { FilterContainer } from '../Components/FilterTableStyle'
+import { Select } from '../Components/Select'
 import { 
   MainContainer,
   OptionsContainer,
@@ -13,7 +13,7 @@ import {
   Available,
   Booked,
 } from './RoomStyled'
-import Table from '../Componentes/Table'
+import Table from '../Components/Table'
 import usersData from "../Data/usersData.json"
 import { RiPhoneFill } from 'react-icons/ri'
 import { RiMailLine } from 'react-icons/ri'   

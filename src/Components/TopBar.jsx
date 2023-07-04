@@ -15,12 +15,9 @@ export const TopBar = (props) => {
     const HandleLogout = () => {
       
       // Eliminar los datos de inicio de sesión del almacenamiento local
-      localStorage.removeItem("logged");
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-  
+      localStorage.clear(); 
       // Redirigir al usuario a la página de inicio de sesión
-      navigate("/");
+      navigate("/Login");
     };
     const HandleMail = () => {
       navigate("/Contact");

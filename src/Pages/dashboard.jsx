@@ -5,8 +5,8 @@ import {
   HiOutlineArrowLeftOnRectangle,
   HiOutlineCalendarDays,
 } from "react-icons/hi2";
-import { KPI, KpiIcon, KpiRow, KpiText, CalendarRow} from "./DashboardStyled";
-import { LastReviews } from "../Componentes/LastReviews";
+import { KPI, KpiIcon, KpiRow, KpiText} from "./DashboardStyled";
+import { LastReviews } from "../Components/LastReviews";
 
 
 

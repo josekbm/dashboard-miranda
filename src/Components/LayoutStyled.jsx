@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const LeftMenu = styled.div`
  display: inline-block;
  width: 300px;
+ 
  ${props => !props.open && css`
     display: none;
 `}
