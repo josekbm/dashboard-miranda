@@ -3,6 +3,7 @@ import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/Bookings";
 import { Contact } from "./Pages/Contact";
 import { Rooms } from "./Pages/Rooms";
+import NewRoom from './Pages/NewRoom';
 import { Users } from "./Pages/Users";
 import Login from "./Pages/Login";
 import { Layout } from "./Components/Layout";
@@ -25,6 +26,7 @@ function App() {
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Bookings" element={<Bookings />} />
             <Route path="/Rooms" element={<Rooms />} />
+            <Route path="/NewRoom" element={<NewRoom />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Users" element={<Users />} />
           </Route>      

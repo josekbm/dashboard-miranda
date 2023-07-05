@@ -18,7 +18,7 @@ import {
   DeleteButton
 } from './RoomStyled'
 import Table from '../Components/Table'
-import roomsData from "../Data/roomsData2.json"
+import roomsData from "../Data/roomsData.json"
 
 export function Contact() {
 

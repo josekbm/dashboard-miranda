@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import FilterTable from '../Components/FilterTable'
 import { FilterContainer } from '../Components/FilterTableStyle'
 import { Select } from '../Components/Select'
@@ -18,16 +18,42 @@ import {
   DeleteButton
 } from './RoomStyled'
 import Table from '../Components/Table'
-import roomsData from "../Data/roomsData2.json"
+import { useDispatch, useSelector } from 'react-redux'
+import { roomDelete, roomsAvailableCall, roomsBookedCall, roomsCall } from '../Features/roomSlice'
+import { Link } from 'react-router-dom'
 
 export function Rooms() {
 
-  const data = roomsData;
+  const dispatch = useDispatch();
+
+  const data = useSelector(state => state.rooms.rooms)
+
+  
+
+  useEffect(() => {
+    dispatch(roomsCall())
+  },[])
+
+  const handleDeleteRoom = (id) => {
+    dispatch(roomDelete(id))
+  }
+
+  const handleAllRooms = () => {
+    dispatch(roomsCall())
+  }
+
+  const handleAvailableRooms = () => {
+    dispatch(roomsAvailableCall())
+  }
+
+  const handleBookedRooms = () => {
+    dispatch(roomsBookedCall())
+  }
   
   const tableFilters = [
-    {name: "All Rooms"},
-    {name: "Available Rooms"},
-    {name: "Booked Rooms"},
+    {name: "All Rooms", action: handleAllRooms},
+    {name: "Available Rooms", action: (handleAvailableRooms)},
+    {name: "Booked Rooms", action: (handleBookedRooms)},
   ]
   
   const cols = [
@@ -74,7 +100,7 @@ export function Rooms() {
           <Booked>Booked</Booked>  
       },
       { property: 'deleteRoom', label: '', display: (row) =>
-        <DeleteButton>Delete</DeleteButton>
+      <DeleteButton onClick={()=>handleDeleteRoom(parseInt(row.id))}>Delete</DeleteButton>
       }
   ]
 
@@ -87,7 +113,9 @@ export function Rooms() {
       </FilterContainer>
       <ButtonsContainer>
         <AddRoom>
-          + New Room                
+          <Link to="/NewRoom">
+          +New Room
+          </Link>            
         </AddRoom>
         <Select />          
       </ButtonsContainer>

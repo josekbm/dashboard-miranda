@@ -1,316 +1,202 @@
-import {
-    Card,
-    CardContainer,
-    CardImage,
-    Booked,
-    CardTitle,
-    CardItem,
-    CardSeparator,
-    CardAmenitie,
-    TitleRow,
-    FeaturesRow,
-    CardHeader,
-    CloseIcon,
-    CardImageText,
-  } from "../Components/CardStyled";
-  import { MySlider } from "../../components/Slider/Slider";
-  import { Navigate, useNavigate, useParams } from "react-router-dom";
-  import { useDispatch, useSelector } from "react-redux";
-  import {
-    getSingleRoom,
-    getSingleRoomStatus,
-  } from "../../features/rooms/roomsSlice";
-  import { useEffect, useState } from "react";
-  import { editRoom, getRoom } from "../../features/rooms/roomsThunks";
-  import { HashLoader } from "react-spinners";
-  import {
-    offerChecker,
-    offerPriceCalc
-  } from "../../features/otherFunctions";
-  import { Wrapper } from "../../components/Layout/LayoutStyled";
-  import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
-  import {
-    Input,
-    InputBig,
-  } from "../../components/Form/FormStyled";
-  import { Button } from "../../components/Button/Button";
-  import { toastWarning } from "../../features/toastify";
-  import { getBookingsData, getBookingsStatus } from "../../features/bookings/bookingsSlice";
-  import { fetchBookings } from "../../features/bookings/bookingThunks";
-  import { roomStatusCalc } from "../../features/roomOccupancy";
-  
-  
-  export const SingleRoom = (props) => {
-    const roomId = useParams();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const singleRoomData = useSelector(getSingleRoom);
-    const singleRoomStatus = useSelector(getSingleRoomStatus);
-  
-  
-    const [roomType, setRoomType] = useState("");
-    const [roomNumber, setRoomNumber] = useState("");
-    const [price, setPrice] = useState("");
-    const [discount, setDiscount] = useState("");
-    const [description, setDescription] = useState("");
-    const bookingsData = useSelector(getBookingsData);
-    const bookingsStatus = useSelector(getBookingsStatus);
-    const [edit, setEdit] = useState(false);
-  
+import React, {useEffect, useState} from 'react'
+import { MainContainer, FormBtn, FormFooter, FormHeader, FormMain, FormPhoto, FormRoomContainer, ImgInput, OfferContainer } from './NewRoomStyled'
+import { useDispatch } from 'react-redux';
+import { roomCreate } from '../Features/roomSlice';
+
+function NewRoom() {
+
+    const dispatch = useDispatch()
+
+    const [img, setImg] = useState([]);
+
+    const [imgURL, setImgURL] = useState([]);
+
+    const [type,setType] = useState();
+
+    const [price,setPrice] = useState();
+
+    const [number,setNumber] = useState();
+
+    const [discount,setDiscount] = useState();
+
+    const [description,setDescription] = useState();
+
+    const [offer,setOffer] = useState();
+
+    const [cancellation,setCancellation] = useState();
+
+    const [amenities,setAmenities] = useState();
+
     useEffect(() => {
-      if (singleRoomStatus === "idle" || (singleRoomStatus==="fulfilled" && roomId.id !== singleRoomData.id)) {
-          dispatch(getRoom(roomId.id));
-      }
-      setRoomType(singleRoomData.roomType);
-      setRoomNumber(singleRoomData.roomNumber);
-      setPrice(singleRoomData.price);
-      setDiscount(singleRoomData.discount);
-      setDescription(singleRoomData.description);
-    }, [dispatch, singleRoomStatus, roomId.id, singleRoomData]);
-  
-    useEffect(() => {
-      if (bookingsStatus === "idle") {
-        dispatch(fetchBookings());
-      }
-    }, [dispatch, bookingsStatus, bookingsData]);
-  
-    const onSubmitHandler = (e) => {
-      e.preventDefault();
-      if (
-        roomType === "" ||
-        roomNumber === "" ||
-        price === "" ||
-        description === ""
-      ) {
-        toastWarning("Error! You have to enter all inputs.")
-      } else 
-        if (discount === "") {
-          setDiscount(0);
-        } else if (discount >= 100) {
-          toastWarning("Discount must be smaller than 100!");
-        } else {
-        const room = {
-          id: singleRoomData.id,
-          roomType: roomType,
-          roomNumber: roomNumber,
-          price: price,
-          discount: discount,
-          description: description
-        };
-        dispatch(editRoom(room));
-        setEdit(false);
-        dispatch(getRoom(room.id));
-      }
-    };
-  
-  
-  
-  
-  if(singleRoomStatus === "rejected" || bookingsStatus === "rejected"){
-    return (
-      <>
-        <Navigate to="/error"/>
-      </>
-    );
-  } else {
-   if (singleRoomStatus==="fulfilled" && singleRoomData.id === roomId.id && bookingsStatus==="fulfilled" && bookingsData) {
-      if(singleRoomData.id ==="R-0000"){
-       return (<Navigate to="/error"/>)
-      } else
-      if (edit !== true) {
-        return (
-          <>
-            <CardContainer full>
-              <Card full>
-                <CardHeader>
-                  <FiArrowLeftCircle
-                    onClick={() => {
-                      navigate("/rooms");
-                    }}
-                  />
-                  <FiEdit
-                    onClick={() => {
-                      setEdit(true);
-                    }}
-                  />
-                </CardHeader>
-                <TitleRow>
-                  <CardTitle>
-                    <h2>Room {singleRoomData.roomNumber}</h2>
-                    <h5>{singleRoomData.roomType}</h5>
-                  </CardTitle>
-                </TitleRow>
-                <FeaturesRow>
-                  <CardItem paragraph>
-                    <h3>Description</h3>
-                    <p>{singleRoomData.description}</p>
-                  </CardItem>
-                </FeaturesRow>
-                <CardSeparator />
-                <FeaturesRow>
-                  <CardItem price discount={singleRoomData.discount}>
-                    <h6>Price</h6>
-                    <h5>
-                      {singleRoomData.price} <span>/per night</span>
-                    </h5>
-                  </CardItem>
-                  <CardItem>
-                    <h6>Discount</h6>
-                    <h5>{singleRoomData.discount}%</h5>
-                  </CardItem>
-                </FeaturesRow>
-                <FeaturesRow>
-                  <CardItem offer discount={singleRoomData.discount}>
-                    <h6>Offer Price</h6>
-                    <h5>
-                      {offerPriceCalc(
-                        singleRoomData.price,
-                        singleRoomData.discount
-                      )}{" "}
-                      <span>/per night</span>
-                    </h5>
-                  </CardItem>
-                  <CardItem state={roomStatusCalc(singleRoomData.id, bookingsData)}>
-                    <h6>Status</h6>
-                    <h5>{roomStatusCalc(singleRoomData.id, bookingsData)}</h5>
-                  </CardItem>
-                </FeaturesRow>
-                <CardSeparator />
-  
-                <FeaturesRow amenities>
-                  {singleRoomData.amenities.map((amenitie, i) => {
-                    return (
-                      <CardItem amenitie key={i}>
-                        <CardAmenitie>{amenitie}</CardAmenitie>
-                      </CardItem>
-                    );
-                  })}
-                </FeaturesRow>
-              </Card>
-              <CardImage>
-                <MySlider data={singleRoomData.images}/>
-  
-                <Booked bookStatus={offerChecker(singleRoomData.discount)}>
-                  {offerChecker(singleRoomData.discount)}
-                </Booked>
-                <CardImageText>
-                <h4>Cancellation</h4>
-                    <p>{singleRoomData.cancellation}</p>
-                </CardImageText>
-              </CardImage>
-            </CardContainer>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <CardContainer>
-              <Card>
-                <CardHeader>
-                  <FiArrowLeftCircle
-                    onClick={() => {
-                      navigate("/rooms");
-                    }}
-                  />
-                  <CloseIcon
-                    onClick={() => {
-                      setEdit(false);
-                    }}
-                  />
-                </CardHeader>
-                <form onSubmit={onSubmitHandler}>
-                  <FeaturesRow>
-                    <CardItem>
-                      <Input>
-                        <h6>Room Number</h6>
-                        <input
-                          type="number"
-                          name="roomNumber"
-                          defaultValue={roomNumber}
-                          onInput={(e) => {
-                            setRoomNumber(e.target.value);
-                          }}
-                        />
-                      </Input>
-                    </CardItem>
-                    <CardItem>
-                      <Input>
-                        <h6>Room Type</h6>
-                        <select
-                          name="RoomType"
-                          defaultValue={roomType}
-                          onChange={(e) => {
-                            setRoomType(e.target.value);
-                          }}
-                        >
-                          <option>Single Bed</option>
-                          <option>Double Bed</option>
-                          <option>Double Superior</option>
-                          <option>Suite</option>
+        if(img.length>0){
+            let arrAux = [];
+            for(let i = 0; i<img.length;i++){
+                arrAux.push(URL.createObjectURL(img[i]))
+            }
+            setImgURL(arrAux)
+        }else{
+            setImgURL([])
+        }
+    },[img])
+
+    const handleImageChange = (event) => {
+        setImg(event.target.files)
+    }
+
+    const handleTypeChange = (e) => {
+        setType(e.target.value)
+    }
+
+    const handlePriceChange = (e) => {
+        setPrice(e.target.value)
+    }
+
+    const handleNumberChange = (e) => {
+        setNumber(e.target.value)
+    }
+
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value)
+    }
+
+    const handleOfferChange = (e) => {
+        setOffer(e.target.value)
+    }
+
+    const handleCancellationChange = (e) => {
+        setCancellation(e.target.value)
+    }
+
+    const handleAmenitiesChange = (e) => {
+        setAmenities(e.target.value)
+    }
+
+    const handleDiscountChange = (e) => {
+        setDiscount(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        
+        e.preventDefault();
+
+        const newRoom = {
+            type: type,
+            price: price,
+            number: number,
+            discount: discount,
+            description: description,
+            offer: offer,
+            cancellation: cancellation,
+            amenities: amenities
+        }
+
+        for(let key in newRoom){
+            if(!newRoom[key]){
+                return alert("Something empty")
+            } 
+        }
+
+        dispatch(roomCreate(newRoom))
+    }
+
+  return (
+    <MainContainer>
+        <FormRoomContainer onSubmit={handleSubmit}>
+            <FormHeader>
+                {
+                    img.length>=3?
+                        imgURL.map((item, i) => 
+                            <FormPhoto key={i}>
+                                <img src={item} alt={'roomPhoto'}/>
+                            </FormPhoto>    
+                        )
+                    :
+                    <>
+                        <FormPhoto>
+                            Select a photo
+                        </FormPhoto>
+                        <FormPhoto>
+                            Select a photo
+                        </FormPhoto>
+                        <FormPhoto>
+                            Select a photo
+                        </FormPhoto>
+                    </>
+                }
+            </FormHeader>
+            <ImgInput
+                type="file" 
+                name="photos" 
+                id="photos" 
+                accept="image/png, image/jpeg" 
+                multiple 
+                onChange={handleImageChange}
+            />
+            <FormMain>
+                <div>
+                    <div>
+                        <label htmlFor="type">Type</label>
+                        <select name="type" id="type" onChange={handleTypeChange}>
+                            <option value="singleBed">Single Bed</option>
+                            <option value="doubleBed">Double Bed</option>
+                            <option value="doubleSuperior">Double Superior</option>
+                            <option value="suite">Suite</option>    
                         </select>
-                      </Input>
-                    </CardItem>
-                  </FeaturesRow>
-  
-                  <FeaturesRow>
-                    <CardItem>
-                      <Input>
-                        <h6>Price</h6>
-                        <input
-                          type="number"
-                          name="price"
-                          defaultValue={price}
-                          onInput={(e) => {
-                            setPrice(e.target.value);
-                          }}
-                        />
-                      </Input>
-                    </CardItem>
-                    <CardItem>
-                      <Input>
-                        <h6>Discount</h6>
-                        <input
-                          type="number"
-                          name="discount"
-                          defaultValue={discount}
-                          onInput={(e) => {
-                            setDiscount(e.target.value);
-                          }}
-                        />
-                      </Input>
-                    </CardItem>
-                  </FeaturesRow>
-                  <FeaturesRow>
-                    <InputBig>
-                      <h6>Description</h6>
-                      <input
-                        type="text"
-                        name="description"
-                        defaultValue={description}
-                        onInput={(e) => {
-                          setDescription(e.target.value);
-                        }}
-                      />
-                    </InputBig>
-                  </FeaturesRow>
-  
-                  <CardSeparator />
-  
-                  <FeaturesRow>
-                    <Button>Save</Button>
-                  </FeaturesRow>
-                </form>
-              </Card>
-            </CardContainer>
-          </>
-        );
-      }
-  } else{
-      return (
-        <Wrapper>
-          <HashLoader color="#799283" size={100} />
-        </Wrapper>
-      );
-  } 
-  }
-  };
+                    </div>
+                    <div>
+                        <label htmlFor="number">Number</label>
+                        <input type="number" name="number" id="number" onChange={handleNumberChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="descripion">Description</label>
+                        <textarea name="description" id="description" style={{resize: 'none'}} onChange={handleDescriptionChange}></textarea>
+                    </div>
+                    <OfferContainer>
+                        <label htmlFor="offer">Offer</label>
+                        <div onChange={handleOfferChange}>
+                            <div>
+                                Yes <input type="radio" name="offer" id="yesOffer" />
+                            </div>
+                            <div>
+                                No <input type="radio" name="offer" id="noOffer" />
+                            </div>                            
+                        </div>                
+                    </OfferContainer>
+                </div>
+                <div>
+                    <div>
+                        <label htmlFor="price">Price</label>
+                        <input type="number" name="price" id="price" onChange={handlePriceChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="discount">Discount</label>
+                        <input type="number" name="discount" id="discount" onChange={handleDiscountChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="cancellation">Cancellation</label>
+                        <textarea name="cancellation" id="cancellation" style={{resize: 'none'}} onChange={handleCancellationChange}></textarea>
+                    </div>
+                    <div>
+                        <label htmlFor="amenities">Amenities</label>
+                        <select name="amenities" id="amenities" onChange={handleAmenitiesChange} defaultValue="">
+                            <option value="" disabled>Select an option</option>
+                            <option value="tv">TV</option>
+                            <option value="bar">Bar</option>
+                            <option value="bar">WiFi</option>
+                            <option value="bar">Shower</option>
+                            <option value="bar">Coffee Set</option>
+                            <option value="bar">Sofa</option>
+                            
+                        </select>
+                    </div>
+                </div>
+            </FormMain>
+            <FormFooter>
+                <FormBtn type='submit' value="Create Room" style={{padding: "10px 20px"}} onSubmit={handleSubmit}/>
+            </FormFooter>
+        </FormRoomContainer>
+    </MainContainer>
+  )
+}
+
+export default NewRoom
