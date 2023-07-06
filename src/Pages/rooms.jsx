@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
-import FilterTable from '../Components/FilterTable'
-import { FilterContainer } from '../Components/FilterTableStyle'
+
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -15,46 +14,28 @@ import {
   Booked,
   Price,
   NoData,
-  DeleteButton
+  DeleteButton,
 } from './RoomStyled'
 import Table from '../Components/Table'
 import { useDispatch, useSelector } from 'react-redux'
-import { roomDelete, roomsAvailableCall, roomsBookedCall, roomsCall } from '../Features/roomSlice'
+import { fetchRooms, selectRooms } from '../Features/roomSlice'
 import { Link } from 'react-router-dom'
+
 
 export function Rooms() {
 
   const dispatch = useDispatch();
-
-  const data = useSelector(state => state.rooms.rooms)
+  
+  const data = useSelector(selectRooms);
 
   
 
-  useEffect(() => {
-    dispatch(roomsCall())
-  },[])
+  useEffect(() => {dispatch(fetchRooms())})
 
-  const handleDeleteRoom = (id) => {
-    dispatch(roomDelete(id))
-  }
-
-  const handleAllRooms = () => {
-    dispatch(roomsCall())
-  }
-
-  const handleAvailableRooms = () => {
-    dispatch(roomsAvailableCall())
-  }
-
-  const handleBookedRooms = () => {
-    dispatch(roomsBookedCall())
-  }
   
-  const tableFilters = [
-    {name: "All Rooms", action: handleAllRooms},
-    {name: "Available Rooms", action: (handleAvailableRooms)},
-    {name: "Booked Rooms", action: (handleBookedRooms)},
-  ]
+  
+  
+  
   
   const cols = [
     {property: 'image', label: 'Room', display: (row) => (
@@ -64,10 +45,10 @@ export function Rooms() {
           </RoomImg>
             <RoomInfo>
               <p>
-                #{row.id}
+                #ID: {row.id}
               </p>
               <p>
-                {row.number}
+                Room nº {row.number}
               </p>
             </RoomInfo>          
         </RoomName>
@@ -100,7 +81,7 @@ export function Rooms() {
           <Booked>Booked</Booked>  
       },
       { property: 'deleteRoom', label: '', display: (row) =>
-      <DeleteButton onClick={()=>handleDeleteRoom(parseInt(row.id))}>Delete</DeleteButton>
+      <DeleteButton >Delete </DeleteButton>
       }
   ]
 
@@ -108,9 +89,7 @@ export function Rooms() {
     <>
     <MainContainer>
     <OptionsContainer>
-      <FilterContainer>
-        <FilterTable filters={tableFilters}/>
-      </FilterContainer>
+      
       <ButtonsContainer>
         <AddRoom>
           <Link to="/NewRoom">

@@ -18,6 +18,8 @@ export const Layout = (props) => {
       title = "Contact";
     } else if (location.pathname === "/Rooms") {
       title = "Rooms";
+    } else if (location.pathname === "/NewRoom") {
+      title = "New Room";
     } else if (location.pathname === "/Bookings") {
       title = "Bookings";
     } else if (location.pathname === "/Users") {

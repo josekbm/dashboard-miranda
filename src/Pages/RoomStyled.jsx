@@ -16,15 +16,20 @@ export const ButtonsContainer = styled.div`
 `
 
 export const AddRoom = styled.button`
-    border: none;
-    border-radius: 12px;
-    background-color: #135846;
-    color: white;
-    font-family: "Poppins";
-    padding: 13px 60px;
-    cursor: pointer;
-    
+border: none;
+border-radius: 12px;
+background-color: #135846;
+color: white;
+font-family: var(--font-Poppins);
+cursor: pointer;
+    a{
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px 35px;
+    }
 `
+
 export const RoomName = styled.div`
     display: flex;
     gap: 20px;
@@ -73,6 +78,13 @@ export const NoData = styled.p`
 export const Available = styled.p`
     background-color: #5AD07A;
     color: white;
+    padding: 10px 7px;
+    text-align: center;
+    border-radius: 12px;
+`
+export const InProgress = styled.p`
+    background-color: #c6d05a;
+    color: black;
     padding: 10px 7px;
     text-align: center;
     border-radius: 12px;

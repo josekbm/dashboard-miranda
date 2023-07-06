@@ -1,6 +1,5 @@
-import React from 'react'
-import FilterTable from '../Components/FilterTable'
-import { FilterContainer } from '../Components/FilterTableStyle'
+import React, {useEffect} from 'react'
+
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -15,84 +14,86 @@ import {
   Booked,
   Price,
   NoData,
-  DeleteButton
+  DeleteButton,
+  InProgress,
 } from './RoomStyled'
 import Table from '../Components/Table'
-import roomsData from "../Data/roomsData.json"
+import bookingsData from "../Data/bookingsData.json"
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { fetchBookings, selectBookings } from '../Features/bookingSlice'
+
 
 export function Bookings() {
 
-  const data = roomsData;
+  const dispatch = useDispatch();
   
-  const tableFilters = [
-    {name: "All Rooms"},
-    {name: "Available Rooms"},
-    {name: "Booked Rooms"},
-  ]
+  const data = useSelector(selectBookings);
+
+  useEffect(() => {dispatch(fetchBookings())})
+
+  
+
+  
+
+  
+  
+  
+  
   
   const cols = [
-    {property: 'image', label: 'Room', display: (row) => (
+    {property: 'guest', label: 'Guest', display: (row) => (
         <RoomName>
-          <RoomImg>
-            <img src={row.photo} alt={row.id} />
-          </RoomImg>
+          
             <RoomInfo>
               <p>
-                #{row.id}
+                {row.guest_name}
               </p>
               <p>
-                {row.number}
+                #ID {row.booking_id}
               </p>
             </RoomInfo>          
         </RoomName>
       )},
-      { property: 'type', label: 'Room Type' },
-      { property: 'amenities', label: 'Amenities', display: (row) =>
-        row.amenities?
-          <p>{row.amenities}</p>
+      { property: 'booking_date', label: 'Booking Date' },
+      { property: 'check_in', label: 'Check In' },
+      { property: 'check_out', label: 'Check Out' },
+      { property: 'special_requests', label: 'Special Request', display: (row) =>
+        row.special_requests?
+        <Available>View Note</Available>
         :  
-          <NoData>No amenities</NoData>
+          <NoData>No special request</NoData>
       },
-      { property: 'price', label: 'Price', display: (row) => 
-        <Price>${row.price} <span>/night</span></Price>
-      },
-      { property: 'offer', label: 'Offer Price', display: (row) => 
-          row.offer?
-            <OfferPrice>
-              <p>{row.offer}%</p>
-              <p>{row.price-(row.price*(row.offer/100))}</p>
-            </OfferPrice>
-          :
-            <NoData>
-              No offer
-            </NoData>
-      },
+      { property: 'room_type', label: 'Room Type' },
       { property: 'status', label: 'Status', display: (row) => 
-        row.status? 
-          <Available>Available</Available>
-        :
-          <Booked>Booked</Booked>  
+        {if(row.status === "Check In") {
+          return <Available>Check in</Available>
+        }else if (row.status === "Check Out"){
+          return <Booked>Check Out</Booked>
+        }else if (row.status === "In Progress"){
+          return <InProgress>In Progress</InProgress>
+        }}  
       },
-      { property: 'deleteRoom', label: '', display: (row) =>
-        <DeleteButton>Delete</DeleteButton>
-      }
+      
+      
   ]
 
   return (
+    <>
     <MainContainer>
     <OptionsContainer>
-      <FilterContainer>
-        <FilterTable filters={tableFilters}/>
-      </FilterContainer>
+      
       <ButtonsContainer>
         <AddRoom>
-          + New Room                
+          <Link to="/NewBooking">
+          +New Room
+          </Link>            
         </AddRoom>
         <Select />          
       </ButtonsContainer>
       </OptionsContainer>
       <Table data={data} cols={cols} />
     </MainContainer>
+    </>
   )
 }
-

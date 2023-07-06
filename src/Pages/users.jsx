@@ -1,6 +1,6 @@
 import React from 'react'
-import FilterTable from '../Components/FilterTable'
-import { FilterContainer } from '../Components/FilterTableStyle'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -14,19 +14,19 @@ import {
   Booked,
 } from './RoomStyled'
 import Table from '../Components/Table'
-import usersData from "../Data/usersData.json"
 import { RiPhoneFill } from 'react-icons/ri'
 import { RiMailLine } from 'react-icons/ri'   
+import { fetchUsers, selectUsers } from '../Features/userSlice'
 
 export function Users() {
 
-  const data = usersData;
+  const dispatch = useDispatch();
   
-  const tableFilters = [
-    {name: "All Employee"},
-    {name: "Active Employee"},
-    {name: "Inactive Employee"},
-  ]
+  const data = useSelector(selectUsers);
+
+  useEffect(() => {dispatch(fetchUsers())})
+  
+  
   
   const cols = [
     {property: 'image', label: 'User', display: (row) => (
@@ -71,9 +71,7 @@ export function Users() {
   return (
     <MainContainer>
     <OptionsContainer>
-      <FilterContainer>
-        <FilterTable filters={tableFilters}/>
-      </FilterContainer>
+      
       <ButtonsContainer>
         <AddRoom>
           + New Employee                

@@ -1,6 +1,5 @@
-import React from 'react'
-import FilterTable from '../Components/FilterTable'
-import { FilterContainer } from '../Components/FilterTableStyle'
+import React, {useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -18,72 +17,63 @@ import {
   DeleteButton
 } from './RoomStyled'
 import Table from '../Components/Table'
-import roomsData from "../Data/roomsData.json"
+import contactData from "../Data/contactData.json"
+import { fetchContacts, selectContacts } from '../Features/contactSlice'
 
 export function Contact() {
 
-  const data = roomsData;
+  const dispatch = useDispatch();
   
-  const tableFilters = [
-    {name: "All Rooms"},
-    {name: "Available Rooms"},
-    {name: "Booked Rooms"},
-  ]
+  const data = useSelector(selectContacts);
+
+  useEffect(() => {dispatch(fetchContacts())})
+  
+  
   
   const cols = [
-    {property: 'image', label: 'Room', display: (row) => (
+    {property: 'image', label: 'Date', display: (row) => (
         <RoomName>
-          <RoomImg>
-            <img src={row.photo} alt={row.id} />
-          </RoomImg>
+          
+            <RoomInfo>
+              <span>
+                {row.message_date}
+              </span>
+              <span>
+                - Hour {row.message_hour}
+              </span>
+            </RoomInfo>          
+        </RoomName>
+      )},
+      {property: 'image', label: 'Customer', display: (row) => (
+        <RoomName>
+          
             <RoomInfo>
               <p>
-                #{row.id}
+                {row.customer}
               </p>
               <p>
-                {row.number}
+                Email: {row.customer_mail}
+              </p>
+              <p>
+                Phone: {row.customer_phone}
               </p>
             </RoomInfo>          
         </RoomName>
       )},
-      { property: 'type', label: 'Room Type' },
-      { property: 'amenities', label: 'Amenities', display: (row) =>
-        row.amenities?
-          <p>{row.amenities}</p>
-        :  
-          <NoData>No amenities</NoData>
-      },
-      { property: 'price', label: 'Price', display: (row) => 
-        <Price>${row.price} <span>/night</span></Price>
-      },
-      { property: 'offer', label: 'Offer Price', display: (row) => 
-          row.offer?
-            <OfferPrice>
-              <p>{row.offer}%</p>
-              <p>{row.price-(row.price*(row.offer/100))}</p>
-            </OfferPrice>
-          :
-            <NoData>
-              No offer
-            </NoData>
-      },
-      { property: 'status', label: 'Status', display: (row) => 
-        row.status? 
-          <Available>Available</Available>
-        :
-          <Booked>Booked</Booked>  
+      {property: 'Topic', label: 'Topic'},
+      { property: 'message_content', label: 'Content', display: (row) => 
+        row.message_content.length > 0 ? <Available>View Note</Available> : <NoData>No amenities</NoData>
+        
       },
       { property: 'deleteRoom', label: '', display: (row) =>
-        <DeleteButton>Delete</DeleteButton>
+        <DeleteButton>Archive</DeleteButton>
       }
   ]
 
   return (
     <MainContainer>
     <OptionsContainer>
-      <FilterContainer>
-        <FilterTable filters={tableFilters}/>
-      </FilterContainer>
+      
       <ButtonsContainer>
         <AddRoom>
           + New Room                

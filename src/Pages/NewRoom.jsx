@@ -1,30 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import { MainContainer, FormBtn, FormFooter, FormHeader, FormMain, FormPhoto, FormRoomContainer, ImgInput, OfferContainer } from './NewRoomStyled'
 import { useDispatch } from 'react-redux';
-import { roomCreate } from '../Features/roomSlice';
+import { createRoom } from '../Features/roomSlice';
 
 function NewRoom() {
 
     const dispatch = useDispatch()
-
     const [img, setImg] = useState([]);
-
     const [imgURL, setImgURL] = useState([]);
-
     const [type,setType] = useState();
-
     const [price,setPrice] = useState();
-
     const [number,setNumber] = useState();
-
     const [discount,setDiscount] = useState();
-
     const [description,setDescription] = useState();
-
     const [offer,setOffer] = useState();
-
     const [cancellation,setCancellation] = useState();
-
     const [amenities,setAmenities] = useState();
 
     useEffect(() => {
@@ -96,7 +86,7 @@ function NewRoom() {
             } 
         }
 
-        dispatch(roomCreate(newRoom))
+        dispatch(createRoom(newRoom))
     }
 
   return (
