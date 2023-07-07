@@ -33,7 +33,7 @@ const contactSlice = createSlice({
     name: "contactsList",
     initialState: {
         contacts: [],
-        contact: null,
+        contact: {},
         isLoading: false,
         hasError: false,
     },
@@ -41,7 +41,7 @@ const contactSlice = createSlice({
     extraReducers(builder) {
         builder
         .addCase(fetchContacts.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(fetchContacts.fulfilled, (state, action) => {
@@ -54,7 +54,7 @@ const contactSlice = createSlice({
             state.hasError = true;
         })
         .addCase(fetchContact.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
             state.contact = null;
         })
@@ -70,7 +70,7 @@ const contactSlice = createSlice({
             state.contact = null;
         })        
         .addCase(archiveContact.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(archiveContact.fulfilled, (state, action) => {

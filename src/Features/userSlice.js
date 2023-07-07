@@ -43,7 +43,7 @@ const userSlice = createSlice({
     name: "userList",
     initialState: {
         users: [],
-        user: null,
+        user: {},
         isLoading: false,
         hasError: false,
     },
@@ -51,7 +51,7 @@ const userSlice = createSlice({
     extraReducers(builder) {
         builder
         .addCase(fetchUsers.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(fetchUsers.fulfilled, (state, action) => {
@@ -64,7 +64,7 @@ const userSlice = createSlice({
             state.hasError = true;
         })
         .addCase(fetchUser.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
             state.user = null;
         })
@@ -80,7 +80,7 @@ const userSlice = createSlice({
             state.user = null;
         })
         .addCase(createUser.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(createUser.fulfilled, (state, action) => {
@@ -93,7 +93,7 @@ const userSlice = createSlice({
             state.hasError = true;
         })
         .addCase(updateUser.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(updateUser.fulfilled, (state, action) => {
@@ -107,7 +107,7 @@ const userSlice = createSlice({
             state.hasError = true;
         })
         .addCase(deleteUser.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(deleteUser.fulfilled, (state, action) => {

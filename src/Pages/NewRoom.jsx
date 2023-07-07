@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { MainContainer, FormBtn, FormFooter, FormHeader, FormMain, FormPhoto, FormRoomContainer, ImgInput, OfferContainer } from './NewRoomStyled'
 import { useDispatch } from 'react-redux';
-import { createRoom } from '../Features/roomSlice';
+import { createRoom, selectRoom } from '../Features/roomSlice';
 
 function NewRoom() {
 
@@ -53,17 +53,13 @@ function NewRoom() {
         setOffer(e.target.value)
     }
 
-    const handleCancellationChange = (e) => {
-        setCancellation(e.target.value)
-    }
+    
 
     const handleAmenitiesChange = (e) => {
         setAmenities(e.target.value)
     }
 
-    const handleDiscountChange = (e) => {
-        setDiscount(e.target.value)
-    }
+   
 
     const handleSubmit = (e) => {
         
@@ -73,11 +69,10 @@ function NewRoom() {
             type: type,
             price: price,
             number: number,
-            discount: discount,
             description: description,
             offer: offer,
-            cancellation: cancellation,
-            amenities: amenities
+            amenities: amenities,
+            
         }
 
         for(let key in newRoom){
@@ -87,6 +82,7 @@ function NewRoom() {
         }
 
         dispatch(createRoom(newRoom))
+        
     }
 
   return (
@@ -157,14 +153,6 @@ function NewRoom() {
                     <div>
                         <label htmlFor="price">Price</label>
                         <input type="number" name="price" id="price" onChange={handlePriceChange}/>
-                    </div>
-                    <div>
-                        <label htmlFor="discount">Discount</label>
-                        <input type="number" name="discount" id="discount" onChange={handleDiscountChange}/>
-                    </div>
-                    <div>
-                        <label htmlFor="cancellation">Cancellation</label>
-                        <textarea name="cancellation" id="cancellation" style={{resize: 'none'}} onChange={handleCancellationChange}></textarea>
                     </div>
                     <div>
                         <label htmlFor="amenities">Amenities</label>

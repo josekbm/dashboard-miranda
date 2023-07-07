@@ -18,7 +18,7 @@ import {
   InProgress,
 } from './RoomStyled'
 import Table from '../Components/Table'
-import bookingsData from "../Data/bookingsData.json"
+
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchBookings, selectBookings } from '../Features/bookingSlice'

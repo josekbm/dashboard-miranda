@@ -23,7 +23,7 @@ export const fetchRoom = createAsyncThunk("rooms/fetchRoom", async() => {
 });
 
 export const createRoom = createAsyncThunk("rooms/createRoom", async(newRoom) => {
-    const roomDelay = await delay(newRoom);
+    const roomDelay = await delay(newRoom(data));
     return roomDelay;
 })
 
@@ -43,7 +43,7 @@ const roomSlice = createSlice({
     name: "roomList",
     initialState: {
         rooms: [],
-        room: null,
+        room: {},
         isLoading: false,
         hasError: false,
     },
@@ -51,7 +51,7 @@ const roomSlice = createSlice({
     extraReducers(builder) {
         builder
         .addCase(fetchRooms.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(fetchRooms.fulfilled, (state, action) => {
@@ -64,7 +64,7 @@ const roomSlice = createSlice({
             state.hasError = true;
         })
         .addCase(fetchRoom.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
             state.room = null;
         })
@@ -80,7 +80,7 @@ const roomSlice = createSlice({
             state.room = null;
         })
         .addCase(createRoom.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(createRoom.fulfilled, (state, action) => {
@@ -93,7 +93,7 @@ const roomSlice = createSlice({
             state.hasError = true;
         })
         .addCase(updateRoom.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(updateRoom.fulfilled, (state, action) => {
@@ -107,7 +107,7 @@ const roomSlice = createSlice({
             state.hasError = true;
         })
         .addCase(deleteRoom.pending, (state) => {
-            state.isLaoding = true;
+            state.isLoading = true;
             state.hasError = false;
         })
         .addCase(deleteRoom.fulfilled, (state, action) => {
