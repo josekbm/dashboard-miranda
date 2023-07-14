@@ -42,13 +42,15 @@ export function Login ()  {
   const handlePass = (event) => {
     setPass(event.target.value);
   }
+  //Validación usuario y contraseña
+ 
 
 
 
     
   return (
         <LogContainer>
-          <LogForm onSubmit={handleForm} >
+          <LogForm onSubmit={handleForm} data-testid="login__form">
             <Logo column>
               <img src={logo} alt="logo" />
               <h2>Miranda Dashboard</h2>
@@ -60,7 +62,9 @@ export function Login ()  {
             </p>
             <Inputs>
               <label htmlFor="email">Email:</label>
-              <input 
+
+              <input
+                data-testid="login__email__input" 
                 type='text' 
                 name='email'
                 id='email'
@@ -68,17 +72,21 @@ export function Login ()  {
                 autoCompleted='off'
                 placeholder="Email"
                 />
+              <div class="emailwarn"></div>
               <label htmlFor="password">Pasword:</label>
-              <input type='password'
-                  name='password'
-                  id='password'
-                  onChange={handlePass}
-                  autoCompleted='off'
-                  placeholder="Password"
+              <input
+                data-testid="login__password__input" 
+                type='password'
+                name='password'
+                id='password'
+                onChange={handlePass}
+                autoCompleted='off'
+                placeholder="Password"
                   />
+              <div class="passwarn"></div>
             </Inputs>
             
-            <EditButton type="submit">Login</EditButton>
+            <EditButton type="submit" data-testid="login__submit__button">Login</EditButton>
           </LogForm>
         </LogContainer>
                 

@@ -12,7 +12,7 @@ export const Layout = (props) => {
   const [open, setOpen] = useState(true);
 
   const titleChooser = () => {
-    if (location.pathname === "/Dashboard") {
+    if (location.pathname === "/") {
       title = "Dashboard";
     } else if (location.pathname === "/Contact") {
       title = "Contact";

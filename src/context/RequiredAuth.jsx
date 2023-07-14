@@ -8,8 +8,8 @@ function RequiredAuth({children}) {
 
     const location = useLocation();
     
-    if(!auth.user.isLogged && location.pathname!=="/login"){
-        return <Navigate to="/login"/>
+    if(!auth.user.isLogged && location.pathname!=="/Login"){
+        return <Navigate to="/Login"/>
     }
 
     return children

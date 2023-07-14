@@ -12,26 +12,12 @@ export const EditButton = styled.button`
   background: #EBF1EF;
   color: #135846;
 
-    &:hover{
-      scale: 1.2;
-      cursor: pointer;
-      background-color: #135846;
-      color: #FFFFFF;
-    }
-`
-export const ArchiveButton = styled.button`
-  font-family: "Poppins";
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  background-color: transparent;
-  letter-spacing: 0px;
-  color: ${props => props.archived ? "#E23428" : "#5AD07A"  } ;
-
-&:hover{
-  scale: 1.1;
-  cursor: pointer;
-}
+  &:hover{
+    scale: 1.2;
+    cursor: pointer;
+    background-color: #135846;
+    color: #FFFFFF;
+  }
 `
 
 export const Button = styled.button`
@@ -43,25 +29,42 @@ export const Button = styled.button`
   border-radius: 10px;
   border: none;
   min-width: 100px;
-    
+  
   background-color: ${props => {
     switch (props.type){
       case "delete":
-      return "#E23428"
+        return "#E23428"
       default:
-      return "rgb(19, 88, 70)";
+        return "rgb(19, 88, 70)";
     }
   }};
-    color: #FFFFFF;
+  color: #FFFFFF;
 
-    &:hover{
+  &:hover{
       scale: 1.2;
-      cursor: pointer;
-      background: #EBF1EF;
-      color: #135846;
-  
+    cursor: pointer;
+    background: #EBF1EF;
+    color: #135846;
+
+  }
+`
+
+export const NotesButton = styled.button`
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 500;
+    height: 32px;
+    width: 100%;
+    border-radius: 10px;
+    border: ${props => props.empty ? "1px solid #799283" : "none"} ;
+    background: ${props => props.empty ? "rgb(255, 255, 255)" : "rgb(238, 249, 242)"} ;
+    color: ${props => props.empty ? "#799283" : "#212121"};
+    &:hover{
+        scale: 1.2;
+    cursor: pointer;
     }
 `
+
 export const StatusButton = styled.button`
 width: 100%;
      font-family: "Poppins";
@@ -120,4 +123,34 @@ width: 100%;
     }}};;
 `
 
+export const ArchiveButton = styled.button`
+  font-family: "Poppins";
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  background-color: transparent;
+  letter-spacing: 0px;
+  color: ${props => props.archived ? "#E23428" : "#5AD07A"  } ;
 
+&:hover{
+  scale: 1.1;
+  cursor: pointer;
+}
+`
+
+export const PaginationButton = styled.button`
+    font-family: "Poppins";
+    font-size: 25px;
+    background-color: #b7b7b7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+
+    border: none;
+    color: white;
+
+    &:hover{
+      scale: 1.1;
+      cursor: pointer;
+    }
+`

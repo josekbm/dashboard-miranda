@@ -23,7 +23,7 @@ export const fetchRoom = createAsyncThunk("rooms/fetchRoom", async() => {
 });
 
 export const createRoom = createAsyncThunk("rooms/createRoom", async(newRoom) => {
-    const roomDelay = await delay(newRoom(data));
+    const roomDelay = await delay(newRoom(rooms));
     return roomDelay;
 })
 

@@ -22,8 +22,7 @@ function App() {
       <RequiredAuth>
       <Routes>        
           <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />            
             <Route path="/Bookings" element={<Bookings />} />
             <Route path="/Rooms" element={<Rooms />} />
             <Route path="/NewRoom" element={<NewRoom />} />

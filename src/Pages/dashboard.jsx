@@ -15,7 +15,7 @@ import { LastReviews } from "../Components/LastReviews";
 export const Dashboard = (props) => {
   return(
     <>    
-    <KpiRow>
+    <KpiRow data-testid="dashboard__kpi">
           <KPI>
             <KpiIcon><MdOutlineKingBed /></KpiIcon><KpiText><h2>8,454</h2><h6>New Booking</h6></KpiText>
           </KPI>

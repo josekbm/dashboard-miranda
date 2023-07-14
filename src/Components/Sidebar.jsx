@@ -22,7 +22,7 @@ export const SideBar = () => {
                 </div>
             </Logo>
             <LinkContainer>
-                <li><MenuLink to="/Dashboard"><RiDashboardLine/> Dashboard</MenuLink></li>
+                <li><MenuLink to="/"><RiDashboardLine/> Dashboard</MenuLink></li>
                 <li><MenuLink to="/Rooms"><RiKey2Line/>Room</MenuLink></li>
                 <li><MenuLink to="/Bookings"><RiCalendarEventFill/>Booking</MenuLink></li>
                 <li><MenuLink to="/Contact"><HiOutlineMail/>Contact</MenuLink></li>

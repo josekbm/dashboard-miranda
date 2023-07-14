@@ -14,10 +14,12 @@ export const TopBar = (props) => {
     const navigate = useNavigate()
     const HandleLogout = () => {
       
-      // Eliminar los datos de inicio de sesión del almacenamiento local
-      localStorage.clear(); 
       // Redirigir al usuario a la página de inicio de sesión
       navigate("/Login");
+      // Eliminar los datos de inicio de sesión del almacenamiento local
+      localStorage.clear(); 
+      
+      
     };
     const HandleMail = () => {
       navigate("/Contact");
@@ -35,7 +37,7 @@ export const TopBar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail onClick={HandleMail}/>
-                <HiOutlineLogout onClick={HandleLogout}/>
+                <HiOutlineLogout onClick={HandleLogout} data-testid="logout__button"/>
               </NavItemContainer>
             </Nav>
           </>
@@ -51,7 +53,7 @@ export const TopBar = (props) => {
               <NavItemContainer>
                 <HiOutlineBell />
                 <HiOutlineMail onClick={HandleMail}/>
-                <HiOutlineLogout onClick={HandleLogout}/>
+                <HiOutlineLogout onClick={HandleLogout} data-testid="logout__button"/>
               </NavItemContainer>
             </Nav>
           </>
