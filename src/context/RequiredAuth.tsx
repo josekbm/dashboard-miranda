@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom';
 import { useLogin } from './LoginProvider';
 
-function RequiredAuth({children}) {
+const RequiredAuth: React.FC<{children: any}> = ({children}) => {
 
     const auth = useLogin();
 

@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/Bookings";
@@ -16,7 +17,7 @@ function App() {
 
     
   return (
-    <>
+    
     <LoginProvider>
     <BrowserRouter>
       <RequiredAuth>
@@ -29,7 +30,7 @@ function App() {
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Users" element={<Users />} />
           </Route>      
-      <Route exact path="/Login" element={<Login />} />
+      <Route path="/Login" element={<Login />} />
       </Routes>
       </RequiredAuth>
     </BrowserRouter>
@@ -37,7 +38,7 @@ function App() {
     
 
     
-    </>
+    
   );
 }
 

@@ -1,12 +1,43 @@
 import React, { createContext, useContext, useReducer } from 'react'
 
-const LoginContext = createContext(false);
+interface State{
+    mail: string,
+    pass: string,
+    isLogged: boolean
+}
+
+interface Action{
+    type: string,
+    user: {
+        mail: string,
+        pass: string,
+    }
+}
+
+interface Context{
+    user: {
+        mail: string,
+        pass: string,
+        isLogged: boolean
+    }
+    dispatch?: any
+}
+
+const initialContext: Context = {
+    user:{
+        mail: '',
+        pass: '',
+        isLogged: false
+    }
+}
+
+const LoginContext = createContext(initialContext);
 
 export const useLogin = () => {
     return useContext(LoginContext)
 }
 
-const reducer = (state,action) => {
+const reducer = (state: State ,action: Action) => {
     switch (action.type) {
         case 'login':
             if(action.user.mail === "admin@admin.com" && action.user.pass === "admin"){
@@ -23,11 +54,9 @@ const reducer = (state,action) => {
     }
 }
 
-function LoginProvider({children}) {
+const LoginProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
 
-    let userEmpty = {mail: "" , isLogged: false};
-
-    const [user, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem("user")) || userEmpty)
+    const [user, dispatch] = useReducer(reducer, JSON.parse(localStorage.getItem("user") || JSON.stringify({mail: "" , isLogged: false})))
 
     return(
         <LoginContext.Provider value={{user,dispatch}}>
