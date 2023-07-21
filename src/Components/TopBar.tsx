@@ -3,18 +3,25 @@ import { HiOutlineLogout, HiOutlineBell, HiOutlineMail } from "react-icons/hi";
 import { Nav, NavItemContainer } from "./TopBarStyled";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../context/LoginProvider";
+import { Dispatch, SetStateAction, useContext } from "react";
 
-export const TopBar = (props) => {
+interface TopBarProps {
+  open: boolean,
+  page: string,
+  showSideBar: Dispatch<SetStateAction<boolean>>;
+}
+
+export const TopBar = ({open, page, showSideBar}: TopBarProps) => {
   const logout = useLogin()
   const onClickSideBarHandler = () => {
-      if (props.open) {
-        props.showSideBar(false);
+      if (open) {
+        showSideBar(false);
       } else {
-        props.showSideBar(true);
+        showSideBar(true);
       }
   };
   const navigate = useNavigate()
-  const HandleLogout = (event) => {
+  const HandleLogout = (event: any) => {
     event.preventDefault()
     logout.dispatch({type: 'logout'})
     // Redirigir al usuario a la página de inicio de sesión
@@ -25,13 +32,13 @@ export const TopBar = (props) => {
   };
 
 
-  if (props.open) {
+  if (open) {
     return (
       <>
         <Nav>
           <NavItemContainer>
             <BsArrowBarLeft onClick={onClickSideBarHandler} />
-            <h2>{props.page}</h2>
+            <h2>{page}</h2>
           </NavItemContainer>
           <NavItemContainer>
             <HiOutlineBell />
@@ -47,7 +54,7 @@ export const TopBar = (props) => {
         <Nav>
           <NavItemContainer>
             <BsArrowBarRight onClick={onClickSideBarHandler} />
-            <h2>{props.page}</h2>
+            <h2>{page}</h2>
           </NavItemContainer>
           <NavItemContainer>
             <HiOutlineBell />

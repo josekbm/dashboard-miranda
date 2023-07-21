@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
+interface SideBarProps{
+  column?: boolean;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,7 +17,7 @@ export const Wrapper = styled.div`
   
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.div<SideBarProps>`
   height: 100px;
   display: flex;
   align-items: center;

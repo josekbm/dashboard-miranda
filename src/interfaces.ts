@@ -4,43 +4,52 @@ export interface Booking {
     booking_date: string;
     check_in: string;
     check_out: string;
-    special_request: string;
+    special_requests: string;
     room_type: string;
     status: string;
 }
 
 export interface User{
-    pic: string;
-    full_name: string;
-    employee_id: string;
-    email: string;    
-    start_date: string;
-    position: string;
-    contact: string;
-    status: string;
+    photo: string;
+    name: string;
+    id: string;
+    email: string;
+    phone: string;
+    startDate: string;
+    jobDescription: string | undefined,
+    state: string,
+    password: string,
+    position: string
     
 }
 
 export interface Room{
-    photo: string;
-    number: number;
+    roomType: string;
+    roomNumber: string;
     id: string;
-    type: string;
+    description: string;
     price: number;
-    status: boolean;
-    amenities: string | undefined;
+    discount: number;
+    cancellation: string;
+    amenities: string[];
+    thumbnail: string;
+    images: string[];
+    status: string;
 }
 
 
 
-export interface Contact {
-    message_date: string;
-    message_hour: string;
-    massage_id: number;
-    customer: string;
-    customer_mail: string;
-    customer_phone: string;
-    topic: string;
-    message_content: string;
-
+type customer = {
+    name: string;
+    phone: string;
+    email: string;
 }
+
+  export interface Contact {
+    date: string;
+    archived: boolean;
+    customer: customer;
+    id: string;
+    subject: string;
+    comment: string;
+ }

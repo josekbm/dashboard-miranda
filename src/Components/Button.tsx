@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-
+interface ButtonProps {
+  type?: any;
+  empty?: boolean;
+  status?: string;
+  archived?: boolean;
+  unarchived?: boolean;
+}
 export const EditButton = styled.button`
   font-family: "Poppins";
   font-size: 12px;
@@ -20,7 +26,7 @@ export const EditButton = styled.button`
   }
 `
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
   font-family: "Poppins";
   font-size: 12px;
   font-weight: normal;
@@ -42,42 +48,42 @@ export const Button = styled.button`
 
   &:hover{
       scale: 1.2;
-    cursor: pointer;
-    background: #EBF1EF;
-    color: #135846;
+  cursor: pointer;
+  background: #EBF1EF;
+  color: #135846;
 
   }
 `
 
-export const NotesButton = styled.button`
-    font-family: "Poppins";
-    font-size: 12px;
-    font-weight: 500;
-    height: 32px;
-    width: 100%;
-    border-radius: 10px;
-    border: ${props => props.empty ? "1px solid #799283" : "none"} ;
-    background: ${props => props.empty ? "rgb(255, 255, 255)" : "rgb(238, 249, 242)"} ;
-    color: ${props => props.empty ? "#799283" : "#212121"};
-    &:hover{
-        scale: 1.2;
-    cursor: pointer;
-    }
+export const NotesButton = styled.button<ButtonProps>`
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  height: 32px;
+  width: 100%;
+  border-radius: 10px;
+  border: ${props => props.empty ? "1px solid #799283" : "none"} ;
+  background: ${props => props.empty ? "rgb(255, 255, 255)" : "rgb(238, 249, 242)"} ;
+  color: ${props => props.empty ? "#799283" : "#212121"};
+  &:hover{
+      scale: 1.2;
+  cursor: pointer;
+  }
 `
 
-export const StatusButton = styled.button`
-width: 100%;
-     font-family: "Poppins";
-    font-size: 12px;
-    font-weight: 500;
-    text-align: center;
-    height: 32px;
-    border: none;
-    border-radius: 10px;
-    color: ${props => {
-       
+export const StatusButton = styled.button<ButtonProps>`
+  width: 100%;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  height: 32px;
+  border: none;
+  border-radius: 10px;
+  color: ${props => {
+      
     switch (props.status) {
-        
+
       case "CHECK IN":
         return "rgb(90, 208, 122)";
       case "ACTIVE":
@@ -95,12 +101,12 @@ width: 100%;
         case "BOOKED":
             return "#E23428";
       default:
-        return "transparent";
+      return "transparent";
     }
-    
-   }};
+  
+  }};
 
-    background-color: ${props => {
+  background-color: ${props => {
     switch (props.status) {
       case "CHECK IN":
         return "rgb(232, 255, 238)";
@@ -120,37 +126,21 @@ width: 100%;
         return "#E8FFEE";
       default:
         return "transparent";
-    }}};;
+  }}};;
 `
 
-export const ArchiveButton = styled.button`
+export const ArchiveButton = styled.button<ButtonProps>`
   font-family: "Poppins";
   font-size: 14px;
   font-weight: 500;
   border: none;
   background-color: transparent;
   letter-spacing: 0px;
-  color: ${props => props.archived ? "#E23428" : "#5AD07A"  } ;
+  color: ${props => props.archived ? "#E23428" : "#5AD07A"  } 
+;
 
-&:hover{
-  scale: 1.1;
-  cursor: pointer;
-}
-`
-
-export const PaginationButton = styled.button`
-    font-family: "Poppins";
-    font-size: 25px;
-    background-color: #b7b7b7;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-
-    border: none;
-    color: white;
-
-    &:hover{
-      scale: 1.1;
-      cursor: pointer;
-    }
+  &:hover{
+    scale: 1.1;
+    cursor: pointer;
+  }
 `

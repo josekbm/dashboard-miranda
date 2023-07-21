@@ -1,7 +1,20 @@
 import { IoClose } from "react-icons/io5";
 import styled from "styled-components";
 
-export const CardContainer = styled.section`
+interface CardProps {
+  full?: boolean;
+  bookStatus?: string;
+  amenitie?: boolean;
+  paragraph?: boolean;
+  discount?: number;
+  price?: boolean;
+  state?: string;
+  offer?: boolean;
+  close?: boolean;
+  amenities?: boolean;
+}
+
+export const CardContainer = styled.section<CardProps>`
   width: ${(props) => (props.full ? "100%" : "80%")};
   background-color: #ffffff;
   display: flex;
@@ -9,7 +22,7 @@ export const CardContainer = styled.section`
   max-height: 110vh;
 `;
 
-export const Card = styled.div`
+export const Card = styled.div<CardProps>`
   width: ${(props) => (props.full ? "46%" : "100%")};
   background-color: #ffffff;
   border-radius: 12px;
@@ -58,8 +71,6 @@ export const CardImage = styled.div`
     left: 30px;
     z-index: 10;
   }
-
-  
 `;
 
 export const CardImageText = styled.div`
@@ -82,7 +93,6 @@ export const CardImageText = styled.div`
   padding-bottom: 3rem;
 
   h4 {
-
     padding-left: 5%;
     padding-right: 5%;
     font-size: 22px;
@@ -103,7 +113,7 @@ export const CardImageText = styled.div`
   }
 `;
 
-export const Booked = styled.div`
+export const Booked = styled.div<CardProps>`
   position: absolute;
   text-align: center;
   padding: 1%;
@@ -168,7 +178,7 @@ export const UserImage = styled.div`
   }
 `;
 
-export const CardItem = styled.div`
+export const CardItem = styled.div<CardProps>`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -188,28 +198,32 @@ export const CardItem = styled.div`
     font-family: "Poppins";
     font-size: 16px;
     text-decoration: ${(props) => {
-    if (props.discount > 0 && props.price) {
-      return "line-through";
-    } else return "none";
-  }};
-    color:${(props) => {if(props.state){
-      switch(props.state){
-        case "ACTIVE":
-            return "#5AD07A"
-        case "INACTIVE":
-        return "#E23428";
-        case "AVAILABLE":
-          return "#5AD07A";
-        case "BOOKED":
-          return "#E23428";
-        default: 
-        return "#212121";
-  }} else {
-    if (props.discount > 0 && props.offer) {
-      return "#E23428";
-    } else return "#212121";
-  }
-  }};
+      if (props.discount)
+        if (props.discount > 0 && props.price) {
+          return "line-through";
+        } else return "none";
+    }};
+    color: ${(props) => {
+      if (props.state) {
+        switch (props.state) {
+          case "ACTIVE":
+            return "#5AD07A";
+          case "INACTIVE":
+            return "#E23428";
+          case "AVAILABLE":
+            return "#5AD07A";
+          case "BOOKED":
+            return "#E23428";
+          default:
+            return "#212121";
+        }
+      } else {
+        if (props.discount)
+          if (props.discount > 0 && props.offer) {
+            return "#E23428";
+          } else return "#212121";
+      }
+    }};
     margin: 0;
   }
 
@@ -226,7 +240,6 @@ export const CardItem = styled.div`
     font-size: 14px;
     color: #799283;
     margin: 0;
-    
   }
 
   p {
@@ -273,7 +286,7 @@ export const TitleRow = styled.div`
   margin-bottom: 5%;
 `;
 
-export const FeaturesRow = styled.div`
+export const FeaturesRow = styled.div<CardProps>`
   display: flex;
   flex-direction: row;
   margin-top: 2.2rem;
@@ -281,25 +294,24 @@ export const FeaturesRow = styled.div`
   flex-wrap: wrap;
 `;
 
-export const CardHeader = styled.div`
+export const CardHeader = styled.div<CardProps>`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-size: 30px;
   margin-bottom: 2rem;
-  color: ${(props) => props.close ? "#E23428" : "gray"};
-  svg:hover{
+  color: ${(props) => (props.close ? "#E23428" : "gray")};
+  svg:hover {
     scale: 1.1;
-    cursor:pointer;
+    cursor: pointer;
   }
-  p{
+  p {
     color: red;
     font-size: 10px;
   }
-`
-
+`;
 
 export const CloseIcon = styled(IoClose)`
- color:  #E23428;
-`
+  color: #e23428;
+`;

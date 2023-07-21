@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SideBar } from "./Sidebar";
 import { Container, Content, LeftMenu, RightSection } from "./LayoutStyled";
 
-export const Layout = (props) => {
+export const Layout = () => {
   let location = useLocation();
   
 
@@ -38,7 +38,6 @@ export const Layout = (props) => {
         <RightSection open={open}>
           <TopBar
             page={titleChooser()}
-            setAuth={props.setAuth}
             showSideBar={setOpen}
             open={open}
           />

@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react'
-
+import {useEffect} from 'react'
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -18,31 +17,23 @@ import {
   InProgress,
 } from './RoomStyled'
 import Table from '../Components/Table'
-
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchBookings, selectBookings } from '../Features/bookingSlice'
+import { fetchBookings, getBookingsData } from '../Features/bookingSlice'
+import { Booking } from '../interfaces'
 
 
 export function Bookings() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const data = useSelector(selectBookings);
+  const data = useAppSelector(getBookingsData);
 
-  useEffect(() => {dispatch(fetchBookings())})
-
-  
-
-  
-
-  
-  
-  
-  
+  useEffect(() => {dispatch(fetchBookings())})  
   
   const cols = [
-    {property: 'guest', label: 'Guest', display: (row) => (
+    {property: 'guest', label: 'Guest', display: (row: Booking) => (
         <RoomName>
           
             <RoomInfo>
@@ -58,14 +49,14 @@ export function Bookings() {
       { property: 'booking_date', label: 'Booking Date' },
       { property: 'check_in', label: 'Check In' },
       { property: 'check_out', label: 'Check Out' },
-      { property: 'special_requests', label: 'Special Request', display: (row) =>
+      { property: 'special_requests', label: 'Special Request', display: (row: Booking) =>
         row.special_requests?
         <Available>View Note</Available>
         :  
           <NoData>No special request</NoData>
       },
       { property: 'room_type', label: 'Room Type' },
-      { property: 'status', label: 'Status', display: (row) => 
+      { property: 'status', label: 'Status', display: (row: Booking) => 
         {if(row.status === "Check In") {
           return <Available>Check in</Available>
         }else if (row.status === "Check Out"){

@@ -23,7 +23,7 @@ export function Login ()  {
     }
   })
 
-  const handleForm = (event) =>{
+  const handleForm = (event: React.ChangeEvent<HTMLInputElement & HTMLFormElement>) =>{
     event.preventDefault();
     login.dispatch({type: 'login', user: {mail,pass}})
     setTimeout(() => {
@@ -35,11 +35,11 @@ export function Login ()  {
   }
   
 
-  const handleMail = (event) => {
+  const handleMail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMail(event.target.value);
   }
 
-  const handlePass = (event) => {
+  const handlePass = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPass(event.target.value);
   }
   //Validación usuario y contraseña
@@ -69,10 +69,8 @@ export function Login ()  {
                 name='email'
                 id='email'
                 onChange={handleMail}
-                autoCompleted='off'
                 placeholder="Email"
                 />
-              <div class="emailwarn"></div>
               <label htmlFor="password">Pasword:</label>
               <input
                 data-testid="login__password__input" 
@@ -80,10 +78,8 @@ export function Login ()  {
                 name='password'
                 id='password'
                 onChange={handlePass}
-                autoCompleted='off'
                 placeholder="Password"
                   />
-              <div class="passwarn"></div>
             </Inputs>
             
             <EditButton type="submit" data-testid="login__submit__button">Login</EditButton>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { TableStyled } from './TableStyled'
 
-function Table({ cols, data }) {
+function Table({ cols, data } : any) {
 
-    const displayRow = (row) => (
+    const displayRow = (row : any) => (
         <tr key={row.id}>
-            {cols.map((col, i) =>
+            {cols.map((col: any, i: number) =>
                 <td key={i}>
                     {col.display ? col.display(row) : row[col.property]}
                 </td>
@@ -17,7 +17,7 @@ function Table({ cols, data }) {
     <TableStyled>
         <thead>
             <tr>
-                {cols.map( (col, i) => 
+                {cols.map( (col: any, i: number) => 
                     <th key={i}>
                         {col.label}
                     </th>

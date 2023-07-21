@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react'
-
+import { useEffect } from 'react'
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -18,15 +17,20 @@ import {
 } from './RoomStyled'
 import Table from '../Components/Table'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchRooms, selectRooms } from '../Features/roomSlice'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { deleteRoom, fetchRooms, getRoomsData } from '../Features/roomSlice'
 import { Link } from 'react-router-dom'
-
+import { Room } from '../interfaces'
 
 export function Rooms() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const data = useSelector(selectRooms);
+  const data = useAppSelector(getRoomsData);
+
+  const handleDeleteRoom = (id: number) => {
+    dispatch(deleteRoom("id"))
+  }
 
   
 
@@ -38,50 +42,50 @@ export function Rooms() {
   
   
   const cols = [
-    {property: 'image', label: 'Room', display: (row) => (
+    {property: 'image', label: 'Room', display: (row: Room) => (
         <RoomName>
           <RoomImg>
-            <img src={row.photo} alt={row.id} />
+            <img src={row.thumbnail} alt={row.id} />
           </RoomImg>
             <RoomInfo>
               <p>
                 #ID: {row.id}
               </p>
               <p>
-                Room nº {row.number}
+                {row.roomNumber}
               </p>
             </RoomInfo>          
         </RoomName>
       )},
       { property: 'type', label: 'Room Type' },
-      { property: 'amenities', label: 'Amenities', display: (row) =>
+      { property: 'amenities', label: 'Amenities', display: (row: Room) =>
         row.amenities?
           <p>{row.amenities}</p>
         :  
           <NoData>No amenities</NoData>
       },
-      { property: 'price', label: 'Price', display: (row) => 
+      { property: 'price', label: 'Price', display: (row: Room) => 
         <Price>${row.price} <span>/night</span></Price>
       },
-      { property: 'offer', label: 'Offer Price', display: (row) => 
-          row.offer?
+      { property: 'offer', label: 'Offer Price', display: (row: Room) => 
+          row.discount?
             <OfferPrice>
-              <p>{row.offer}%</p>
-              <p>{row.price-(row.price*(row.offer/100))}</p>
+              <p>{row.discount}%</p>
+              <p>{row.price-(row.price*(row.discount/100))}</p>
             </OfferPrice>
           :
             <NoData>
               No offer
             </NoData>
       },
-      { property: 'status', label: 'Status', display: (row) => 
+      { property: 'status', label: 'Status', display: (row: Room) => 
         row.status? 
           <Available>Available</Available>
         :
           <Booked>Booked</Booked>  
       },
-      { property: 'deleteRoom', label: '', display: (row) =>
-      <DeleteButton >Delete </DeleteButton>
+      { property: 'deleteRoom', label: '', display: (row: Room) =>
+      <DeleteButton onClick={()=>handleDeleteRoom(parseInt(row.id))}>Delete </DeleteButton>
       }
   ]
 
@@ -92,7 +96,7 @@ export function Rooms() {
       
       <ButtonsContainer>
         <AddRoom>
-          <Link to="/NewRoom">
+          <Link to="/SingleRoom">
           +New Room
           </Link>            
         </AddRoom>

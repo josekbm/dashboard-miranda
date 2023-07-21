@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Select } from '../Components/Select'
 import { 
   MainContainer,
@@ -18,54 +19,55 @@ import {
 } from './RoomStyled'
 import Table from '../Components/Table'
 import contactData from "../Data/contactData.json"
-import { fetchContacts, selectContacts } from '../Features/contactSlice'
+import { fetchContacts, getContactsData } from '../Features/contactSlice'
+import { Contact } from '../interfaces'
 
-export function Contact() {
+export function Contacts() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const data = useSelector(selectContacts);
+  const data = useAppSelector(getContactsData);
 
   useEffect(() => {dispatch(fetchContacts())})
   
   
   
   const cols = [
-    {property: 'image', label: 'Date', display: (row) => (
+    {property: 'image', label: 'Date', display: (row: Contact) => (
         <RoomName>
           
             <RoomInfo>
               <span>
-                {row.message_date}
+                {row.date}
               </span>
               <span>
-                - Hour {row.message_hour}
+                - Hour {row.date}
               </span>
             </RoomInfo>          
         </RoomName>
       )},
-      {property: 'image', label: 'Customer', display: (row) => (
+      {property: 'image', label: 'Customer', display: (row: Contact) => (
         <RoomName>
           
             <RoomInfo>
               <p>
-                {row.customer}
+                {row.customer.name}
               </p>
               <p>
-                Email: {row.customer_mail}
+                Email: {row.customer.email}
               </p>
               <p>
-                Phone: {row.customer_phone}
+                Phone: {row.customer.phone}
               </p>
             </RoomInfo>          
         </RoomName>
       )},
       {property: 'Topic', label: 'Topic'},
-      { property: 'message_content', label: 'Content', display: (row) => 
-        row.message_content.length > 0 ? <Available>View Note</Available> : <NoData>No amenities</NoData>
+      { property: 'message_content', label: 'Content', display: (row: Contact) => 
+        row.comment.length > 0 ? <Available>View Note</Available> : <NoData>No amenities</NoData>
         
       },
-      { property: 'deleteRoom', label: '', display: (row) =>
+      { property: 'deleteRoom', label: '', display: (row: Contact) =>
         <DeleteButton>Archive</DeleteButton>
       }
   ]
