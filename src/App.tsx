@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/Bookings";
-import { Contacts } from "./Pages/Contact";
+import { Contacts } from "./Pages/Contacts";
 import { Rooms } from "./Pages/Rooms";
 import { SingleRoom } from './Pages/SingleRoom';
 import { Users } from "./Pages/Users";
