@@ -3,7 +3,7 @@ import { HiOutlineLogout, HiOutlineBell, HiOutlineMail } from "react-icons/hi";
 import { Nav, NavItemContainer } from "./TopBarStyled";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../context/LoginProvider";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface TopBarProps {
   open: boolean,

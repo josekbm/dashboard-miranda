@@ -5,20 +5,15 @@ import {
   OptionsContainer,
   ButtonsContainer,
   RoomName,
-  RoomImg,
   RoomInfo,
   AddRoom,
-  OfferPrice,
   Available,
   Booked,
-  Price,
   NoData,
-  DeleteButton,
   InProgress,
 } from './RoomStyled'
 import Table from '../Components/Table'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchBookings, getBookingsData } from '../Features/bookingSlice'
 import { Booking } from '../interfaces'

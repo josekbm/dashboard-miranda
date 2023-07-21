@@ -17,11 +17,10 @@ import {
   jobDescriptionChooser,
   roomInfoChooser,
 } from "../Features/otherFunctions";
-import { Dispatch, FormEvent, FormEventHandler, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 import {
   ReviewComment,
-  ReviewContainer,
   ReviewInfo,
 } from "./LastReviewsStyled";
 import { useAppDispatch } from "../app/hooks";

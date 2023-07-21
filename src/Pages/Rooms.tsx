@@ -16,7 +16,6 @@ import {
   DeleteButton,
 } from './RoomStyled'
 import Table from '../Components/Table'
-import { useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { deleteRoom, fetchRooms, getRoomsData } from '../Features/roomSlice'
 import { Link } from 'react-router-dom'

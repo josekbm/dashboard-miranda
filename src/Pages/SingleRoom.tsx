@@ -26,7 +26,6 @@ import {
     offerPriceCalc,
     roomInfoChooser,
   } from "../Features/otherFunctions";
-  import { Wrapper } from "../Components/LayoutStyled";
   import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
   import {
     Input,

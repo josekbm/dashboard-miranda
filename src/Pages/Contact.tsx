@@ -1,5 +1,4 @@
 import {useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { Select } from '../Components/Select'
 import { 
@@ -7,18 +6,13 @@ import {
   OptionsContainer,
   ButtonsContainer,
   RoomName,
-  RoomImg,
   RoomInfo,
   AddRoom,
-  OfferPrice,
   Available,
-  Booked,
-  Price,
   NoData,
   DeleteButton
 } from './RoomStyled'
 import Table from '../Components/Table'
-import contactData from "../Data/contactData.json"
 import { fetchContacts, getContactsData } from '../Features/contactSlice'
 import { Contact } from '../interfaces'
 
