@@ -4,8 +4,8 @@ export const ReviewSlider = styled(Slider)`
     width: 100%;
     margin-bottom: 2rem;
     padding: 1rem;
-    .slick-prev:before{
-      font-size: 20px;
+  .slick-prev:before{
+    font-size: 20px;
     font-family: "Courier";
     background-color: #25232346;
     display: flex;
@@ -17,7 +17,7 @@ export const ReviewSlider = styled(Slider)`
     height: 25px;
     position: absolute;
     left: 2px;
-    }
+  }
   .slick-next:before {
     font-size: 20px;
     font-family: "Courier";

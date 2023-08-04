@@ -28,7 +28,7 @@ export const TopBar = ({open, page, showSideBar}: TopBarProps) => {
     navigate("/Login");
   };
   const HandleMail = () => {
-    navigate("/Contact");
+    navigate("/Contacts");
   };
 
 

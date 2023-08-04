@@ -16,14 +16,14 @@ const initialState: BookingState = {
     bookingListData: [],
     status: "idle",
     singleBookingData: {
-        guest_name: "",
-        booking_id: "",
-        booking_date: "",
-        check_in: "",
-        check_out: "",
-        special_requests: "",
-        room_type: "",
-        status: "",
+        name: "",
+        id: "",
+        orderDate: "",
+        checkIn: "",
+        checkOut: "",
+        specialRequest: "",
+        room: "",
+        
     },
     singleBookingStatus: "idle",
 }
@@ -46,7 +46,7 @@ export const addBooking = createAsyncThunk<Booking, Booking>("bookings/addBookin
     })
 });
 
-export const getBooking = createAsyncThunk<Booking["booking_id"], Booking["booking_id"]>("bookings/getBooking", async (bookingId : Booking["booking_id"]) =>{
+export const getBooking = createAsyncThunk<Booking["id"], Booking["id"]>("bookings/getBooking", async (bookingId : Booking["id"]) =>{
     return await new Promise((resolve) => {
         setTimeout(() => {
           resolve(bookingId);
@@ -54,7 +54,7 @@ export const getBooking = createAsyncThunk<Booking["booking_id"], Booking["booki
     })
 })
 
-export const deleteBooking = createAsyncThunk<Booking["booking_id"], Booking["booking_id"]>('bookings/deleteBooking', async (bookingId: Booking["booking_id"]) => {
+export const deleteBooking = createAsyncThunk<Booking["id"], Booking["id"]>('bookings/deleteBooking', async (bookingId: Booking["id"]) => {
     return await new Promise((resolve) => {
         setTimeout(() => {
           resolve(bookingId);
@@ -97,8 +97,8 @@ const bookingSlice = createSlice({
         
 
         .addCase(addBooking.fulfilled, (state, action) => {
-            const lastId = parseInt(state.bookingListData[state.bookingListData.length - 1].booking_id.slice(2));
-            action.payload.booking_id = "B-" + (lastId + 1).toString().padStart(4, "0");
+            const lastId = parseInt(state.bookingListData[state.bookingListData.length - 1].id.slice(2));
+            action.payload.id = "B-" + (lastId + 1).toString().padStart(4, "0");
             state.bookingListData.push(action.payload);
             state.status = "fulfilled";
         })
@@ -106,7 +106,7 @@ const bookingSlice = createSlice({
 
         .addCase(deleteBooking.fulfilled, (state, action) => {
             state.bookingListData = state.bookingListData.filter(
-                (item) => item.booking_id !== action.payload
+                (item) => item.id !== action.payload
             );
             state.status = "fulfilled";
         })
@@ -126,7 +126,7 @@ const bookingSlice = createSlice({
         .addCase(editBooking.fulfilled, (state, action) => {
             state.status = "fulfilled";
             for (let i = 0; i < state.bookingListData.length; i++) {
-                if (state.bookingListData[i].booking_id === action.payload.booking_id) {
+                if (state.bookingListData[i].id === action.payload.id) {
                     state.bookingListData[i] = action.payload;
                     state.singleBookingData = action.payload;
                     return;

@@ -1,11 +1,12 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from "./Pages/Dashboard";
-import { Bookings } from "./Pages/Bookings";
-import { Contacts } from "./Pages/Contacts";
-import { Rooms } from "./Pages/Rooms";
-import { SingleRoom } from './Pages/SingleRoom';
-import { Users } from "./Pages/Users";
+import { Bookings } from "./Pages/bookings/Bookings";
+import { Contacts } from "./Pages/contacts/Contacts";
+import { Rooms } from "./Pages/rooms/Rooms";
+import { SingleRoom } from './Pages/rooms/SingleRoom';
+import { SingleUser } from './Pages/users/SingleUser';
+import { Users } from "./Pages/users/Users";
 import Login from "./Pages/Login";
 import { Layout } from "./Components/Layout";
 import './App.css';
@@ -26,9 +27,10 @@ function App() {
             <Route path="/" element={<Dashboard />} />            
             <Route path="/Bookings" element={<Bookings />} />
             <Route path="/Rooms" element={<Rooms />} />
-            <Route path="/SingleRoom" element={<SingleRoom />} />
+            <Route  path = "/Rooms/:id" element={<SingleRoom/>}/>
             <Route path="/Contacts" element={<Contacts />} />
             <Route path="/Users" element={<Users />} />
+            <Route  path = "/Users/:id" element={<SingleUser/>}/>
           </Route>      
       <Route path="/Login" element={<Login />} />
       </Routes>

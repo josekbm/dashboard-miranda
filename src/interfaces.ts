@@ -1,12 +1,12 @@
 export interface Booking {
-    guest_name: string;
-    booking_id: string;
-    booking_date: string;
-    check_in: string;
-    check_out: string;
-    special_requests: string;
-    room_type: string;
-    status: string;
+    name: string;
+    id: string;
+    orderDate: string;
+    checkIn: string;
+    checkOut: string;
+    specialRequest: string;
+    room: string;
+   
 }
 
 export interface User{

@@ -146,13 +146,13 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         setFieldError("You have to enter all inputs!");
       } else {
         const booking = {
-            guest_name: "",
-            booking_id: "",
-            booking_date: "",
-            check_in: "",
-            check_out: "",
-            special_requests: "",
-            room_type: "",
+            name: "",
+            id: "",
+            orderDate: "",
+            checkIn: "",
+            checkOut: "",
+            specialRequest: "",
+            room: "",
             status: "",
         };
         console.log(booking);
@@ -191,7 +191,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           discount: discount,
           status: roomStatus,
           amenities: roomInfoChooser(roomType).amenities,
-          cancellation: roomInfoChooser(roomType).cancelattion,
+          cancellation: roomInfoChooser(roomType).cancellation,
           thumbnail: roomInfoChooser(roomType).thumbnail,
           description: description,
           images: roomInfoChooser(roomType).images,
@@ -612,11 +612,11 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
               />
             </ModalCloseRow>
            
-              <ReviewComment>{targetBooking.special_requests}</ReviewComment>
+              <ReviewComment>{targetBooking.specialRequest}</ReviewComment>
               <ReviewInfo>
                 <div>
-                  <h4>{targetBooking.guest_name}</h4>
-                  <p>{dateConverter(targetBooking.booking_date).date}</p>
+                  <h4>{targetBooking.name}</h4>
+                  <p>{dateConverter(targetBooking.orderDate).date}</p>
                 </div>
               </ReviewInfo>
             
