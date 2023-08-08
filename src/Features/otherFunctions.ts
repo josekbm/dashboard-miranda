@@ -1,5 +1,6 @@
 import { Booking } from "../interfaces";
 import rooms from "../Data/roomsData.json"
+import users from "../Data/usersData.json"
 
 type data = Booking | Booking[] 
 export function delay(data: data, time = 1000) {
@@ -164,6 +165,12 @@ export const roomInfoChooser = (roomType: string) => {
 export const maxCharString = (string :string, maxChar: number) =>{
   return string.slice(0, maxChar) +"..."
 }
+
+export const searchObjectByEmailAndPassword = (email: string, password: string) => {
+  return users.find(
+    (object) => object.email === email && object.password === password
+  );
+};
 
 export const searchBookingRoom = (roomId: string) => {
   const room = rooms.find(

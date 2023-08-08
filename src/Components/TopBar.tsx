@@ -25,11 +25,9 @@ export const TopBar = ({open, page, showSideBar}: TopBarProps) => {
     event.preventDefault()
     logout.dispatch({type: 'logout'})
     // Redirigir al usuario a la página de inicio de sesión
-    navigate("/Login");
+    navigate("/login");
   };
-  const HandleMail = () => {
-    navigate("/Contacts");
-  };
+  
 
 
   if (open) {
@@ -42,7 +40,7 @@ export const TopBar = ({open, page, showSideBar}: TopBarProps) => {
           </NavItemContainer>
           <NavItemContainer>
             <HiOutlineBell />
-            <HiOutlineMail onClick={HandleMail}/>
+            <HiOutlineMail />
             <HiOutlineLogout onClick={HandleLogout} data-testid="logout__button"/>
           </NavItemContainer>
         </Nav>
@@ -58,7 +56,7 @@ export const TopBar = ({open, page, showSideBar}: TopBarProps) => {
           </NavItemContainer>
           <NavItemContainer>
             <HiOutlineBell />
-            <HiOutlineMail onClick={HandleMail}/>
+            <HiOutlineMail />
             <HiOutlineLogout onClick={HandleLogout} data-testid="logout__button"/>
           </NavItemContainer>
         </Nav>

@@ -1,13 +1,13 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/bookings/Bookings";
 import { Contacts } from "./Pages/contacts/Contacts";
 import { Rooms } from "./Pages/rooms/Rooms";
-import { SingleRoom } from './Pages/rooms/SingleRoom';
-import { SingleUser } from './Pages/users/SingleUser';
 import { Users } from "./Pages/users/Users";
-import Login from "./Pages/Login";
+import { SingleRoom } from './Pages/rooms/SingleRoom';
+import { SingleBooking } from './Pages/bookings/SingleBooking';
+import { SingleUser } from './Pages/users/SingleUser';
+import Login from "./Pages/login/Login";
 import { Layout } from "./Components/Layout";
 import './App.css';
 import LoginProvider from './context/LoginProvider';
@@ -15,7 +15,6 @@ import RequiredAuth from './context/RequiredAuth';
 
 function App() {
   
-
     
   return (
     
@@ -25,12 +24,13 @@ function App() {
       <Routes>        
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />            
-            <Route path="/Bookings" element={<Bookings />} />
-            <Route path="/Rooms" element={<Rooms />} />
-            <Route  path = "/Rooms/:id" element={<SingleRoom/>}/>
-            <Route path="/Contacts" element={<Contacts />} />
-            <Route path="/Users" element={<Users />} />
-            <Route  path = "/Users/:id" element={<SingleUser/>}/>
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/bookings/:id" element={<SingleBooking />} />
+            <Route path="/rooms" element={<Rooms />} />
+            <Route path="/rooms/:id" element={<SingleRoom />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<SingleUser />} />
           </Route>      
       <Route path="/Login" element={<Login />} />
       </Routes>
@@ -38,10 +38,8 @@ function App() {
     </BrowserRouter>
     </LoginProvider>
     
-
     
     
   );
 }
-
 export default App;

@@ -5,28 +5,27 @@ import { RootState } from '../app/store';
 
 const bookingsList = bookings as Booking[];
 
-interface BookingState {
+export interface BookingsState {
     bookingListData: Booking[];
     status: string;
-    singleBookingData: Booking;
+    singleBookingData: Booking | undefined;
     singleBookingStatus: string;
-}
-
-const initialState: BookingState = {
+  }
+  
+  const initialState: BookingsState = {
     bookingListData: [],
     status: "idle",
     singleBookingData: {
-        name: "",
-        id: "",
-        orderDate: "",
-        checkIn: "",
-        checkOut: "",
-        specialRequest: "",
-        room: "",
-        
+      name: "" ,
+      id: "",
+      orderDate: "",
+      checkIn: "",
+      checkOut: "",
+      room: "",
+      specialRequest: "",
     },
     singleBookingStatus: "idle",
-}
+  };
 
 //Async Thunks :
 
@@ -79,65 +78,74 @@ export const getSingleBookingStatus = (state: RootState) => state.bookings.singl
 
 
 const bookingSlice = createSlice({
-    name: "bookingList",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-        .addCase(fetchBookings.rejected, (state) => {
-            state.status = "rejected";
-        })
-        .addCase(fetchBookings.pending, (state) => {
-            state.status = "pending";
-        })
-        .addCase(fetchBookings.fulfilled, (state, action) => {
-            state.bookingListData = action.payload;
-            state.status = "fulfilled";
-        })
-        
+  name: "bookings",
+  initialState,
+  reducers: {},
 
-        .addCase(addBooking.fulfilled, (state, action) => {
-            const lastId = parseInt(state.bookingListData[state.bookingListData.length - 1].id.slice(2));
-            action.payload.id = "B-" + (lastId + 1).toString().padStart(4, "0");
-            state.bookingListData.push(action.payload);
-            state.status = "fulfilled";
-        })
-        
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBookings.rejected, (state) => {
+        state.status = "rejected";
+      })
+      .addCase(fetchBookings.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(
+        fetchBookings.fulfilled,
+        (state, action) => {
+          state.bookingListData = action.payload;
+          state.status = "fulfilled";
+        }
+      )
 
-        .addCase(deleteBooking.fulfilled, (state, action) => {
-            state.bookingListData = state.bookingListData.filter(
-                (item) => item.id !== action.payload
-            );
-            state.status = "fulfilled";
-        })
-        .addCase(deleteBooking.pending, (state, action) => {
-            state.status = "pending";
-        })
+      .addCase(
+        addBooking.fulfilled,
+        (state, action) => {
+          const lastId = parseInt(
+            state.bookingListData[state.bookingListData.length - 1].id.slice(2)
+          );
+          action.payload.id = "B-" + (lastId + 1).toString().padStart(4, "0");
+          state.bookingListData.push(action.payload);
+          state.status = "fulfilled";
+        }
+      )
 
-        /*.addCase(getBooking.fulfilled, (state, action) => {
-            state.singleBookingData = state.bookingListData.find((booking: Booking) => booking.booking_id === action.payload);
-            state.singleBookingStatus = "fulfilled";
-        })*/
+      .addCase(deleteBooking.fulfilled, (state, action) => {
+        state.bookingListData = state.bookingListData.filter(
+          (item) => item.id !== action.payload
+        );
+        state.status = "fulfilled";
+      })
+      .addCase(deleteBooking.pending, (state, action) => {
+        state.status = "pending";
+      })
 
-        .addCase(getBooking.pending, (state) => {
-            state.singleBookingStatus = "pending";
-        })
+      .addCase(getBooking.fulfilled, (state, action) => {
+        state.singleBookingData = state.bookingListData.find(
+          (booking: Booking) => booking.id === action.payload
+        );
+        state.singleBookingStatus = "fulfilled";
+      })
 
-        .addCase(editBooking.fulfilled, (state, action) => {
-            state.status = "fulfilled";
-            for (let i = 0; i < state.bookingListData.length; i++) {
-                if (state.bookingListData[i].id === action.payload.id) {
-                    state.bookingListData[i] = action.payload;
-                    state.singleBookingData = action.payload;
-                    return;
-                }
-            }
-        })
+      .addCase(getBooking.pending, (state) => {
+        state.singleBookingStatus = "pending";
+      })
 
-        .addCase(editBooking.pending, (state) => {
-            state.status = "pending";
-        });
-    },
+      .addCase(editBooking.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        for (let i = 0; i < state.bookingListData.length; i++) {
+          if (state.bookingListData[i].id === action.payload.id) {
+            state.bookingListData[i] = action.payload;
+            state.singleBookingData = action.payload;
+            return;
+          }
+        }
+      })
+
+      .addCase(editBooking.pending, (state) => {
+        state.status = "pending";
+      });
+  },
 });
 
 

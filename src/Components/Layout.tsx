@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useMatch } from "react-router-dom";
 import { TopBar } from "./TopBar";
 import { useState } from "react";
 import { SideBar } from "./Sidebar";
@@ -6,7 +6,9 @@ import { Container, Content, LeftMenu, RightSection } from "./LayoutStyled";
 
 export const Layout = () => {
   let location = useLocation();
-  
+  let roomMatch = useMatch("/rooms/:id");
+  let bookingMatch = useMatch("/bookings/:bookingId");
+  let userMatch = useMatch("/users/:id");
 
   let title = "";
   const [open, setOpen] = useState(true);
@@ -14,17 +16,21 @@ export const Layout = () => {
   const titleChooser = () => {
     if (location.pathname === "/") {
       title = "Dashboard";
-    } else if (location.pathname === "/Contacts") {
+    } else if (location.pathname === "/contact") {
       title = "Contacts";
-    } else if (location.pathname === "/Rooms") {
+    } else if (location.pathname === "/rooms") {
       title = "Rooms";
-    } else if (location.pathname === "/NewRoom") {
-      title = "New Room";
-    } else if (location.pathname === "/Bookings") {
+    } else if (location.pathname === "/bookings") {
       title = "Bookings";
-    } else if (location.pathname === "/Users") {
+    } else if (location.pathname === "/users") {
       title = "Users";
-    } 
+    } else if (userMatch != null && location.pathname === userMatch.pathname) {
+      title = "User";
+    } else if (bookingMatch != null && location.pathname === bookingMatch.pathname) {
+      title = "Booking details";
+    } else if (roomMatch != null && location.pathname === roomMatch.pathname) {
+      title = "Room details";
+    }
 
     return title;
   };

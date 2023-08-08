@@ -5,7 +5,7 @@ import userSlice from '../Features/userSlice';
 import contactSlice from '../Features/contactSlice';
 
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     rooms: roomSlice,
     bookings: bookingSlice,

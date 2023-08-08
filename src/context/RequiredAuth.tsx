@@ -8,8 +8,8 @@ const RequiredAuth: React.FC<{children: any}> = ({children}) => {
 
     const location = useLocation();
     
-    if(!auth.user.isLogged && location.pathname!=="/Login"){
-        return <Navigate to="/Login"/>
+    if(!auth.user.isLogged && location.pathname!=="/login"){
+        return <Navigate to="/login"/>
     }
 
     return children

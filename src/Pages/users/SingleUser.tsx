@@ -1,7 +1,7 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Card, CardContainer, CardTitle, UserImage, CardItem, CardSeparator, TitleRow, FeaturesRow, CardHeader, CloseIcon } from "../../Components/CardStyled";
+import { Card, CardContainer, CardTitle, UserImage, CardItem, CardSeparator, TitleRow, FeaturesRow, CardHeader, CloseIcon, } from "../../Components/CardStyled";
 import { useEffect, useState } from "react";
-import { editUser, getUser, getSingleUserStatus, getUsersSingle, getUsersStatus, } from "../../Features/userSlice";
+import { editUser, getUser, getSingleUserStatus, getUsersSingle, getUsersStatus } from "../../Features/userSlice";
 import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
 import { Button } from "../../Components/Button";
 import { Input, Label, RadioInput } from "../../Components/FormStyled";
@@ -66,11 +66,11 @@ export const SingleUser = () => {
         state: userState,
         jobDescription: jobDescriptionChooser(userPosition),
         password: userPassword,
-    }
-    dispatch(editUser(user));
-    dispatch(getUser(user.id));
-    console.log(getUserData);
-    setEdit(false);
+      }
+      dispatch(editUser(user));
+      dispatch(getUser(user.id));
+      console.log(getUserData);
+      setEdit(false);
     }
   }
   };
@@ -301,7 +301,7 @@ export const SingleUser = () => {
   } else {
     return (
       <>
-        <Navigate to="error" />
+        <Navigate to="/" />
       </>
     );
   }
