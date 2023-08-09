@@ -18,12 +18,12 @@ let toastMSG = (msg = "Wrong User") => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    })
+  })
 } 
 
-/*const loginApi = async(mail: String,password: String) => {
+const loginApi = async(mail: String,password: String) => {
   try{
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/login`,{
+      const response = await fetch(`${process.env.REACT_APP_API_URL}login`,{
           method: 'POST',
           mode: 'cors',
           body: JSON.stringify({email: mail, password: password}),
@@ -38,12 +38,12 @@ let toastMSG = (msg = "Wrong User") => {
   }catch(e){
       console.log(e)
   }
-}*/
+}
 
 
 
 
-export function Login ()  {
+export function Login (props: any)  {
   const login = useLogin()
   const [mail, setMail] = useState("");
   const [pass, setPass] = useState("");
@@ -54,9 +54,19 @@ export function Login ()  {
     }
   })
 
-  const handleForm = (event: React.ChangeEvent<HTMLInputElement & HTMLFormElement>) =>{
+  const handleForm = async (event: React.ChangeEvent<HTMLInputElement & HTMLFormElement>) =>{
     event.preventDefault();
-    login.dispatch({type: 'login', user: {mail,pass}})
+    if(mail===""){
+      return toastMSG("Empty Email")
+    }
+    if(pass===""){
+      return toastMSG("Empty Password")
+    }
+    const token  = await loginApi(mail,pass)
+    if(!token){
+      return toastMSG("There's no Token!")
+    }
+    login.dispatch({type: 'login', user: {mail,pass,token}})
     setTimeout(() => {
       if(localStorage.getItem("user")){
         

@@ -2,61 +2,47 @@ import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
 import rooms from '../Data/roomsData.json'
 import { Room } from '../interfaces';
 import { RootState } from "../app/store";
+import { CrossFetch } from './API';
 
 const roomsList = rooms as Room[];
 
 export const fetchRooms = createAsyncThunk<Room[], void>(
   "rooms/fetchRooms",
   async () => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(roomsList);
-      }, 200);
-    });
+    const res=  await CrossFetch(`rooms`, "GET", undefined);
+    return await res.data
   }
 );
 
 export const addRoom = createAsyncThunk<Room, Room>(
   "rooms/addRoom",
   async (roomObject: Room) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(roomObject);
-      }, 200);
-    });
+    const res=  await CrossFetch(`rooms`, "POST",  JSON.stringify(roomObject));
+    return await res.data
   }
 );
 
 export const getRoom = createAsyncThunk<Room["id"], Room["id"]>(
   "rooms/getRoom",
   async (roomId: Room["id"]) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(roomId);
-      }, 200);
-    });
+    const res=  await CrossFetch(`rooms/${roomId}`, "GET", undefined);
+    return await res.data
   }
 );
 
 export const deleteRoom = createAsyncThunk<Room["id"], Room["id"]>(
   "rooms/deleteRooms",
   async (roomId: Room["id"]) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(roomId);
-      }, 200);
-    });
+    const res=  await CrossFetch(`rooms/${roomId}`, "DELETE", undefined);
+    return await res.data
   }
 );
 
 export const editRoom = createAsyncThunk<Room, Room>(
   "rooms/editRoom",
   async (updatedRoomObject: Room) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(updatedRoomObject);
-      }, 200);
-    });
+    const res=  await CrossFetch(`rooms/${updatedRoomObject.id}`, "PUT", JSON.stringify(updatedRoomObject));
+    return await res.data
   }
 );
 

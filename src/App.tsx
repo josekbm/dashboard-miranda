@@ -32,7 +32,7 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/users/:id" element={<SingleUser />} />
           </Route>      
-      <Route path="/Login" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       </Routes>
       </RequiredAuth>
     </BrowserRouter>

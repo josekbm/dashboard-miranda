@@ -10,6 +10,7 @@ import { Button } from "../../Components/Button";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export const SingleRoom = () => {
+  
   const roomId = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -27,20 +28,19 @@ export const SingleRoom = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    if (singleRoomStatus === "idle" ) {
-      if(singleRoomData && roomId){
-        if (roomId.id !== singleRoomData.id) {
+    if(singleRoomData && roomId){
+      if (roomId.id !== singleRoomData.id) {
           dispatch(getRoom(roomId.id as string));
-        }
       }
     }
+    
     if(singleRoomData){
-    setRoomType(singleRoomData.roomType);
-    setRoomNumber(singleRoomData.roomNumber);
-    setPrice(singleRoomData.price);
-    setDiscount(singleRoomData.discount);
-    setStatus(singleRoomData.status);
-    setDescription(singleRoomData.description);
+      setRoomType(singleRoomData.roomType);
+      setRoomNumber(singleRoomData.roomNumber);
+      setPrice(singleRoomData.price);
+      setDiscount(singleRoomData.discount);
+      setStatus(singleRoomData.status);
+      setDescription(singleRoomData.description);
     }
     
   }, [dispatch, singleRoomStatus, roomId, singleRoomData]);

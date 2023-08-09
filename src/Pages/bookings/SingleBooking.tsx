@@ -26,52 +26,52 @@ const [specialRequest, setSpecialRequest] = useState("");
 
 const [edit, setEdit] = useState(false);
 
-useEffect(() => {
-    if (singleBookingStatus === "idle") {
-    if(bookingData && bookingId){
-        if (bookingId.id !== bookingData.id) {
-        dispatch(getBooking(bookingId.id as string));
+    useEffect(() => {
+
+        if(bookingData && bookingId){
+            if (bookingId.id !== bookingData.id) {
+                dispatch(getBooking(bookingId.id as string));
+            }
         }
-    }
-    }
-    if(bookingData){
-    setGuestName(bookingData.name);
-    setOrderDate(bookingData.orderDate);
-    setRoomId(bookingData.room);
-    setCheckIn(bookingData.checkIn);
-    setCheckOut(bookingData.checkOut);
-    setSpecialRequest(bookingData.specialRequest);
-    }
-}, [dispatch, singleBookingStatus, bookingId.id, bookingData]);
+
+        if(bookingData){
+            setGuestName(bookingData.name);
+            setOrderDate(bookingData.orderDate);
+            setRoomId(bookingData.room);
+            setCheckIn(bookingData.checkIn);
+            setCheckOut(bookingData.checkOut);
+            setSpecialRequest(bookingData.specialRequest);
+        }
+    }, [dispatch, singleBookingStatus, bookingId.id, bookingData]);
 
 
-const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if(guestName=== "" || checkIn ==="" || checkOut=== "" || orderDate==="" ||  roomId===""){
-    setFieldError("You have to enter all inputs!")
-    console.log(searchBookingRoom(roomId))
-    
-} if(!searchBookingRoom(roomId)){
-    setFieldError("The room you've entered does not exists!")
-}  else {
-    if(bookingData){
-    const booking = {
-        id: bookingData.id,
-        name: guestName,
-        checkIn: checkIn,
-        checkOut: checkOut,
-        orderDate: orderDate,
-        specialRequest: specialRequest,
-        room: roomId,
-    }
-    console.log(booking);
-    dispatch(editBooking(booking));
-    dispatch(getBooking(booking.id))
-    setEdit(false);
-    setFieldError("");
-    } 
-} 
-};
+    const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(guestName=== "" || checkIn ==="" || checkOut=== "" || orderDate==="" ||  roomId===""){
+            setFieldError("You have to enter all inputs!")
+            console.log(searchBookingRoom(roomId))
+        
+        }if(!searchBookingRoom(roomId)){
+            setFieldError("The room you've entered does not exists!")
+        }else {
+            if(bookingData){
+                const booking = {
+                    id: bookingData.id,
+                    name: guestName,
+                    checkIn: checkIn,
+                    checkOut: checkOut,
+                    orderDate: orderDate,
+                    specialRequest: specialRequest,
+                    room: roomId,
+                }
+                console.log(booking);
+                dispatch(editBooking(booking));
+                dispatch(getBooking(booking.id))
+                setEdit(false);
+                setFieldError("");
+            } 
+        } 
+    };
 
 
 

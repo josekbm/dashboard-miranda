@@ -2,6 +2,7 @@ import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
 import users from '../Data/usersData.json'
 import { User } from '../interfaces';
 import { RootState } from '../app/store';
+import { CrossFetch } from './API';
 
 
 const usersList = users as User[];
@@ -9,55 +10,56 @@ const usersList = users as User[];
 export const fetchUsers = createAsyncThunk<User[], void>(
   "users/fetchUsers ",
   async () => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(usersList);
-      }, 200);
-    });
+    const res = await CrossFetch("users", "GET", null);
+    return res.data
   }
 );
 
 export const addUser = createAsyncThunk<User, User>(
   "users/addUser ",
   async (userObject: User) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(userObject);
-      }, 200);
-    });
+    const res = await CrossFetch(
+      "api/users/",
+      "POST",
+      JSON.stringify(userObject)
+    );
+    return await res.data;
   }
 );
 
 export const getUser = createAsyncThunk<User["id"], User["id"]>(
   "users/getUser ",
   async (userId: User["id"]) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(userId);
-      }, 200);
-    });
+    const res = await CrossFetch(`users/${userId}`, "GET", undefined);
+    return await res.data;
   }
 );
 
 export const deleteUser = createAsyncThunk<User["id"], User["id"]>(
   "users/deleteUser",
   async (userId: User["id"]) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(userId);
-      }, 200);
-    });
+    const res = await CrossFetch(`users/${userId}`, "DELETE", undefined);
+    return await res.data;
   }
 );
 
 export const editUser = createAsyncThunk<User, User>(
   "users/editUser",
   async (updatedUserObject: User) => {
-    return await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(updatedUserObject);
-      }, 200);
-    });
+    const res = await CrossFetch(
+      `users/${updatedUserObject.id}`,
+      "PUT",
+      JSON.stringify(updatedUserObject)
+    );
+    return await res.data;
+  }
+);
+
+export const getLoggedUser = createAsyncThunk<User["id"], User["id"]>(
+  "users/getLoggedUser ",
+  async (userId: User["id"]) => {
+    const res = await CrossFetch(`users/${userId}`, "GET", undefined);
+    return await res.data;
   }
 );
 

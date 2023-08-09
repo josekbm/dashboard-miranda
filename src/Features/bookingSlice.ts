@@ -1,86 +1,89 @@
-import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
-import bookings from '../Data/bookingsData.json'
-import { Booking } from '../interfaces';
-import { RootState } from '../app/store';
-
-const bookingsList = bookings as Booking[];
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Booking } from "../interfaces";
+import { CrossFetch } from "./API";
+import { RootState } from "../app/store";
 
 export interface BookingsState {
-    bookingListData: Booking[];
-    status: string;
-    singleBookingData: Booking | undefined;
-    singleBookingStatus: string;
-  }
-  
-  const initialState: BookingsState = {
-    bookingListData: [],
-    status: "idle",
-    singleBookingData: {
-      name: "" ,
-      id: "",
-      orderDate: "",
-      checkIn: "",
-      checkOut: "",
-      room: "",
-      specialRequest: "",
-    },
-    singleBookingStatus: "idle",
-  };
+  bookingListData: Booking[];
+  status: string;
+  singleBookingData: Booking | undefined;
+  singleBookingStatus: string;
+}
+
+const initialState: BookingsState = {
+  bookingListData: [],
+  status: "idle",
+  singleBookingData: {
+    name: "",
+    id: "",
+    orderDate: "",
+    checkIn: "",
+    checkOut: "",
+    room: "",
+    specialRequest: "",
+  },
+  singleBookingStatus: "idle",
+};
 
 //Async Thunks :
 
-export const fetchBookings = createAsyncThunk<Booking[], void>("bookings/fetchBookings", async () => {
-    return await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(bookingsList);
-        }, 200);
-    })
-});
+export const fetchBookings = createAsyncThunk(
+  "bookings/fetchBookings",
+  async () => {
+    const res = await CrossFetch("bookings", "GET", null);
+    return res.data;
+  }
+);
 
-export const addBooking = createAsyncThunk<Booking, Booking>("bookings/addBooking", async (bookingObject :Booking) => {
-    return await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(bookingObject);
-        }, 200);
-    })
-});
+export const addBooking = createAsyncThunk(
+  "bookings/addBooking",
+  async (bookingObject: Booking) => {
+    const res = await CrossFetch(
+      "bookings/",
+      "POST",
+      JSON.stringify(bookingObject)
+    );
+    return await res.data;
+  }
+);
 
-export const getBooking = createAsyncThunk<Booking["id"], Booking["id"]>("bookings/getBooking", async (bookingId : Booking["id"]) =>{
-    return await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(bookingId);
-        }, 200);
-    })
-})
+export const getBooking = createAsyncThunk(
+  "bookings/getBooking",
+  async (bookingId: Booking["id"]) => {
+    const res = await CrossFetch(`bookings/${bookingId}`, "GET", undefined);
+    return res.data;
+  }
+);
 
-export const deleteBooking = createAsyncThunk<Booking["id"], Booking["id"]>('bookings/deleteBooking', async (bookingId: Booking["id"]) => {
-    return await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(bookingId);
-        }, 200);
-    })
-});
+export const deleteBooking = createAsyncThunk(
+  "bookings/deleteBooking",
+  async (bookingId: Booking["id"]) => {
+    const res = await CrossFetch(`bookings/${bookingId}`, "DELETE", undefined);
+    return await res.data;
+  }
+);
 
-export const editBooking = createAsyncThunk<Booking, Booking>("bookings/editBooking", async (updatedBookingObject: Booking)=>{
-    return await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(updatedBookingObject);
-        }, 200);
-    })
-})
-
-
-export const getBookingsStatus = (state: RootState) => state.bookings.status;
-export const getBookingsData = (state: RootState) => state.bookings.bookingListData;
-export const getSingleBooking = (state: RootState) => state.bookings.singleBookingData;
-export const getSingleBookingStatus = (state: RootState) => state.bookings.singleBookingStatus;
-
-
+export const editBooking = createAsyncThunk(
+  "bookings/editBooking",
+  async (updatedBookingObject: Booking) => {
+    const res = await CrossFetch(
+      `api/bookings/${updatedBookingObject.id}`,
+      "PUT",
+      JSON.stringify(updatedBookingObject)
+    );
+    return await res.data;
+  }
+);
 
 const bookingSlice = createSlice({
   name: "bookings",
   initialState,
-  reducers: {},
+  reducers: {
+    resetBookingsState(state) {
+      state.bookingListData = [];
+      state.status = "idle";
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -90,25 +93,19 @@ const bookingSlice = createSlice({
       .addCase(fetchBookings.pending, (state) => {
         state.status = "pending";
       })
-      .addCase(
-        fetchBookings.fulfilled,
-        (state, action) => {
-          state.bookingListData = action.payload;
-          state.status = "fulfilled";
-        }
-      )
+      .addCase(fetchBookings.fulfilled, (state, action) => {
+        state.bookingListData = action.payload;
+        state.status = "fulfilled";
+      })
 
-      .addCase(
-        addBooking.fulfilled,
-        (state, action) => {
-          const lastId = parseInt(
-            state.bookingListData[state.bookingListData.length - 1].id.slice(2)
-          );
-          action.payload.id = "B-" + (lastId + 1).toString().padStart(4, "0");
-          state.bookingListData.push(action.payload);
-          state.status = "fulfilled";
-        }
-      )
+      .addCase(addBooking.fulfilled, (state, action) => {
+        const lastId = parseInt(
+          state.bookingListData[state.bookingListData.length - 1].id.slice(2)
+        );
+        action.payload.id = "B-" + (lastId + 1).toString().padStart(4, "0");
+        state.bookingListData.push(action.payload);
+        state.status = "fulfilled";
+      })
 
       .addCase(deleteBooking.fulfilled, (state, action) => {
         state.bookingListData = state.bookingListData.filter(
@@ -144,10 +141,20 @@ const bookingSlice = createSlice({
 
       .addCase(editBooking.pending, (state) => {
         state.status = "pending";
+      })
+      .addCase(editBooking.rejected, (state) => {
+        state.singleBookingStatus = "rejected";
       });
   },
 });
 
+export const getBookingsStatus = (state: RootState) => state.bookings.status;
+export const getBookingsData = (state: RootState) =>
+  state.bookings.bookingListData;
+export const getSingleBooking = (state: RootState) =>
+  state.bookings.singleBookingData;
+export const getSingleBookingStatus = (state: RootState) =>
+  state.bookings.singleBookingStatus;
+export const { resetBookingsState } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
-

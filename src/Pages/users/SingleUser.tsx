@@ -1,7 +1,24 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Card, CardContainer, CardTitle, UserImage, CardItem, CardSeparator, TitleRow, FeaturesRow, CardHeader, CloseIcon, } from "../../Components/CardStyled";
+import {
+  Card,
+  CardContainer,
+  CardTitle,
+  UserImage,
+  CardItem,
+  CardSeparator,
+  TitleRow,
+  FeaturesRow,
+  CardHeader,
+  CloseIcon,
+} from "../../Components/CardStyled";
 import { useEffect, useState } from "react";
-import { editUser, getUser, getSingleUserStatus, getUsersSingle, getUsersStatus } from "../../Features/userSlice";
+import {
+  editUser,
+  getUser,
+  getSingleUserStatus,
+  getUsersSingle,
+  getUsersStatus,
+} from "../../Features/userSlice";
 import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
 import { Button } from "../../Components/Button";
 import { Input, Label, RadioInput } from "../../Components/FormStyled";
@@ -29,50 +46,58 @@ export const SingleUser = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    if (getUserStatus === "idle") {
-      if(getUserData && userId){
-        if (userId.id !== getUserData.id) {
-          dispatch(getUser(userId.id as string));
-        }
+    
+    if (getUserData && userId) {
+      if (userId.id !== getUserData.id) {
+        dispatch(getUser(userId.id as string));
       }
-      
     }
-    if(getUserData){
+
+    if (getUserData) {
       setUserImage(getUserData.photo);
       setUserEmail(getUserData.email);
       setUserName(getUserData.name);
       setUserPosition(getUserData.position);
       setUserState(getUserData.state);
-      setUserPhone(getUserData.phone)
-      setUserStartDate(getUserData.startDate)
-      setUserPassword(getUserData.password)
+      setUserPhone(getUserData.phone);
+      setUserStartDate(getUserData.startDate);
+      setUserPassword(getUserData.password);
     }
   }, [dispatch, getStatus, getUserStatus, userId.id, getUserData]);
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement> ) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(userEmail=== "" || userImage ==="" || userName=== "" || userPosition==="" || userStartDate==="" || userState==="" || userPhone==="" || userPassword=== ""){
-      setFieldError("You have to enter all inputs!")
-  } else {
-    if(getUserData){
-      const user = {
-        id: getUserData.id,
-        photo: userImage,
-        name: userName,
-        position: userPosition,
-        email: userEmail,
-        phone: userPhone,
-        startDate: userStartDate,
-        state: userState,
-        jobDescription: jobDescriptionChooser(userPosition),
-        password: userPassword,
+    if (
+      userEmail === "" ||
+      userImage === "" ||
+      userName === "" ||
+      userPosition === "" ||
+      userStartDate === "" ||
+      userState === "" ||
+      userPhone === "" ||
+      userPassword === ""
+    ) {
+      setFieldError("You have to enter all inputs!");
+    } else {
+      if (getUserData) {
+        const user = {
+          id: getUserData.id,
+          photo: userImage,
+          name: userName,
+          position: userPosition,
+          email: userEmail,
+          phone: userPhone,
+          startDate: userStartDate,
+          state: userState,
+          jobDescription: jobDescriptionChooser(userPosition),
+          password: userPassword,
+        };
+        dispatch(editUser(user));
+        dispatch(getUser(user.id));
+        console.log(getUserData);
+        setEdit(false);
       }
-      dispatch(editUser(user));
-      dispatch(getUser(user.id));
-      console.log(getUserData);
-      setEdit(false);
     }
-  }
   };
 
   if (getUserData) {
@@ -160,22 +185,21 @@ export const SingleUser = () => {
                 />
               </CardHeader>
               <form onSubmit={onSubmitHandler}>
-                
-                  <FeaturesRow>
-                    <Input>
-                      <h6>Image Link</h6>
-                      <input
-                        type="link"
-                        name="image"
-                        value={userImage}
-                        onInput={(e) => {
-                          setUserImage(e.currentTarget.value);
-                        }}
-                      />
-                    </Input>
-                  </FeaturesRow>
-                  <FeaturesRow>
-                    <CardItem>
+                <FeaturesRow>
+                  <Input>
+                    <h6>Image Link</h6>
+                    <input
+                      type="link"
+                      name="image"
+                      value={userImage}
+                      onInput={(e) => {
+                        setUserImage(e.currentTarget.value);
+                      }}
+                    />
+                  </Input>
+                </FeaturesRow>
+                <FeaturesRow>
+                  <CardItem>
                     <Input>
                       <h6>Name</h6>
                       <input
@@ -187,10 +211,10 @@ export const SingleUser = () => {
                         }}
                       />
                     </Input>
-                    </CardItem>
-                   <CardItem>
-                   <Input>
-                     <h6>Position</h6>
+                  </CardItem>
+                  <CardItem>
+                    <Input>
+                      <h6>Position</h6>
                       <select
                         name="position"
                         defaultValue={userPosition}
@@ -203,10 +227,9 @@ export const SingleUser = () => {
                         <option>Room Service</option>
                       </select>
                     </Input>
-                   </CardItem>
-                   
-                  </FeaturesRow>
-                
+                  </CardItem>
+                </FeaturesRow>
+
                 <FeaturesRow>
                   <CardItem>
                     <Input>
@@ -250,14 +273,14 @@ export const SingleUser = () => {
                     </Input>
                   </CardItem>
                   <CardItem>
-                    <RadioInput >
+                    <RadioInput>
                       <h6>Status</h6>
                       <Label active htmlFor="state">
                         <input
                           type="radio"
                           name="state"
                           value="ACTIVE"
-                          defaultChecked={userState=== "ACTIVE" ? true : false}
+                          defaultChecked={userState === "ACTIVE" ? true : false}
                           onChange={(e) => {
                             setUserState(e.target.value);
                           }}
@@ -269,7 +292,9 @@ export const SingleUser = () => {
                           type="radio"
                           name="state"
                           value="INACTIVE"
-                          defaultChecked={userState=== "INACTIVE" ? true : false}
+                          defaultChecked={
+                            userState === "INACTIVE" ? true : false
+                          }
                           onChange={(e) => {
                             setUserState(e.target.value);
                           }}
@@ -282,13 +307,20 @@ export const SingleUser = () => {
                 <FeaturesRow>
                   <CardItem>
                     <Input>
-                    <h6>Password</h6>
-                    <input type="password" defaultValue={userPassword} name="password" onInput= {(e)=>{setUserPassword(e.currentTarget.value)}}/>
+                      <h6>Password</h6>
+                      <input
+                        type="password"
+                        defaultValue={userPassword}
+                        name="password"
+                        onInput={(e) => {
+                          setUserPassword(e.currentTarget.value);
+                        }}
+                      />
                     </Input>
                   </CardItem>
                 </FeaturesRow>
                 <CardSeparator />
-               
+
                 <FeaturesRow>
                   <Button>Save</Button>
                 </FeaturesRow>
