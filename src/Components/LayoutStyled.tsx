@@ -14,7 +14,6 @@ export const Container = styled.div`
 export const LeftMenu = styled.div<LayoutProps>`
  display: inline-block;
  width: 300px;
- 
  ${props => !props.open && css`
     display: none;
 `}
@@ -31,10 +30,9 @@ display: flex;
 align-items: center;
 flex-direction: column;
 background-color: #00000005;
-padding: 3% 5%;
+padding: 3% 30px;
 height: calc(100% - 100px);
 position: relative;
-
 `
 
 export const Wrapper = styled.div`

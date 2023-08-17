@@ -14,12 +14,15 @@ export const CrossFetch = async (
     }
     const response = await fetch(`${url}${endpoint}`, {
       method: method,
+      mode: 'cors',
       headers: {
-        "Authorization": `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: jsonBody,
+      
     });
+    
 
     const data = await response.json();
     if (response.ok) {
@@ -29,6 +32,7 @@ export const CrossFetch = async (
     }
   } catch (error) {
     console.log(error);
+    
   }
 };
 

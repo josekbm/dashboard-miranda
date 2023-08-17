@@ -1,11 +1,10 @@
 import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
-import users from '../Data/usersData.json'
 import { User } from '../interfaces';
 import { RootState } from '../app/store';
 import { CrossFetch } from './API';
+import { actionInterface } from './roomSlice';
 
 
-const usersList = users as User[];
 
 export const fetchUsers = createAsyncThunk<User[], void>(
   "users/fetchUsers ",
@@ -15,16 +14,15 @@ export const fetchUsers = createAsyncThunk<User[], void>(
   }
 );
 
+
 export const addUser = createAsyncThunk<User, User>(
   "users/addUser ",
-  async (userObject: User) => {
-    const res = await CrossFetch(
-      "api/users/",
-      "POST",
-      JSON.stringify(userObject)
-    );
+  async (userObject) => {
+    const res = await CrossFetch("users", "POST", JSON.stringify(userObject));
+    
+    console.log(userObject)
     return await res.data;
-  }
+  },
 );
 
 export const getUser = createAsyncThunk<User["id"], User["id"]>(
@@ -106,7 +104,13 @@ export interface UsersState {
           state.status = "fulfilled";
           state.usersListData = action.payload;
         })
-  
+
+        .addCase(addUser.rejected, (state: UsersState) => {
+          state.status = "rejected";
+        })
+        .addCase(addUser.pending, (state: UsersState) => {
+          state.status = "pending";
+        })  
         .addCase(addUser.fulfilled, (state, action) => {
           const lastId = parseInt(
             state.usersListData[state.usersListData.length - 1].id.slice(2)
@@ -126,11 +130,9 @@ export interface UsersState {
           state.status = "pending";
         })
   
-        .addCase(getUser.fulfilled, (state, action) => {
-          state.singleUser = state.usersListData.find(
-            (user) => user.id === action.payload
-          );
+        .addCase(getUser.fulfilled, (state, action: actionInterface) => {
           state.singleUserStatus = "fullfilled";
+          state.singleUser = action.payload
         })
   
         .addCase(getUser.pending, (state) => {
@@ -157,7 +159,6 @@ export interface UsersState {
   export const getUsersStatus = (state: RootState) => state.users.status;
   export const getUsersData = (state: RootState) => state.users.usersListData;
   export const getUsersSingle = (state: RootState) => state.users.singleUser;
-  export const getSingleUserStatus = (state: RootState) =>
-    state.users.singleUserStatus;
+  export const getSingleUserStatus = (state: RootState) =>state.users.singleUserStatus;
   
   export default usersSlice.reducer;

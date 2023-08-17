@@ -1,7 +1,7 @@
 import { ArchiveButton, Button } from "./Button";
 import { ModalButtonRow, ModalCloseRow, ModalContainer } from "./ModalStyled";
 import { IoClose } from "react-icons/io5";
-import { addUser, deleteUser } from "../Features/userSlice";
+import { addUser, deleteUser, fetchUsers, getUsersData } from "../Features/userSlice";
 import { addBooking, deleteBooking } from "../Features/bookingSlice";
 import { addRoom, deleteRoom } from "../Features/roomSlice";
 import {
@@ -51,7 +51,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
   const [userEmail, setUserEmail] = useState("");
   const [userStartDate, setUserStartDate] = useState(getTodayString());
   const [userImage, setUserImage] = useState(
-    "https://cdn.pixabay.com/photo/2022/06/05/07/04/person-7243410_1280.png"
+    "https://randomuser.me/api/portraits/lego/5.jpg"
   );
   const [userState, setUserState] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -72,7 +72,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
 
   const onClickDeleteHandler = () => {
     if (page === "users" && setShowDeleteModal && itemId) {
-      dispatch(deleteUser(itemId));
+      dispatch(deleteUser(itemId)).then(fetchUsers);
       setShowDeleteModal(false);
     }
 
@@ -122,7 +122,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         setUserEmail("");
         setUserName("");
         setUserImage(
-          "https://cdn.pixabay.com/photo/2022/06/05/07/04/person-7243410_1280.png"
+          "https://randomuser.me/api/portraits/lego/5.jpg"
         );
         const form = document.getElementById('createForm') as HTMLFormElement 
         form.reset();

@@ -30,7 +30,7 @@ export const Button = styled.button<ButtonProps>`
   font-family: "Poppins";
   font-size: 12px;
   font-weight: normal;
-  padding: 0.5rem ;
+  padding: 8px ;
   height: 32px;
   border-radius: 10px;
   border: none;

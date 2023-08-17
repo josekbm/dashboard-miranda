@@ -1,15 +1,12 @@
 import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
-import rooms from '../Data/roomsData.json'
 import { Room } from '../interfaces';
 import { RootState } from "../app/store";
 import { CrossFetch } from './API';
 
-const roomsList = rooms as Room[];
-
 export const fetchRooms = createAsyncThunk<Room[], void>(
   "rooms/fetchRooms",
   async () => {
-    const res=  await CrossFetch(`rooms`, "GET", undefined);
+    const res=  await CrossFetch("rooms", "GET", undefined);
     return await res.data
   }
 );
@@ -17,7 +14,7 @@ export const fetchRooms = createAsyncThunk<Room[], void>(
 export const addRoom = createAsyncThunk<Room, Room>(
   "rooms/addRoom",
   async (roomObject: Room) => {
-    const res=  await CrossFetch(`rooms`, "POST",  JSON.stringify(roomObject));
+    const res=  await CrossFetch("rooms", "POST",  JSON.stringify(roomObject));
     return await res.data
   }
 );
@@ -45,6 +42,11 @@ export const editRoom = createAsyncThunk<Room, Room>(
     return await res.data
   }
 );
+
+export interface actionInterface {
+  payload: any,
+  type: string
+}
 
 export interface RoomsState {
   roomsListData: Room[];
@@ -113,12 +115,11 @@ export const roomSlice = createSlice({
         state.status = "pending";
       })
 
-      .addCase(getRoom.fulfilled, (state, action) => {
+      .addCase(getRoom.fulfilled, (state, action: actionInterface) => {
         state.singleRoomStatus = "fulfilled";
 
-        state.singleRoomData = state.roomsListData.find(
-          (booking) => booking.id === action.payload
-        );
+        state.singleRoomData = action.payload
+        
       })
       .addCase(getRoom.pending, (state) => {
         state.singleRoomStatus = "pending";

@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
-interface SideBarProps{
+interface SideBarProps {
   column?: boolean;
 }
 
@@ -13,8 +13,7 @@ export const Wrapper = styled.div`
   align-items: center;
   max-width: 345px;
   padding-bottom: 5%;
-  height: 100%;  
-  
+  height: 100%;
 `;
 
 export const Logo = styled.div<SideBarProps>`
@@ -127,12 +126,12 @@ export const User = styled.div`
 `;
 
 export const SideBarUserImage = styled.img`
-    width: 70px;
-    height: 70px;
-    background-color: #c5c5c5;
-    border-radius: 8px;
-    object-fit: cover;
-`
+  width: 70px;
+  height: 70px;
+  background-color: #c5c5c5;
+  border-radius: 8px;
+  object-fit: cover;
+`;
 
 export const MenuLink = styled(NavLink)`
   font-weight: normal;
@@ -145,7 +144,6 @@ export const MenuLink = styled(NavLink)`
   &.active {
     color: #135846;
     font-weight: 600;
-
   }
 `;
 

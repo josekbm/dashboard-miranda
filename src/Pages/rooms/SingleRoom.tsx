@@ -28,11 +28,14 @@ export const SingleRoom = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
+    
     if(singleRoomData && roomId){
       if (roomId.id !== singleRoomData.id) {
-          dispatch(getRoom(roomId.id as string));
+        dispatch(getRoom(roomId.id as string));
       }
-    }
+    }   
+      
+    
     
     if(singleRoomData){
       setRoomType(singleRoomData.roomType);
@@ -43,7 +46,7 @@ export const SingleRoom = () => {
       setDescription(singleRoomData.description);
     }
     
-  }, [dispatch, singleRoomStatus, roomId, singleRoomData]);
+  }, [dispatch, singleRoomStatus, roomId.id, singleRoomData]);
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -303,7 +306,7 @@ export const SingleRoom = () => {
   } else {
     return (
       <>
-        <Navigate to="/error" />
+        
       </>
     );
   }

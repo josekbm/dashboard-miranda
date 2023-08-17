@@ -3,6 +3,8 @@ import { Booking } from "../interfaces";
 import { CrossFetch } from "./API";
 import { RootState } from "../app/store";
 
+
+
 export interface BookingsState {
   bookingListData: Booking[];
   status: string;
@@ -118,10 +120,9 @@ const bookingSlice = createSlice({
       })
 
       .addCase(getBooking.fulfilled, (state, action) => {
-        state.singleBookingData = state.bookingListData.find(
-          (booking: Booking) => booking.id === action.payload
-        );
         state.singleBookingStatus = "fulfilled";
+        state.singleBookingData = action.payload
+        
       })
 
       .addCase(getBooking.pending, (state) => {

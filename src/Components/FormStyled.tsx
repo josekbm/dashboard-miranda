@@ -12,10 +12,10 @@ export const FormContainer = styled.form`
   padding: 2%;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 11.2px;
   align-items: center;
-  padding: 2rem;
-  p{
+
+  p {
     color: red;
     font-size: 10px;
   }
@@ -33,24 +33,23 @@ export const Input = styled.div`
   display: flex;
   flex-direction: column;
 
-  h6{
+  h6 {
     font-weight: normal;
     font-family: "Poppins";
     font-size: 14px;
     color: #6e6e6e;
     margin: 0;
   }
-  
 
   input {
     border: none;
     box-shadow: 0px 3px 10px #00000005;
     background-color: #d4d4d4;
     border-radius: 6px;
-    padding: 0.3rem 0.5rem;
+    padding: 4.8px 8px;
     font-weight: normal;
-  font-family: "Poppins";
-  font-size: 12px;
+    font-family: "Poppins";
+    font-size: 12px;
   }
 
   select {
@@ -65,51 +64,50 @@ export const Input = styled.div`
   }
 `;
 
-
 export const RadioInput = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+`;
 
 export const Label = styled.label<FormProps>`
-     color: ${props => {
-        if (props.active){
-            return "#5AD07A";
-        } if (props.inactive){
-            return "#E23428";
-        }
-    }};
-`
+  color: ${(props) => {
+    if (props.active) {
+      return "#5AD07A";
+    }
+    if (props.inactive) {
+      return "#E23428";
+    }
+  }};
+`;
 
 export const InputBig = styled.div`
   width: 100%;
- 
-  
+
   letter-spacing: 0px;
   color: #212121;
   margin: 0;
   display: flex;
   flex-direction: column;
   height: 150px;
-  
-h6{
-  margin: 0;
-  font-weight: normal;
+
+  h6 {
+    margin: 0;
+    font-weight: normal;
     font-family: "Poppins";
     font-size: 14px;
     color: #6e6e6e;
     margin: 0;
-}
+  }
   input {
     border: none;
     box-shadow: 0px 3px 10px #00000005;
     background-color: #d4d4d4;
     border-radius: 6px;
-    padding: 0.3rem 0.5rem;
+    padding: 4.8px 8px;
     height: 100%;
     font-weight: normal;
-  font-family: "Poppins";
-  font-size: 12px;
-
-  }`
+    font-family: "Poppins";
+    font-size: 12px;
+  }
+`;
