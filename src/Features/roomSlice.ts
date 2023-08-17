@@ -1,51 +1,55 @@
-import { createAsyncThunk , createSlice } from '@reduxjs/toolkit'
-import { Room } from '../interfaces';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Room } from "../interfaces";
 import { RootState } from "../app/store";
-import { CrossFetch } from './API';
+import { CrossFetch } from "./API";
 
 export const fetchRooms = createAsyncThunk<Room[], void>(
   "rooms/fetchRooms",
   async () => {
-    const res=  await CrossFetch("rooms", "GET", undefined);
-    return await res.data
+    const res = await CrossFetch("rooms", "GET", undefined);
+    return await res.data;
   }
 );
 
 export const addRoom = createAsyncThunk<Room, Room>(
   "rooms/addRoom",
   async (roomObject: Room) => {
-    const res=  await CrossFetch("rooms", "POST",  JSON.stringify(roomObject));
-    return await res.data
+    const res = await CrossFetch("rooms", "POST", JSON.stringify(roomObject));
+    return await res.data;
   }
 );
 
 export const getRoom = createAsyncThunk<Room["id"], Room["id"]>(
   "rooms/getRoom",
   async (roomId: Room["id"]) => {
-    const res=  await CrossFetch(`rooms/${roomId}`, "GET", undefined);
-    return await res.data
+    const res = await CrossFetch(`rooms/${roomId}`, "GET", undefined);
+    return await res.data;
   }
 );
 
 export const deleteRoom = createAsyncThunk<Room["id"], Room["id"]>(
   "rooms/deleteRooms",
   async (roomId: Room["id"]) => {
-    const res=  await CrossFetch(`rooms/${roomId}`, "DELETE", undefined);
-    return await res.data
+    const res = await CrossFetch(`rooms/${roomId}`, "DELETE", undefined);
+    return await res.data;
   }
 );
 
 export const editRoom = createAsyncThunk<Room, Room>(
   "rooms/editRoom",
   async (updatedRoomObject: Room) => {
-    const res=  await CrossFetch(`rooms/${updatedRoomObject.id}`, "PUT", JSON.stringify(updatedRoomObject));
-    return await res.data
+    const res = await CrossFetch(
+      `rooms/${updatedRoomObject.id}`,
+      "PUT",
+      JSON.stringify(updatedRoomObject)
+    );
+    return await res.data;
   }
 );
 
 export interface actionInterface {
-  payload: any,
-  type: string
+  payload: any;
+  type: string;
 }
 
 export interface RoomsState {
@@ -118,8 +122,7 @@ export const roomSlice = createSlice({
       .addCase(getRoom.fulfilled, (state, action: actionInterface) => {
         state.singleRoomStatus = "fulfilled";
 
-        state.singleRoomData = action.payload
-        
+        state.singleRoomData = action.payload;
       })
       .addCase(getRoom.pending, (state) => {
         state.singleRoomStatus = "pending";
@@ -145,6 +148,7 @@ export const roomSlice = createSlice({
 export const getRoomsStatus = (state: RootState) => state.rooms.status;
 export const getRoomsData = (state: RootState) => state.rooms.roomsListData;
 export const getSingleRoom = (state: RootState) => state.rooms.singleRoomData;
-export const getSingleRoomStatus = (state: RootState) => state.rooms.singleRoomStatus;
+export const getSingleRoomStatus = (state: RootState) =>
+  state.rooms.singleRoomStatus;
 
 export default roomSlice.reducer;

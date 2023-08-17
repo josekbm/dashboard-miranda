@@ -17,7 +17,7 @@ export const NavItemContainer = styled.div`
   flex-direction: row;
   font-family: "Poppins";
   align-items: center;
-  gap: 2.5rem;
+  gap: 40px;
   padding: 0 2%;
 
   svg:hover {

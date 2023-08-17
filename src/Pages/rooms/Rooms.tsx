@@ -1,7 +1,7 @@
 import { getRoomsData, getRoomsStatus } from "../../Features/roomSlice";
 import { useEffect } from "react";
 import { fetchRooms } from "../../Features/roomSlice";
-import { AiOutlineInfoCircle} from "react-icons/ai";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import { VscTrash } from "react-icons/vsc";
 import {
   MdOutlineKeyboardArrowDown,
@@ -57,7 +57,7 @@ export const Rooms = () => {
     setTableData(roomsData);
   }, [dispatch, roomsStatus, roomsData]);
 
-  const onChangeHandler = (e : any) => {
+  const onChangeHandler = (e: any) => {
     if (e.value === "Room Number") {
       setTableData(
         [...tableData].sort((a, b) => {
@@ -99,94 +99,92 @@ export const Rooms = () => {
   };
 
   return (
-      <>
-        <TableActions>
-          <LeftActions></LeftActions>
-          <RightActions>
-            <Button
-              onClick={() => {
-                setShowCreateModal(true);
-              }}
-            >+ New </Button>
-            <CustomDropdown
-              arrowOpen={<MdOutlineKeyboardArrowUp />}
-              arrowClosed={<MdOutlineKeyboardArrowDown />}
-              options={options}
-              onChange={onChangeHandler}
-              value={"ID"}
-              room
-            />
-          </RightActions>
-        </TableActions>
-        <TableContainer>
-          <thead>
-            <TableTitle>
-              {tableTitles.map((element) => (
-                <th key={tableTitles.indexOf(element)}>{element}</th>
-              ))}
-            </TableTitle>
-          </thead>
-          <tbody>
-            {tableData.map((element) => (
-              <TableRow key={element.id}>
-                <TableItem>
-                  <ImageItem>
-                    <RoomImageItem
-                      src={element.thumbnail}
-                      alt="room"
-                    />
-                    <div>
-                      {element.roomType + "-" + element.roomNumber}
-                      <p>{element.id}</p>
-                    </div>
-                  </ImageItem>
-                </TableItem>
-                <TableItem>
-                  <p>{element.amenities.join(", ")}</p>
-                </TableItem>
-                <TableItem price discount={element.discount}>
-                  {element.price + "$"} <p>{"/per night"}</p>
-                </TableItem>
-                <TableItem offer discount={element.discount}>
-                  {offerPriceCalc(element.price, element.discount)}
-                  <p>{element.discount > 0 ? "/per night" : ""}</p>
-                </TableItem>
-                <TableItem>
-                  <StatusButton status={element.status}>
-                    {element.status}
-                  </StatusButton>
-                </TableItem>
-                <TableItem>
-                  <StyledLink to={`/rooms/${element.id}`}>
-                    <AiOutlineInfoCircle />
-                  </StyledLink>
-                </TableItem>
-                <TableItem>
-                  <VscTrash
-                    onClick={() => {
-                      setShowDeleteModal(true);
-                      setTargetId(element.id);
-                    }}
-                  />
-                </TableItem>
-              </TableRow>
+    <>
+      <TableActions>
+        <LeftActions></LeftActions>
+        <RightActions>
+          <Button
+            onClick={() => {
+              setShowCreateModal(true);
+            }}
+          >
+            + New{" "}
+          </Button>
+          <CustomDropdown
+            arrowOpen={<MdOutlineKeyboardArrowUp />}
+            arrowClosed={<MdOutlineKeyboardArrowDown />}
+            options={options}
+            onChange={onChangeHandler}
+            value={"ID"}
+            room
+          />
+        </RightActions>
+      </TableActions>
+      <TableContainer>
+        <thead>
+          <TableTitle>
+            {tableTitles.map((element) => (
+              <th key={tableTitles.indexOf(element)}>{element}</th>
             ))}
-          </tbody>
-        </TableContainer>
-        <Modal
-          mode="delete"
-          page={"rooms"}
-          showDeleteModal={showDeleteModal}
-          setShowDeleteModal={setShowDeleteModal}
-          itemId={targetId}
-        />
-        <Modal
-          mode="create"
-          page={"rooms"}
-          setShowCreateModal={setShowCreateModal}
-          showCreateModal={showCreateModal}
-        />
-      </>
-    );
-  
+          </TableTitle>
+        </thead>
+        <tbody>
+          {tableData.map((element) => (
+            <TableRow key={element.id}>
+              <TableItem>
+                <ImageItem>
+                  <RoomImageItem src={element.thumbnail} alt="room" />
+                  <div>
+                    {element.roomType + "-" + element.roomNumber}
+                    <p>{element.id}</p>
+                  </div>
+                </ImageItem>
+              </TableItem>
+              <TableItem>
+                <p>{element.amenities.join(", ")}</p>
+              </TableItem>
+              <TableItem price discount={element.discount}>
+                {element.price + "$"} <p>{"/per night"}</p>
+              </TableItem>
+              <TableItem offer discount={element.discount}>
+                {offerPriceCalc(element.price, element.discount)}
+                <p>{element.discount > 0 ? "/per night" : ""}</p>
+              </TableItem>
+              <TableItem>
+                <StatusButton status={element.status}>
+                  {element.status}
+                </StatusButton>
+              </TableItem>
+              <TableItem>
+                <StyledLink to={`/rooms/${element.id}`}>
+                  <AiOutlineInfoCircle />
+                </StyledLink>
+              </TableItem>
+              <TableItem>
+                <VscTrash
+                  onClick={() => {
+                    setShowDeleteModal(true);
+                    setTargetId(element.id);
+                  }}
+                />
+              </TableItem>
+            </TableRow>
+          ))}
+        </tbody>
+      </TableContainer>
+      <Modal
+        mode="delete"
+        page={"rooms"}
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        itemId={targetId}
+      />
+      <Modal
+        mode="create"
+        page={"rooms"}
+        setShowCreateModal={setShowCreateModal}
+        showCreateModal={showCreateModal}
+      />
+    </>
+  );
 };

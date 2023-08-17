@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import contacts from "../Data/contactData.json";
 import { Contact } from "../interfaces";
 import { RootState } from "../app/store";
 import { CrossFetch } from "./API";
 
-const contactsList = contacts as Contact[];
 export const fetchContacts = createAsyncThunk<Contact[], void>(
   "contacts/fetchContacts",
   async () => {

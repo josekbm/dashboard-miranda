@@ -1,16 +1,43 @@
-import { Card, CardContainer, CardImage, Booked, CardTitle, CardItem, CardSeparator, CardAmenitie, TitleRow, FeaturesRow, CardHeader, CloseIcon, CardImageText, } from "../../Components/CardStyled";
+import {
+  Card,
+  CardContainer,
+  CardImage,
+  Booked,
+  CardTitle,
+  CardItem,
+  CardSeparator,
+  CardAmenitie,
+  TitleRow,
+  FeaturesRow,
+  CardHeader,
+  CloseIcon,
+  CardImageText,
+} from "../../Components/CardStyled";
 import { MySlider } from "../../Components/Slider";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { getSingleRoom, getSingleRoomStatus, editRoom, getRoom } from "../../Features/roomSlice";
+import {
+  getSingleRoom,
+  getSingleRoomStatus,
+  editRoom,
+  getRoom,
+} from "../../Features/roomSlice";
 import { useEffect, useState } from "react";
-import { offerChecker, offerPriceCalc, roomInfoChooser, } from "../../Features/otherFunctions";
+import {
+  offerChecker,
+  offerPriceCalc,
+  roomInfoChooser,
+} from "../../Features/otherFunctions";
 import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
-import { Input, InputBig, Label, RadioInput, } from "../../Components/FormStyled";
+import {
+  Input,
+  InputBig,
+  Label,
+  RadioInput,
+} from "../../Components/FormStyled";
 import { Button } from "../../Components/Button";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export const SingleRoom = () => {
-  
   const roomId = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,16 +55,13 @@ export const SingleRoom = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    
-    if(singleRoomData && roomId){
+    if (singleRoomData && roomId) {
       if (roomId.id !== singleRoomData.id) {
         dispatch(getRoom(roomId.id as string));
       }
-    }   
-      
-    
-    
-    if(singleRoomData){
+    }
+
+    if (singleRoomData) {
       setRoomType(singleRoomData.roomType);
       setRoomNumber(singleRoomData.roomNumber);
       setPrice(singleRoomData.price);
@@ -45,7 +69,6 @@ export const SingleRoom = () => {
       setStatus(singleRoomData.status);
       setDescription(singleRoomData.description);
     }
-    
   }, [dispatch, singleRoomStatus, roomId.id, singleRoomData]);
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,12 +78,13 @@ export const SingleRoom = () => {
       roomNumber === "" ||
       price === undefined ||
       status === "" ||
-      description === "" || discount === undefined
+      description === "" ||
+      discount === undefined
     ) {
       setFieldError("All inputs must be written!");
       setDiscount(0);
     } else {
-      if(singleRoomData){
+      if (singleRoomData) {
         const room = {
           id: singleRoomData.id,
           roomType: roomType,
@@ -72,7 +96,7 @@ export const SingleRoom = () => {
           cancellation: roomInfoChooser(roomType).cancellation,
           thumbnail: roomInfoChooser(roomType).thumbnail,
           description: description,
-          images: roomInfoChooser(roomType).images
+          images: roomInfoChooser(roomType).images,
         };
         dispatch(editRoom(room));
         dispatch(getRoom(room.id));
@@ -153,14 +177,14 @@ export const SingleRoom = () => {
               </FeaturesRow>
             </Card>
             <CardImage>
-              <MySlider data={singleRoomData.images}/>
+              <MySlider data={singleRoomData.images} />
 
               <Booked bookStatus={offerChecker(singleRoomData.discount)}>
                 {offerChecker(singleRoomData.discount)}
               </Booked>
               <CardImageText>
-              <h4>Cancellation</h4>
-                  <p>{singleRoomData.cancellation}</p>
+                <h4>Cancellation</h4>
+                <p>{singleRoomData.cancellation}</p>
               </CardImageText>
             </CardImage>
           </CardContainer>
@@ -304,10 +328,6 @@ export const SingleRoom = () => {
       );
     }
   } else {
-    return (
-      <>
-        
-      </>
-    );
+    return <></>;
   }
 };

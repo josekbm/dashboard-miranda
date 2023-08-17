@@ -1,8 +1,8 @@
 import { Booking } from "../interfaces";
-import rooms from "../Data/roomsData.json"
-import users from "../Data/usersData.json"
+import rooms from "../Data/roomsData.json";
+import users from "../Data/usersData.json";
 
-type data = Booking | Booking[] 
+type data = Booking | Booking[];
 export function delay(data: data, time = 1000) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -21,11 +21,19 @@ export const offerPriceCalc = (price: number, discount: number) => {
   return discount > 0 ? price - (price * discount) / 100 + "$" : "-";
 };
 
-export const dateConverter = (dateToConver : string) => {
+export const dateConverter = (dateToConver: string) => {
   const fecha = new Date(dateToConver);
 
-  const opcionesFecha: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" };
-  const opcionesHora: Intl.DateTimeFormatOptions = { hour12: true, hour: "numeric", minute: "numeric" };
+  const opcionesFecha: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  const opcionesHora: Intl.DateTimeFormatOptions = {
+    hour12: true,
+    hour: "numeric",
+    minute: "numeric",
+  };
 
   const fechaString = fecha.toLocaleDateString("en-US", opcionesFecha);
   const horaString = fecha.toLocaleTimeString("en-US", opcionesHora);
@@ -50,7 +58,11 @@ export const bookedStatusCalc = (checkIn: string, checkOut: string) => {
   }
 };
 
-export const totalPriceCalc = (pricePerNight: number, checkIn: string, checkOut: string) => {
+export const totalPriceCalc = (
+  pricePerNight: number,
+  checkIn: string,
+  checkOut: string
+) => {
   var date1 = new Date(checkOut);
   var date2 = new Date(checkIn);
 
@@ -63,16 +75,15 @@ export function getTodayString() {
   let dd = today.getDate();
   let mm = today.getMonth() + 1;
   const yyyy = today.getFullYear();
-  let day = dd.toString()
-  let month = mm.toString()
-  let year = yyyy.toString()
+  let day = dd.toString();
+  let month = mm.toString();
+  let year = yyyy.toString();
 
   if (dd < 10) {
     day = "0" + day;
   }
 
   if (mm < 10) {
-    
     month = "0" + month;
   }
 
@@ -162,33 +173,35 @@ export const roomInfoChooser = (roomType: string) => {
   }
 };
 
-export const maxCharString = (string :string, maxChar: number) =>{
-  return string.slice(0, maxChar) +"..."
-}
+export const maxCharString = (string: string, maxChar: number) => {
+  return string.slice(0, maxChar) + "...";
+};
 
-export const searchObjectByEmailAndPassword = (email: string, password: string) => {
+export const searchObjectByEmailAndPassword = (
+  email: string,
+  password: string
+) => {
   return users.find(
     (object) => object.email === email && object.password === password
   );
 };
 
 export const searchBookingRoom = (roomId: string) => {
-  const room = rooms.find(
-    (object) => object.id === roomId
-  );
-  if(room){
-    return room
-  } else return {
-    roomType: "",
-    roomNumber: "",
-    id: "",
-    description: "",
-    price: 0,
-    discount: 0,
-    cancellation: "",
-    amenities: [""],
-    thumbnail: "",
-    images: [""],
-    status: "",
-  }
+  const room = rooms.find((object) => object.id === roomId);
+  if (room) {
+    return room;
+  } else
+    return {
+      roomType: "",
+      roomNumber: "",
+      id: "",
+      description: "",
+      price: 0,
+      discount: 0,
+      cancellation: "",
+      amenities: [""],
+      thumbnail: "",
+      images: [""],
+      status: "",
+    };
 };

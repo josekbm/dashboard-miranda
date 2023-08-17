@@ -46,7 +46,6 @@ export const SingleUser = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    
     if (getUserData && userId) {
       if (userId.id !== getUserData.id) {
         dispatch(getUser(userId.id as string));
@@ -65,7 +64,6 @@ export const SingleUser = () => {
     }
   }, [dispatch, getStatus, getUserStatus, userId.id, getUserData]);
 
-  
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (

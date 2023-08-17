@@ -1,12 +1,33 @@
-import { getUsersStatus, getUsersData, fetchUsers } from "../../Features/userSlice";
+import {
+  getUsersStatus,
+  getUsersData,
+  fetchUsers,
+} from "../../Features/userSlice";
 import { useEffect, useState } from "react";
 import { Button, StatusButton } from "../../Components/Button";
-import { CustomDropdown, ImageItem, LeftActions, RightActions, SearchBar, StyledLink, TableActions, TableItem, TableLink, UserTableImage, TableRow, TableContainer, TableTitle} from "../../Components/TableStyled";
+import {
+  CustomDropdown,
+  ImageItem,
+  LeftActions,
+  RightActions,
+  SearchBar,
+  StyledLink,
+  TableActions,
+  TableItem,
+  TableLink,
+  UserTableImage,
+  TableRow,
+  TableContainer,
+  TableTitle,
+} from "../../Components/TableStyled";
 import { Modal } from "../../Components/Modal";
 import { dateConverter } from "../../Features/otherFunctions";
 import { AiOutlineInfoCircle, AiOutlineSearch } from "react-icons/ai";
 import { VscTrash } from "react-icons/vsc";
-import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
+import {
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
+} from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export const Users = () => {
@@ -20,7 +41,7 @@ export const Users = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [tableData, setTableData] = useState(usersData);
-  const [orderValue, setOrderValue] = useState("ID")
+  const [orderValue, setOrderValue] = useState("ID");
 
   const tableTitles = [
     "Name",
@@ -41,9 +62,9 @@ export const Users = () => {
     setTableData(usersData);
   }, [dispatch, usersStatus, usersData]);
 
-  const onClickHandler = (e :  React.MouseEvent<HTMLButtonElement>) => {
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const input = e.target as HTMLElement;
-    const option= input.innerText;
+    const option = input.innerText;
     if (option === "All users") {
       setShowAll("true");
       setShowActive("false");
@@ -65,8 +86,7 @@ export const Users = () => {
     }
   };
 
-  const onSearchInputHandler = (e : React.ChangeEvent<HTMLInputElement> ) => {
-    
+  const onSearchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTableData(
       tableData.filter((user) =>
         user.name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -85,12 +105,12 @@ export const Users = () => {
     }
   };
 
-  const onChangeHandler = (e : any) => {
-        const option = e.value;
-        console.log(option)
-    
-    if ( option === "Name") {
-      setOrderValue("Name")
+  const onChangeHandler = (e: any) => {
+    const option = e.value;
+    console.log(option);
+
+    if (option === "Name") {
+      setOrderValue("Name");
       setTableData(
         [...tableData].sort((a, b) => {
           if (a.name < b.name) return -1;
@@ -100,7 +120,7 @@ export const Users = () => {
       );
     }
     if (option === "Date") {
-      setOrderValue("Date")
+      setOrderValue("Date");
       setTableData(
         [...tableData].sort((a, b) => {
           if (a.startDate < b.startDate) return -1;
@@ -112,116 +132,120 @@ export const Users = () => {
   };
 
   return (
-      <>
-        <TableActions>
-          <LeftActions>
-            <TableLink active={showAll} onClick={onClickHandler}>
-              All users
-            </TableLink>
-            <TableLink active={showActive} onClick={onClickHandler}>
-              Active users
-            </TableLink>
-            <TableLink active={showInactive} onClick={onClickHandler}>
-              Inactive users
-            </TableLink>
-          </LeftActions>
-          <RightActions>
-            <SearchBar>
-              <AiOutlineSearch />
-              <input
-                type="text"
-                name="users"
-                id="users"
-                onChange={onSearchInputHandler}
-                placeholder="Search By Name"
-              />
-            </SearchBar>
-            {showAll === "true" ? (
-              <Button
-                onClick={() => {
-                  setShowCreateModal(true);
-                }}>+ New </Button>) : (""
-            )}
-            <CustomDropdown
-              arrowOpen={<MdOutlineKeyboardArrowUp />}
-              arrowClosed={<MdOutlineKeyboardArrowDown />}
-              options={options}
-              onChange={onChangeHandler}
-              value={orderValue}
+    <>
+      <TableActions>
+        <LeftActions>
+          <TableLink active={showAll} onClick={onClickHandler}>
+            All users
+          </TableLink>
+          <TableLink active={showActive} onClick={onClickHandler}>
+            Active users
+          </TableLink>
+          <TableLink active={showInactive} onClick={onClickHandler}>
+            Inactive users
+          </TableLink>
+        </LeftActions>
+        <RightActions>
+          <SearchBar>
+            <AiOutlineSearch />
+            <input
+              type="text"
+              name="users"
+              id="users"
+              onChange={onSearchInputHandler}
+              placeholder="Search By Name"
             />
-          </RightActions>
-        </TableActions>
+          </SearchBar>
+          {showAll === "true" ? (
+            <Button
+              onClick={() => {
+                setShowCreateModal(true);
+              }}
+            >
+              + New{" "}
+            </Button>
+          ) : (
+            ""
+          )}
+          <CustomDropdown
+            arrowOpen={<MdOutlineKeyboardArrowUp />}
+            arrowClosed={<MdOutlineKeyboardArrowDown />}
+            options={options}
+            onChange={onChangeHandler}
+            value={orderValue}
+          />
+        </RightActions>
+      </TableActions>
 
-        <TableContainer>
-          <thead>
-            <TableTitle>
-              {tableTitles.map((element) => (
-                <th key={tableTitles.indexOf(element)}>{element}</th>
-              ))}
-            </TableTitle>
-          </thead>
-          <tbody>
-            {tableData.map((element) => (
-              <TableRow key={element.id}>
-                <TableItem>
-                  <ImageItem user>
-                    <UserTableImage src={element.photo} alt="user" />
-
-                    <div>
-                      {element.name}
-                      <p>{element.id}</p>
-                    </div>
-                  </ImageItem>
-                </TableItem>
-                <TableItem>
-                  {dateConverter(element.startDate).date}
-                  <p>{dateConverter(element.startDate).hour}</p>
-                </TableItem>
-                <TableItem>
-                  <p>{element.jobDescription}</p>
-                </TableItem>
-                <TableItem>
-                  <p>{element.phone}</p>
-                  <p>{element.email}</p>
-                </TableItem>
-                <TableItem>
-                  <StatusButton status={element.state}>
-                    {" "}
-                    {element.state}
-                  </StatusButton>
-                </TableItem>
-                <TableItem>
-                  <StyledLink to={`/users/${element.id}`}>
-                    <AiOutlineInfoCircle />
-                  </StyledLink>
-                </TableItem>
-                <TableItem>
-                  <VscTrash
-                    onClick={() => {
-                      setShowDeleteModal(true);
-                      setTargetId(element.id);
-                    }}
-                  />
-                </TableItem>
-              </TableRow>
+      <TableContainer>
+        <thead>
+          <TableTitle>
+            {tableTitles.map((element) => (
+              <th key={tableTitles.indexOf(element)}>{element}</th>
             ))}
-          </tbody>
-        </TableContainer>
-        <Modal
-          mode="delete"
-          page={"users"}
-          showDeleteModal={showDeleteModal}
-          setShowDeleteModal={setShowDeleteModal}
-          itemId={targetId}
-        />
+          </TableTitle>
+        </thead>
+        <tbody>
+          {tableData.map((element) => (
+            <TableRow key={element.id}>
+              <TableItem>
+                <ImageItem user>
+                  <UserTableImage src={element.photo} alt="user" />
 
-        <Modal
-          mode="create"
-          page={"users"}
-          setShowCreateModal={setShowCreateModal}
-          showCreateModal={showCreateModal}
-        />
-      </>
-    );
-  
+                  <div>
+                    {element.name}
+                    <p>{element.id}</p>
+                  </div>
+                </ImageItem>
+              </TableItem>
+              <TableItem>
+                {dateConverter(element.startDate).date}
+                <p>{dateConverter(element.startDate).hour}</p>
+              </TableItem>
+              <TableItem>
+                <p>{element.jobDescription}</p>
+              </TableItem>
+              <TableItem>
+                <p>{element.phone}</p>
+                <p>{element.email}</p>
+              </TableItem>
+              <TableItem>
+                <StatusButton status={element.state}>
+                  {" "}
+                  {element.state}
+                </StatusButton>
+              </TableItem>
+              <TableItem>
+                <StyledLink to={`/users/${element.id}`}>
+                  <AiOutlineInfoCircle />
+                </StyledLink>
+              </TableItem>
+              <TableItem>
+                <VscTrash
+                  onClick={() => {
+                    setShowDeleteModal(true);
+                    setTargetId(element.id);
+                  }}
+                />
+              </TableItem>
+            </TableRow>
+          ))}
+        </tbody>
+      </TableContainer>
+      <Modal
+        mode="delete"
+        page={"users"}
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        itemId={targetId}
+      />
+
+      <Modal
+        mode="create"
+        page={"users"}
+        setShowCreateModal={setShowCreateModal}
+        showCreateModal={showCreateModal}
+      />
+    </>
+  );
 };

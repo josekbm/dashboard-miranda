@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Slider from "react-slick";
+
+
 export const ReviewSlider = styled(Slider)`
-    width: 100%;
-    margin-bottom: 2rem;
-    padding: 1rem;
-  .slick-prev:before{
+  width: 100%;
+  margin-bottom: 32px;
+  padding: 16px;
+  .slick-prev:before {
     font-size: 20px;
     font-family: "Courier";
     background-color: #25232346;
@@ -32,7 +34,7 @@ export const ReviewSlider = styled(Slider)`
     align-items: center;
     justify-content: center;
   }
-`
+`;
 export const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,14 +45,11 @@ export const ReviewContainer = styled.div`
   background-color: #ffffff;
   margin-right: 20px;
   min-height: 180px;
-  
-  &:hover{
+
+  &:hover {
     scale: 1.1;
     cursor: pointer;
   }
-
-  
-
 `;
 
 export const ReviewComment = styled.div`
@@ -58,8 +57,7 @@ export const ReviewComment = styled.div`
   font-weight: normal;
   color: #262626;
   font-family: "Poppins";
-  background-color: #FFFFFFFF;
-  
+  background-color: #ffffffff;
 `;
 
 export const ReviewInfo = styled.div`
@@ -67,8 +65,7 @@ export const ReviewInfo = styled.div`
   align-items: center;
   justify-content: space-between;
   font-family: "Poppins";
-  background-color: #FFFFFFFF;
-
+  background-color: #ffffffff;
 
   h4 {
     font-size: 14px;
@@ -84,4 +81,3 @@ export const ReviewInfo = styled.div`
     margin: 0;
   }
 `;
-

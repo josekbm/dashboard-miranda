@@ -72,7 +72,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
 
   const onClickDeleteHandler = () => {
     if (page === "users" && setShowDeleteModal && itemId) {
-      dispatch(deleteUser(itemId)).then(fetchUsers);
+      dispatch(deleteUser(itemId))
       setShowDeleteModal(false);
     }
 

@@ -1,293 +1,317 @@
-import { Card, CardContainer, CardImage, Booked, CardTitle, CardItem, CardSeparator, CardAmenitie, TitleRow, FeaturesRow, CardImageText, CardHeader, CloseIcon, } from "../../Components/CardStyled";
+import {
+  Card,
+  CardContainer,
+  CardImage,
+  Booked,
+  CardTitle,
+  CardItem,
+  CardSeparator,
+  CardAmenitie,
+  TitleRow,
+  FeaturesRow,
+  CardImageText,
+  CardHeader,
+  CloseIcon,
+} from "../../Components/CardStyled";
 import { MySlider } from "../../Components/Slider";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { getSingleBooking, getSingleBookingStatus, editBooking, getBooking } from "../../Features/bookingSlice";
+import {
+  getSingleBooking,
+  getSingleBookingStatus,
+  editBooking,
+  getBooking,
+} from "../../Features/bookingSlice";
 import { useEffect, useState } from "react";
-import { bookedStatusCalc, dateConverter, totalPriceCalc, searchBookingRoom } from "../../Features/otherFunctions";
+import {
+  bookedStatusCalc,
+  dateConverter,
+  totalPriceCalc,
+  searchBookingRoom,
+} from "../../Features/otherFunctions";
 import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
 import { Button } from "../../Components/Button";
 import { Input, InputBig } from "../../Components/FormStyled";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 export const SingleBooking = () => {
-const bookingId = useParams();
-const dispatch = useAppDispatch();
-const navigate = useNavigate();
-const bookingData = useAppSelector(getSingleBooking);
-const singleBookingStatus = useAppSelector(getSingleBookingStatus);
+  const bookingId = useParams();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const bookingData = useAppSelector(getSingleBooking);
+  const singleBookingStatus = useAppSelector(getSingleBookingStatus);
 
-const [fieldError, setFieldError] = useState("");
-const [guestName, setGuestName] = useState("");
-const [orderDate, setOrderDate] = useState("");
-const [roomId, setRoomId] = useState("");
-const [checkIn, setCheckIn] = useState("");
-const [checkOut, setCheckOut] = useState("");
-const [specialRequest, setSpecialRequest] = useState("");
+  const [fieldError, setFieldError] = useState("");
+  const [guestName, setGuestName] = useState("");
+  const [orderDate, setOrderDate] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [specialRequest, setSpecialRequest] = useState("");
 
-const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (bookingData && bookingId) {
+      if (bookingId.id !== bookingData.id) {
+        dispatch(getBooking(bookingId.id as string));
+      }
+    }
 
-        if(bookingData && bookingId){
-            if (bookingId.id !== bookingData.id) {
-                dispatch(getBooking(bookingId.id as string));
-            }
-        }
+    if (bookingData) {
+      setGuestName(bookingData.name);
+      setOrderDate(bookingData.orderDate);
+      setRoomId(bookingData.room);
+      setCheckIn(bookingData.checkIn);
+      setCheckOut(bookingData.checkOut);
+      setSpecialRequest(bookingData.specialRequest);
+    }
+  }, [dispatch, singleBookingStatus, bookingId.id, bookingData]);
 
-        if(bookingData){
-            setGuestName(bookingData.name);
-            setOrderDate(bookingData.orderDate);
-            setRoomId(bookingData.room);
-            setCheckIn(bookingData.checkIn);
-            setCheckOut(bookingData.checkOut);
-            setSpecialRequest(bookingData.specialRequest);
-        }
-    }, [dispatch, singleBookingStatus, bookingId.id, bookingData]);
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      guestName === "" ||
+      checkIn === "" ||
+      checkOut === "" ||
+      orderDate === "" ||
+      roomId === ""
+    ) {
+      setFieldError("You have to enter all inputs!");
+      console.log(searchBookingRoom(roomId));
+    }
+    if (!searchBookingRoom(roomId)) {
+      setFieldError("The room you've entered does not exists!");
+    } else {
+      if (bookingData) {
+        const booking = {
+          id: bookingData.id,
+          name: guestName,
+          checkIn: checkIn,
+          checkOut: checkOut,
+          orderDate: orderDate,
+          specialRequest: specialRequest,
+          room: roomId,
+        };
+        console.log(booking);
+        dispatch(editBooking(booking));
+        dispatch(getBooking(booking.id));
+        setEdit(false);
+        setFieldError("");
+      }
+    }
+  };
 
-
-    const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if(guestName=== "" || checkIn ==="" || checkOut=== "" || orderDate==="" ||  roomId===""){
-            setFieldError("You have to enter all inputs!")
-            console.log(searchBookingRoom(roomId))
-        
-        }if(!searchBookingRoom(roomId)){
-            setFieldError("The room you've entered does not exists!")
-        }else {
-            if(bookingData){
-                const booking = {
-                    id: bookingData.id,
-                    name: guestName,
-                    checkIn: checkIn,
-                    checkOut: checkOut,
-                    orderDate: orderDate,
-                    specialRequest: specialRequest,
-                    room: roomId,
-                }
-                console.log(booking);
-                dispatch(editBooking(booking));
-                dispatch(getBooking(booking.id))
-                setEdit(false);
-                setFieldError("");
-            } 
-        } 
-    };
-
-
-
-if (bookingData) {
+  if (bookingData) {
     if (edit !== true) {
-    return (
+      return (
         <>
-        <CardContainer full>
+          <CardContainer full>
             <Card full>
-            <CardHeader>
+              <CardHeader>
                 <FiArrowLeftCircle
-                onClick={() => {
+                  onClick={() => {
                     navigate("/bookings");
-                }}
+                  }}
                 />
                 <FiEdit
-                onClick={() => {
+                  onClick={() => {
                     setEdit(true);
-                }}
+                  }}
                 />
-            </CardHeader>
-            <TitleRow>
+              </CardHeader>
+              <TitleRow>
                 <CardTitle>
-                <h2>{bookingData.name}</h2>
-                <h5>{bookingData.id}</h5>
+                  <h2>{bookingData.name}</h2>
+                  <h5>{bookingData.id}</h5>
                 </CardTitle>
-            </TitleRow>
-            <FeaturesRow>
+              </TitleRow>
+              <FeaturesRow>
                 <CardItem>
-                <h6>Check in</h6>
-                <h5>{dateConverter(bookingData.checkIn).date}, </h5>
-                <h5>{dateConverter(bookingData.checkIn).hour}</h5>
+                  <h6>Check in</h6>
+                  <h5>{dateConverter(bookingData.checkIn).date}, </h5>
+                  <h5>{dateConverter(bookingData.checkIn).hour}</h5>
                 </CardItem>
                 <CardItem>
-                <h6>Check out</h6>
-                <h5>{dateConverter(bookingData.checkOut).date}, </h5>
-                <h5>{dateConverter(bookingData.checkOut).hour}</h5>
+                  <h6>Check out</h6>
+                  <h5>{dateConverter(bookingData.checkOut).date}, </h5>
+                  <h5>{dateConverter(bookingData.checkOut).hour}</h5>
                 </CardItem>
-            </FeaturesRow>
-            <CardSeparator />
-            <FeaturesRow>
+              </FeaturesRow>
+              <CardSeparator />
+              <FeaturesRow>
                 <CardItem>
-                <h6>Room info</h6>
-                <h4>
+                  <h6>Room info</h6>
+                  <h4>
                     {searchBookingRoom(bookingData.room).roomType}-
                     {searchBookingRoom(bookingData.room).roomNumber}
-                </h4>
+                  </h4>
                 </CardItem>
                 <CardItem>
-                <h6>Price</h6>
-                <h4>
+                  <h6>Price</h6>
+                  <h4>
                     {totalPriceCalc(
-                    searchBookingRoom(bookingData.room).price,
-                    bookingData.checkIn,
-                    bookingData.checkOut
+                      searchBookingRoom(bookingData.room).price,
+                      bookingData.checkIn,
+                      bookingData.checkOut
                     )}{" "}
                     $
-                </h4>
+                  </h4>
                 </CardItem>
-            </FeaturesRow>
-            <FeaturesRow>
+              </FeaturesRow>
+              <FeaturesRow>
                 <CardItem paragraph>
-                <p>{bookingData.specialRequest}</p>
+                  <p>{bookingData.specialRequest}</p>
                 </CardItem>
-            </FeaturesRow>
-            <FeaturesRow amenities>
+              </FeaturesRow>
+              <FeaturesRow amenities>
                 {searchBookingRoom(bookingData.room).amenities.map(
-                (amenitie, i) => {
+                  (amenitie, i) => {
                     return (
-                    <CardItem key={i} amenitie>
+                      <CardItem key={i} amenitie>
                         <CardAmenitie>{amenitie}</CardAmenitie>
-                    </CardItem>
+                      </CardItem>
                     );
-                }
+                  }
                 )}
-            </FeaturesRow>
+              </FeaturesRow>
             </Card>
             <CardImage>
-            <MySlider data={searchBookingRoom(bookingData.room).images}/>
+              <MySlider data={searchBookingRoom(bookingData.room).images} />
 
-            <Booked
+              <Booked
                 bookStatus={bookedStatusCalc(
-                bookingData.checkIn,
-                bookingData.checkOut
+                  bookingData.checkIn,
+                  bookingData.checkOut
                 )}
-            >
+              >
                 {bookedStatusCalc(bookingData.checkIn, bookingData.checkOut)}
-            </Booked>
-            <CardImageText>
+              </Booked>
+              <CardImageText>
                 <h4>{searchBookingRoom(bookingData.room).roomType}</h4>
                 <p>{searchBookingRoom(bookingData.room).description}</p>
-            </CardImageText>
+              </CardImageText>
             </CardImage>
-        </CardContainer>
+          </CardContainer>
         </>
-    );
+      );
     } else {
-    return (
+      return (
         <>
-        <CardContainer>
+          <CardContainer>
             <Card>
-            <CardHeader>
+              <CardHeader>
                 <FiArrowLeftCircle
-                onClick={() => {
+                  onClick={() => {
                     navigate("/bookings");
-                }}
+                  }}
                 />
                 <p>{fieldError}</p>
                 <CloseIcon
-                onClick={() => {
+                  onClick={() => {
                     setEdit(false);
                     setFieldError("");
-                }}
+                  }}
                 />
-            </CardHeader>
-            <form onSubmit={onSubmitHandler}>
+              </CardHeader>
+              <form onSubmit={onSubmitHandler}>
                 <FeaturesRow>
-                <Input>
+                  <Input>
                     <h6>Guest Name</h6>
                     <input
-                    type="text"
-                    name="name"
-                    value={guestName}
-                    onInput={(e) => {
+                      type="text"
+                      name="name"
+                      value={guestName}
+                      onInput={(e) => {
                         setGuestName(e.currentTarget.value);
-                    }}
+                      }}
                     />
-                </Input>
+                  </Input>
                 </FeaturesRow>
                 <FeaturesRow>
-                <CardItem>
+                  <CardItem>
                     <Input>
-                    <h6>Check In</h6>
-                    <input
+                      <h6>Check In</h6>
+                      <input
                         type="date"
                         name="checkIn"
                         defaultValue={checkIn}
                         onInput={(e) => {
-                        setCheckIn(e.currentTarget.value);
+                          setCheckIn(e.currentTarget.value);
                         }}
-                    />
+                      />
                     </Input>
-                </CardItem>
-                <CardItem>
+                  </CardItem>
+                  <CardItem>
                     <Input>
-                    <h6>Check Out</h6>
-                    <input
+                      <h6>Check Out</h6>
+                      <input
                         type="date"
                         name="checkOut"
                         defaultValue={checkOut}
                         onInput={(e) => {
-                        setCheckOut(e.currentTarget.value);
+                          setCheckOut(e.currentTarget.value);
                         }}
-                    />
+                      />
                     </Input>
-                </CardItem>
+                  </CardItem>
                 </FeaturesRow>
                 <FeaturesRow>
-                <CardItem>
+                  <CardItem>
                     <Input>
-                    <h6>Order Date</h6>
-                    <input
+                      <h6>Order Date</h6>
+                      <input
                         type="date"
                         name="orderDate"
                         defaultValue={orderDate}
                         onInput={(e) => {
-                        setOrderDate(e.currentTarget.value);
+                          setOrderDate(e.currentTarget.value);
                         }}
-                    />
+                      />
                     </Input>
-                </CardItem>
-                <CardItem>
+                  </CardItem>
+                  <CardItem>
                     <Input>
-                    <h6>Room</h6>
-                    <input
+                      <h6>Room</h6>
+                      <input
                         type="text"
                         name="room"
                         defaultValue={roomId}
                         onInput={(e) => {
-                        setRoomId(e.currentTarget.value);
+                          setRoomId(e.currentTarget.value);
                         }}
-                    />
+                      />
                     </Input>
-                </CardItem>
+                  </CardItem>
                 </FeaturesRow>
                 <FeaturesRow>
-                
-                    <InputBig>
+                  <InputBig>
                     <h6>Special Request</h6>
                     <input
-                        type="text"
-                        name="specialRequest"
-                        defaultValue={specialRequest}
-                        onInput={(e) => {
+                      type="text"
+                      name="specialRequest"
+                      defaultValue={specialRequest}
+                      onInput={(e) => {
                         setSpecialRequest(e.currentTarget.value);
-                        }}
+                      }}
                     />
-                    </InputBig>
-                
+                  </InputBig>
                 </FeaturesRow>
                 <CardSeparator />
 
                 <FeaturesRow>
-                <Button>Save</Button>
+                  <Button>Save</Button>
                 </FeaturesRow>
-            </form>
+              </form>
             </Card>
-        </CardContainer>
+          </CardContainer>
         </>
-    );
+      );
     }
-} else {
+  } else {
     return (
-    <>
+      <>
         <Navigate to="/error" />
-    </>
+      </>
     );
-}
+  }
 };

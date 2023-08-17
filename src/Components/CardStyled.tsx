@@ -90,7 +90,7 @@ export const CardImageText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 3rem;
+  padding-bottom: 48px;
 
   h4 {
     padding-left: 5%;
@@ -100,7 +100,7 @@ export const CardImageText = styled.div`
     font-weight: 500;
     font-family: "Poppins";
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
   }
 
   p {
@@ -147,7 +147,7 @@ export const Booked = styled.div<CardProps>`
 export const CardTitle = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.48px;
   margin: 0;
 
   h2 {
@@ -255,16 +255,16 @@ export const CardSeparator = styled.div`
   background-color: #ebebeb;
   height: 1px;
   width: 100%;
-  margin: 2rem 0;
+  margin: 32px 0;
 `;
 
 export const CardAmenitie = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 12px;
-  gap: 0.8rem;
+  gap: 12.8px;
   background-color: #e8f2ef;
-  padding: 1rem 0.8rem;
+  padding: 16px 12.8px;
   font-family: "Poppins";
   font-weight: 600;
   font-size: 14px;
@@ -289,8 +289,8 @@ export const TitleRow = styled.div`
 export const FeaturesRow = styled.div<CardProps>`
   display: flex;
   flex-direction: row;
-  margin-top: 2.2rem;
-  gap: ${(props) => (props.amenities ? "1rem" : "0")};
+  margin-top: 2.32px;
+  gap: ${(props) => (props.amenities ? "16px" : "0")};
   flex-wrap: wrap;
 `;
 
@@ -300,7 +300,7 @@ export const CardHeader = styled.div<CardProps>`
   flex-direction: row;
   justify-content: space-between;
   font-size: 30px;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
   color: ${(props) => (props.close ? "#E23428" : "gray")};
   svg:hover {
     scale: 1.1;

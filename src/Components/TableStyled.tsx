@@ -3,7 +3,7 @@ import { LinkProps, To } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-interface TableProps{
+interface TableProps {
   big?: boolean;
   discount?: number;
   price?: boolean;
@@ -12,7 +12,6 @@ interface TableProps{
   room?: boolean;
   user?: boolean;
 }
-
 
 interface ReactDropdownProps {
   options: any;
@@ -23,20 +22,20 @@ interface ReactDropdownProps {
   menuClassName?: string;
   arrowClassName?: string;
   disabled?: boolean;
-  arrowClosed?: React.ReactNode,
-  arrowOpen?: React.ReactNode,
+  arrowClosed?: React.ReactNode;
+  arrowOpen?: React.ReactNode;
   onChange?: (arg: Option) => void;
   onFocus?: (arg: boolean) => void;
   value?: Option | string;
   placeholder?: String;
-  room?: boolean,
+  room?: boolean;
 }
 
 export const TableActions = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
   width: 100%;
   height: 30px;
 `;
@@ -59,7 +58,7 @@ export const RightActions = styled.div`
   width: 40%;
   align-items: center;
   height: 100%;
-  gap: 1rem;
+  gap: 16px;
 `;
 
 export const TableContainer = styled.table`
@@ -97,20 +96,20 @@ export const TableItem = styled.td<TableProps>`
   font-family: "Poppins";
   font-weight: 500;
   font-size: 14px;
-  max-width: ${props => props.big ? "120px" : "80px"};
+  max-width: ${(props) => (props.big ? "120px" : "80px")};
 
   text-decoration: ${(props) => {
-    if(props.discount)
+    if (props.discount)
       if (props.discount > 0 && props.price) {
-      return "line-through";
-    } else return "none";
+        return "line-through";
+      } else return "none";
   }};
 
   color: ${(props) => {
-    if(props.discount)
+    if (props.discount)
       if (props.discount > 0 && props.offer) {
-      return "#E23428";
-    } else return "#393939";
+        return "#E23428";
+      } else return "#393939";
   }};
   padding: 1% 1%;
 
@@ -119,7 +118,7 @@ export const TableItem = styled.td<TableProps>`
     color: #799283;
     font-weight: 300;
     margin: 0;
-    margin-top: 0rem;
+    margin-top: 0;
   }
   svg {
     font-size: 18px;
@@ -136,10 +135,8 @@ export const TableItem = styled.td<TableProps>`
 `;
 
 export const ImageItem = styled.div<TableProps>`
-  
-  
   display: flex;
-  gap:0.5rem;
+  gap: 8px;
   flex-direction: column;
   margin: 0;
 `;
@@ -166,20 +163,24 @@ export const TableLink = styled.button<TableProps>`
   width: 100%;
   background-color: transparent;
   border: none;
-  border-bottom: ${(props) => {if(props.active === "true"){
-    return "#135846 2px solid";
-  } else{
-    return "#939090be 2px solid";
-  } }};
+  border-bottom: ${(props) => {
+    if (props.active === "true") {
+      return "#135846 2px solid";
+    } else {
+      return "#939090be 2px solid";
+    }
+  }};
   height: 30px;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
-  color: ${(props) => {if(props.active === "true"){
-    return "#135846";
-  } else{
-    return "#939090be";
-  } }};
+  color: ${(props) => {
+    if (props.active === "true") {
+      return "#135846";
+    } else {
+      return "#939090be";
+    }
+  }};
 `;
 
 export const SearchBar = styled.div`
@@ -196,12 +197,12 @@ export const SearchBar = styled.div`
   border-radius: 10px;
   box-shadow: 0px 3px 10px #00000005;
   gap: 1%;
-  
+
   input {
     border: none;
     width: 80%;
     background-color: #d4d4d4;
-    padding: 0.3rem 0.5rem;
+    padding: 4.8px 8px;
     height: 100%;
     font-family: "Poppins";
     font-size: 12px;
@@ -209,57 +210,52 @@ export const SearchBar = styled.div`
 `;
 
 export const CustomDropdown = styled(ReactDropdown)<ReactDropdownProps>`
-   font-family: "Poppins";
-    font-size: 12px;
-    font-weight: normal;
-    position: relative;
-  
-    .Dropdown-control{
-      display: flex;
-      gap: 2%;
-      justify-content: space-between;
-      align-items: center;
-      height: 32px;
-      border-radius: 10px;
-      background-color: #135846;
-      color: #FFFFFF;
-      padding: 0.5rem ;
-      width: ${props => props.room ? "120px" : "80px"};
-      z-index: 1;
-      &:hover{
-        scale:1.1;
-        cursor: pointer;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: normal;
+  position: relative;
 
-      }
-
+  .Dropdown-control {
+    display: flex;
+    gap: 2%;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    border-radius: 10px;
+    background-color: #135846;
+    color: #ffffff;
+    padding: 8px;
+    width: ${(props) => (props.room ? "120px" : "80px")};
+    z-index: 1;
+    &:hover {
+      scale: 1.1;
+      cursor: pointer;
     }
-    .Dropdown-menu{
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      background-color: #135846;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      width: ${props => props.room ? "120px" : "80px"};;
-      padding: 0.5rem;
-      top: 25px;
-      z-index: 0;
-      color: #FFFFFF;
+  }
+  .Dropdown-menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #135846;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: ${(props) => (props.room ? "120px" : "80px")};
+    padding: 8px;
+    top: 25px;
+    z-index: 0;
+    color: #ffffff;
+  }
+
+  .Dropdown-arrow-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .Dropdown-option {
+    &:hover {
+      scale: 1.1;
+      cursor: pointer;
     }
-
-    .Dropdown-arrow-wrapper{
-        display: flex;
-        align-items: center;
-      };
-
-    .Dropdown-option {
-      &:hover{
-        scale:1.1;
-        cursor: pointer;
-
-      }
-
-      
-    }
-`
+  }
+`;

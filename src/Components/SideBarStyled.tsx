@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 13px 3px 40px #00000005;
-  gap: 1.8rem;
+  gap: 28.8px;
   align-items: center;
   max-width: 345px;
   padding-bottom: 5%;
@@ -45,7 +45,7 @@ export const LinkContainer = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
-  gap: 2.5rem;
+  gap: 40px;
   font-family: "Poppins";
   font-style: 18px;
   font-weight: normal;
@@ -65,7 +65,7 @@ export const LinkContainer = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 16px;
   }
 `;
 
@@ -76,7 +76,7 @@ export const User = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 24px 32px;
   margin: 15% 0;
 
   .user-image {
@@ -93,8 +93,8 @@ export const User = styled.div`
     font-weight: medium;
     letter-spacing: 0px;
     color: #393939;
-    margin-top: 1rem;
-    margin-bottom: 0.2rem;
+    margin-top: 16px;
+    margin-bottom: 3.2px;
   }
 
   p {
@@ -104,7 +104,7 @@ export const User = styled.div`
     letter-spacing: 0px;
     color: #b2b2b2;
     margin: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
   }
 
   button {
@@ -116,7 +116,7 @@ export const User = styled.div`
     font-weight: 600;
     letter-spacing: 0px;
     color: #135846;
-    padding: 0.7rem 2rem;
+    padding: 11.2px 32px;
   }
 
   button:hover {
@@ -139,7 +139,7 @@ export const MenuLink = styled(NavLink)`
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 
   &.active {
     color: #135846;

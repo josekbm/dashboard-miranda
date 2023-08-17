@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const KpiRow = styled.div`
-  display: flex;  
+  display: flex;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: 24px;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
 `;
 
 export const KPI = styled.div`
@@ -15,8 +15,8 @@ export const KPI = styled.div`
   display: flex;
 
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1rem;
+  gap: 16px;
+  padding: 16px 16px;
   background-color: #ffffff;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 12px;
@@ -46,7 +46,7 @@ export const KpiIcon = styled.div`
 export const KpiText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 3.2px;
   margin: 0;
   h2 {
     text-align: left;
@@ -72,14 +72,14 @@ export const CalendarRow = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
   grid-column-gap: 20%;
-  margin-bottom: 3rem;
+  margin-bottom: 48px;
 `;
 
 export const BookingCalendar = styled.div`
   background-color: #ffffff;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 20px;
-  padding: 2rem 1rem;
+  padding: 32px 16px;
 
   .fc {
     max-height: 600px;
@@ -120,14 +120,14 @@ export const BookingCalendar = styled.div`
   }
 
   .fc .fc-toolbar {
-    gap: 0.5rem;
+    gap: 8px;
   }
 
   .fc-toolbar-chunk {
     div {
       display: flex;
       flex-direction: row;
-      gap: 1rem;
+      gap: 16px;
     }
   }
   .fc-dayGridMonth-view {
@@ -165,19 +165,19 @@ export const BookingCalendar = styled.div`
   .fc-direction-rtl .fc-daygrid-event.fc-event-start {
     border-radius: 8px;
     border: none;
-    padding: 0.2rem;
+    padding: 3.2px;
   }
   .fc-direction-ltr .fc-daygrid-event.fc-event-start,
   .fc-direction-rtl .fc-daygrid-event.fc-event-end {
     border-radius: 8px;
     border: none;
-    padding: 0.2rem;
+    padding: 3.2px;
   }
   .fc-event {
     background-color: #ebd90d;
   }
 
-  .fc-event:hover{
+  .fc-event:hover {
     scale: 1.1;
     cursor: pointer;
   }
@@ -195,12 +195,12 @@ export const LastBookings = styled.table`
   background-color: #ffffff;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 20px;
-  padding: 2rem 2%;
+  padding: 32px 2%;
 `;
 
 export const ViewMore = styled.tr`
   width: 100%;
-  height: 3rem;
+  height: 48px;
   padding-left: 40%;
   padding-right: 40%;
 `;
