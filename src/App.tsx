@@ -12,6 +12,7 @@ import { Layout } from "./Components/Layout";
 import './App.css';
 import LoginProvider from './context/LoginProvider';
 import RequiredAuth from './context/RequiredAuth';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   
@@ -36,6 +37,18 @@ function App() {
       </Routes>
       </RequiredAuth>
     </BrowserRouter>
+    <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+    />
     </LoginProvider>
     
     

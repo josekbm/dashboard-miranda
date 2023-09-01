@@ -18,6 +18,7 @@ export const addUser = createAsyncThunk<User, User>(
     const res = await CrossFetch("users", "POST", JSON.stringify(userObject));
 
     console.log(userObject);
+    console.log(res);
     return await res.data;
   }
 );
@@ -41,11 +42,9 @@ export const deleteUser = createAsyncThunk<User["id"], User["id"]>(
 export const editUser = createAsyncThunk<User, User>(
   "users/editUser",
   async (updatedUserObject: User) => {
-    const res = await CrossFetch(
-      `users/${updatedUserObject.id}`,
-      "PUT",
-      JSON.stringify(updatedUserObject)
-    );
+    const res = await CrossFetch(`users/${updatedUserObject.id}`, "PUT", JSON.stringify(updatedUserObject));
+    console.log(updatedUserObject.id);
+    console.log(res);
     return await res.data;
   }
 );

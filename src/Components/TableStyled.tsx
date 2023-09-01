@@ -185,7 +185,7 @@ export const TableLink = styled.button<TableProps>`
 
 export const SearchBar = styled.div`
   width: 50%;
-  height: 32px;
+  height: 16px;
   display: flex;
   flex-direction: row;
   padding: 2% 2%;
@@ -220,7 +220,7 @@ export const CustomDropdown = styled(ReactDropdown)<ReactDropdownProps>`
     gap: 2%;
     justify-content: space-between;
     align-items: center;
-    height: 32px;
+    height: 16px;
     border-radius: 10px;
     background-color: #135846;
     color: #ffffff;

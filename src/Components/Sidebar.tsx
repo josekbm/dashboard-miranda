@@ -15,20 +15,16 @@ import {
   RiUser6Line,
 } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
+import { useNavigate } from "react-router";
 import { useAppSelector } from "../app/hooks";
 import { getUsersSingle } from "../Features/userSlice";
 
 export const SideBar = () => {
-  /*const navigate = useNavigate();
-    const appContext = useContext(useLogin);
-    if (!appContext) {
-      // Si el contexto no esté disponible
-      return null;
-    }
-    const { state } = appContext;
+  const navigate = useNavigate();
+    
     const clickHandler = () => {
-        navigate(`/users/${state.user.id}`);
-    };*/
+        navigate(`/users/U-0001}`);
+    };
 
   return (
     <Wrapper>
@@ -77,7 +73,7 @@ export const SideBar = () => {
         ></SideBarUserImage>
         <h5>Admin</h5>
         <p>admin@admin.com</p>
-        <button>Edit User</button>
+        <button onClick={clickHandler}>Edit User</button>
       </User>
 
       <Copyright>

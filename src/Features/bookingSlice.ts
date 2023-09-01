@@ -67,7 +67,7 @@ export const editBooking = createAsyncThunk(
   "bookings/editBooking",
   async (updatedBookingObject: Booking) => {
     const res = await CrossFetch(
-      `api/bookings/${updatedBookingObject.id}`,
+      `bookings/${updatedBookingObject.id}`,
       "PUT",
       JSON.stringify(updatedBookingObject)
     );

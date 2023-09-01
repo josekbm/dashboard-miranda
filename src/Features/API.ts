@@ -9,9 +9,11 @@ export const CrossFetch = async (
     const url = process.env.REACT_APP_API_URL;
     const token = getToken();
     let jsonBody = null;
-    if (body) {
+    /*if (body) {
       jsonBody = JSON.stringify(body);
-    }
+    }*/
+    console.log(body);
+    console.log(jsonBody);
     const response = await fetch(`${url}${endpoint}`, {
       method: method,
       mode: 'cors',
@@ -19,15 +21,17 @@ export const CrossFetch = async (
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: jsonBody,
+      body,
       
     });
+    console.log(response);
     
 
     const data = await response.json();
     if (response.ok) {
       return data;
     } else {
+      console.log(response);
       throw new Error(response.statusText);
     }
   } catch (error) {

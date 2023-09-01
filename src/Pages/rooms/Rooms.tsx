@@ -48,7 +48,7 @@ export const Rooms = () => {
     "Delete",
   ];
 
-  const options = ["Room Number", "State", "Lowest Price", "Highest Price"];
+  const options = ["ID","Room Number", "State", "Lowest Price", "Highest Price"];
 
   useEffect(() => {
     if (roomsStatus === "idle") {
@@ -58,6 +58,9 @@ export const Rooms = () => {
   }, [dispatch, roomsStatus, roomsData]);
 
   const onChangeHandler = (e: any) => {
+    if (e.value === "ID") {
+      setTableData(roomsData);
+    }
     if (e.value === "Room Number") {
       setTableData(
         [...tableData].sort((a, b) => {

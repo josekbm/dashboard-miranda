@@ -53,7 +53,7 @@ export const Users = () => {
     "Delete",
   ];
 
-  const options = ["Date", "Name"];
+  const options = ["Date", "Name", "ID"];
 
   useEffect(() => {
     if (usersStatus === "idle") {
@@ -108,7 +108,9 @@ export const Users = () => {
   const onChangeHandler = (e: any) => {
     const option = e.value;
     console.log(option);
-
+    if (option === "ID") {
+      setTableData(usersData);
+    }
     if (option === "Name") {
       setOrderValue("Name");
       setTableData(

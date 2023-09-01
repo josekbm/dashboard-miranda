@@ -2,8 +2,8 @@ import { ArchiveButton, Button } from "./Button";
 import { ModalButtonRow, ModalCloseRow, ModalContainer } from "./ModalStyled";
 import { IoClose } from "react-icons/io5";
 import { addUser, deleteUser, fetchUsers, getUsersData } from "../Features/userSlice";
-import { addBooking, deleteBooking } from "../Features/bookingSlice";
-import { addRoom, deleteRoom } from "../Features/roomSlice";
+import { addBooking, deleteBooking, fetchBookings, resetBookingsState } from "../Features/bookingSlice";
+import { addRoom, deleteRoom, fetchRooms } from "../Features/roomSlice";
 import {
   FormContainer,
   Input,
@@ -25,6 +25,7 @@ import {
 } from "./LastReviewsStyled";
 import { useAppDispatch } from "../app/hooks";
 import { Booking, Contact } from "../interfaces";
+import { useNavigate } from "react-router";
 
 interface ModalProps {
   mode?: string,
@@ -44,6 +45,7 @@ interface ModalProps {
 export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, showDeleteModal, showCreateModal, mode, target, showModal, setShowModal, showNotesModal, setShowNotesModal, targetBooking} : ModalProps) => {
   const dispatch = useAppDispatch();
   const [fieldError, setFieldError] = useState("");
+  const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -72,17 +74,27 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
 
   const onClickDeleteHandler = () => {
     if (page === "users" && setShowDeleteModal && itemId) {
-      dispatch(deleteUser(itemId))
+      dispatch(deleteUser(itemId)).then(()=> {
+        dispatch(fetchUsers())
+      });
+      navigate("/users")
       setShowDeleteModal(false);
     }
 
     if (page === "bookings" && setShowDeleteModal && itemId) {
-      dispatch(deleteBooking(itemId));
+      dispatch(deleteBooking(itemId)).then(()=> {
+        dispatch(fetchBookings())
+      });
+      navigate("/bookings")
       setShowDeleteModal(false);
     }
 
     if (page === "rooms" && setShowDeleteModal && itemId) {
-      dispatch(deleteRoom(itemId));
+      dispatch(deleteRoom(itemId)).then(()=> {
+        dispatch(fetchRooms())
+      });
+      navigate("/rooms");
+      dispatch(resetBookingsState());
       setShowDeleteModal(false);
     }
   };
@@ -114,7 +126,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           jobDescription: jobDescriptionChooser(userPosition),
           password: userPassword,
         };
-        dispatch(addUser(user));
+        dispatch(addUser(user))
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
@@ -132,6 +144,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         setUserState("");
         setUserPhone("");
         
+        
       }
     }
     if (page === "bookings") {
@@ -146,16 +159,15 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         setFieldError("You have to enter all inputs!");
       } else {
         const booking = {
-            name: "",
+            name: guestName,
             id: "",
-            orderDate: "",
-            checkIn: "",
-            checkOut: "",
-            specialRequest: "",
-            room: "",
+            orderDate: orderDate,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            specialRequest: specialRequest,
+            room: bookingRoomId,
             status: "",
         };
-        console.log(booking);
         dispatch(addBooking(booking));
         if(setShowCreateModal){
           setShowCreateModal(false);
@@ -166,6 +178,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         setBookingRoomId("");
         setCheckIn("");
         setCheckOut("");
+        setRoomType("");
         setOrderDate(getTodayString());
         setSpecialRequest("");
         setFieldError("");
@@ -430,6 +443,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
                 <input
                   type="text"
                   name="room"
+                  placeholder="Must exist! R-XXXX"
                   onChange={(e) => {
                     setBookingRoomId(e.target.value);
                   }}
