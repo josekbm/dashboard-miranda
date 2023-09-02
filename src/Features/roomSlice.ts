@@ -55,7 +55,7 @@ export interface actionInterface {
 export interface RoomsState {
   roomsListData: Room[];
   status: string;
-  singleRoomData: Room | undefined;
+  singleRoomData: Room;
   singleRoomStatus: string;
 }
 

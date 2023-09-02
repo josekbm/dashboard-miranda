@@ -6,7 +6,7 @@ import { RootState } from "../app/store";
 export interface BookingsState {
   bookingListData: Booking[];
   status: string;
-  singleBookingData: Booking | undefined;
+  singleBookingData: Booking;
   singleBookingStatus: string;
 }
 

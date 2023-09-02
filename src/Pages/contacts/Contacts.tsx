@@ -20,6 +20,9 @@ import { ArchiveButton } from "../../Components/Button";
 import { LastReviews } from "../../Components/LastReviews";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Contact } from "../../interfaces";
+import NotFound from "../notfoundpage/notfoundpage";
+import { Wrapper } from "../../Components/LayoutStyled";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 export const Contacts = () => {
   const dispatch = useAppDispatch();
@@ -85,71 +88,83 @@ export const Contacts = () => {
     }
   };
 
-  return (
-    <>
-      <LastReviews data={recentContacts} />
-      <TableActions>
-        <LeftActions>
-          <TableLink active={showAll} onClick={onClickHandler}>
-            All Contacts
-          </TableLink>
-          <TableLink active={showArchived} onClick={onClickHandler}>
-            Archived
-          </TableLink>
-        </LeftActions>
-        <RightActions></RightActions>
-      </TableActions>
-      <TableContainer>
-        <thead>
-          <TableTitle>
-            {tableTitles.map((element) => (
-              <th key={tableTitles.indexOf(element)}>{element}</th>
+  if (contactsStatus === "rejected") {
+    return <NotFound />;
+  } else if (contactsStatus === "fulfilled" && tableData.length > 0) {
+    return (
+      <>
+        <LastReviews data={recentContacts} />
+        <TableActions>
+          <LeftActions>
+            <TableLink active={showAll} onClick={onClickHandler}>
+              All Contacts
+            </TableLink>
+            <TableLink active={showArchived} onClick={onClickHandler}>
+              Archived
+            </TableLink>
+          </LeftActions>
+          <RightActions></RightActions>
+        </TableActions>
+        <TableContainer>
+          <thead>
+            <TableTitle>
+              {tableTitles.map((element) => (
+                <th key={tableTitles.indexOf(element)}>{element}</th>
+              ))}
+            </TableTitle>
+          </thead>
+          <tbody>
+            {tableData.map((element) => (
+              <TableRow key={element.id}>
+                <TableItem>
+                  <p>{element.id}</p>
+                  {dateConverter(element.date).date}
+                  <p>{dateConverter(element.date).hour}</p>
+                </TableItem>
+                <TableItem big>
+                  {element.subject}
+                  <p>{element.comment}</p>
+                </TableItem>
+                <TableItem>
+                  {element.customer.name}
+                  <p>{element.customer.phone}</p>
+                  <p>{element.customer.email}</p>
+                </TableItem>
+                <TableItem>
+                  {element.archived !== true ? (
+                    <ArchiveButton
+                      archived
+                      onClick={() => onClickArchiveHandler(element)}
+                    >
+                      Archive
+                    </ArchiveButton>
+                  ) : (
+                    ""
+                  )}
+                  {element.archived ? (
+                    <ArchiveButton
+                      unarchived
+                      onClick={() => onClickArchiveHandler(element)}
+                    >
+                      Unarchive
+                    </ArchiveButton>
+                  ) : (
+                    ""
+                  )}
+                </TableItem>
+              </TableRow>
             ))}
-          </TableTitle>
-        </thead>
-        <tbody>
-          {tableData.map((element) => (
-            <TableRow key={element.id}>
-              <TableItem>
-                <p>{element.id}</p>
-                {dateConverter(element.date).date}
-                <p>{dateConverter(element.date).hour}</p>
-              </TableItem>
-              <TableItem big>
-                {element.subject}
-                <p>{element.comment}</p>
-              </TableItem>
-              <TableItem>
-                {element.customer.name}
-                <p>{element.customer.phone}</p>
-                <p>{element.customer.email}</p>
-              </TableItem>
-              <TableItem>
-                {element.archived !== true ? (
-                  <ArchiveButton
-                    archived
-                    onClick={() => onClickArchiveHandler(element)}
-                  >
-                    Archive
-                  </ArchiveButton>
-                ) : (
-                  ""
-                )}
-                {element.archived ? (
-                  <ArchiveButton
-                    unarchived
-                    onClick={() => onClickArchiveHandler(element)}
-                  >
-                    Unarchive
-                  </ArchiveButton>
-                ) : (
-                  ""
-                )}
-              </TableItem>
-            </TableRow>
-          ))}
-        </tbody>
-      </TableContainer>
-    </>
-  );
+          </tbody>
+        </TableContainer>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Wrapper>
+          <PropagateLoader color="#407957" size={15} />
+        </Wrapper>
+      </>
+    );
+  }
 };

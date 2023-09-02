@@ -32,6 +32,9 @@ import {
 } from "../../Features/otherFunctions";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Booking } from "../../interfaces";
+import NotFound from "../notfoundpage/notfoundpage";
+import { Wrapper } from "../../Components/LayoutStyled";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 export const Bookings = () => {
   const dispatch = useAppDispatch();
@@ -204,141 +207,162 @@ export const Bookings = () => {
     }
   };
 
-  return (
-    <>
-      <TableActions>
-        <LeftActions>
-          <TableLink active={showAll} onClick={onClickHandler}>
-            All Bookings
-          </TableLink>
-          <TableLink active={showCheckIn} onClick={onClickHandler}>
-            Checking In
-          </TableLink>
-          <TableLink active={showCheckOut} onClick={onClickHandler}>
-            Checking Out
-          </TableLink>
-          <TableLink active={showInProgress} onClick={onClickHandler}>
-            In Progress
-          </TableLink>
-        </LeftActions>
-        <RightActions>
-          <SearchBar>
-            <AiOutlineSearch />
-            <input
-              type="text"
-              name="users"
-              id="users"
-              onChange={onSearchInputHandler}
-              placeholder="Search By Guestname"
-            />
-          </SearchBar>
-          {showAll === "true" ? (
-            <Button
-              onClick={() => {
-                setShowCreateModal(true);
-              }}
-            >
-              + New
-            </Button>
-          ) : (
-            ""
-          )}
-          <CustomDropdown
-            arrowOpen={<MdOutlineKeyboardArrowUp />}
-            arrowClosed={<MdOutlineKeyboardArrowDown />}
-            options={options}
-            onChange={onChangeHandler}
-            value={orderValue}
-          />
-        </RightActions>
-      </TableActions>
-
-      <TableContainer>
-        <thead>
-          <TableTitle>
-            {tableTitles.map((element) => (
-              <th key={tableTitles.indexOf(element)}>{element}</th>
-            ))}
-          </TableTitle>
-        </thead>
-        <tbody>
-          {tableData.map((element) => (
-            <TableRow key={element.id}>
-              <TableItem>
-                {element.name}
-                <p>{element.id}</p>
-              </TableItem>
-              <TableItem>
-                {dateConverter(element.orderDate).date}
-                <p>{dateConverter(element.orderDate).hour}</p>
-              </TableItem>
-              <TableItem>
-                {dateConverter(element.checkIn).date}
-                <p>{dateConverter(element.checkIn).hour}</p>
-              </TableItem>
-              <TableItem>
-                {dateConverter(element.checkOut).date}
-                <p>{dateConverter(element.checkOut).hour}</p>
-              </TableItem>
-              <TableItem>
-                <NotesButton
-                  onClick={() => {
-                    setTargetBooking(element);
-                    setShowNotesModal(true);
-                  }}
-                >
-                  View Notes
-                </NotesButton>
-              </TableItem>
-              <TableItem>
-                {searchBookingRoom(element.room).roomType} -{" "}
-                {searchBookingRoom(element.room).roomNumber}
-              </TableItem>
-              <TableItem>
-                <StatusButton
-                  status={bookedStatusCalc(element.checkIn, element.checkOut)}
-                >
-                  {bookedStatusCalc(element.checkIn, element.checkOut)}
-                </StatusButton>
-              </TableItem>
-              <TableItem>
-                <StyledLink to={`/bookings/${element.id}`}>
-                  <AiOutlineInfoCircle />
-                </StyledLink>
-              </TableItem>
-              <TableItem>
-                <VscTrash
-                  onClick={() => {
-                    setShowDeleteModal(true);
-                    setTargetId(element.id);
-                  }}
+  if (bookingsStatus === "rejected") {
+    return (
+      <>
+        <NotFound />
+      </>
+    );
+  } else {
+    if (bookingsStatus === "fulfilled" && tableData) {
+      return (
+        <>
+          <TableActions>
+            <LeftActions>
+              <TableLink active={showAll} onClick={onClickHandler}>
+                All Bookings
+              </TableLink>
+              <TableLink active={showCheckIn} onClick={onClickHandler}>
+                Checking In
+              </TableLink>
+              <TableLink active={showCheckOut} onClick={onClickHandler}>
+                Checking Out
+              </TableLink>
+              <TableLink active={showInProgress} onClick={onClickHandler}>
+                In Progress
+              </TableLink>
+            </LeftActions>
+            <RightActions>
+              <SearchBar>
+                <AiOutlineSearch />
+                <input
+                  type="text"
+                  name="users"
+                  id="users"
+                  onChange={onSearchInputHandler}
+                  placeholder="Search By Guestname"
                 />
-              </TableItem>
-            </TableRow>
-          ))}
-        </tbody>
-      </TableContainer>
+              </SearchBar>
+              {showAll === "true" ? (
+                <Button
+                  onClick={() => {
+                    setShowCreateModal(true);
+                  }}
+                >
+                  + New
+                </Button>
+              ) : (
+                ""
+              )}
+              <CustomDropdown
+                arrowOpen={<MdOutlineKeyboardArrowUp />}
+                arrowClosed={<MdOutlineKeyboardArrowDown />}
+                options={options}
+                onChange={onChangeHandler}
+                value={orderValue}
+              />
+            </RightActions>
+          </TableActions>
 
-      <Modal
-        mode="delete"
-        page={"bookings"}
-        showDeleteModal={showDeleteModal}
-        setShowDeleteModal={setShowDeleteModal}
-        itemId={targetId}
-      />
-      <Modal
-        mode="create"
-        page={"bookings"}
-        setShowCreateModal={setShowCreateModal}
-        showCreateModal={showCreateModal}
-      />
-      <Modal
-        mode="moreInfo"
-        page={"bookings"}
-        setShowNotesModal={setShowNotesModal}
-        showNotesModal={showNotesModal}
-        targetBooking={targetBooking}
-      />
-    </>
-  );
+          <TableContainer>
+            <thead>
+              <TableTitle>
+                {tableTitles.map((element) => (
+                  <th key={tableTitles.indexOf(element)}>{element}</th>
+                ))}
+              </TableTitle>
+            </thead>
+            <tbody>
+              {tableData.map((element) => (
+                <TableRow key={element.id}>
+                  <TableItem>
+                    {element.name}
+                    <p>{element.id}</p>
+                  </TableItem>
+                  <TableItem>
+                    {dateConverter(element.orderDate).date}
+                    <p>{dateConverter(element.orderDate).hour}</p>
+                  </TableItem>
+                  <TableItem>
+                    {dateConverter(element.checkIn).date}
+                    <p>{dateConverter(element.checkIn).hour}</p>
+                  </TableItem>
+                  <TableItem>
+                    {dateConverter(element.checkOut).date}
+                    <p>{dateConverter(element.checkOut).hour}</p>
+                  </TableItem>
+                  <TableItem>
+                    <NotesButton
+                      onClick={() => {
+                        setTargetBooking(element);
+                        setShowNotesModal(true);
+                      }}
+                    >
+                      View Notes
+                    </NotesButton>
+                  </TableItem>
+                  <TableItem>
+                    {searchBookingRoom(element.room).roomType} -{" "}
+                    {searchBookingRoom(element.room).roomNumber}
+                  </TableItem>
+                  <TableItem>
+                    <StatusButton
+                      status={bookedStatusCalc(
+                        element.checkIn,
+                        element.checkOut
+                      )}
+                    >
+                      {bookedStatusCalc(element.checkIn, element.checkOut)}
+                    </StatusButton>
+                  </TableItem>
+                  <TableItem>
+                    <StyledLink to={`/bookings/${element.id}`}>
+                      <AiOutlineInfoCircle />
+                    </StyledLink>
+                  </TableItem>
+                  <TableItem>
+                    <VscTrash
+                      onClick={() => {
+                        setShowDeleteModal(true);
+                        setTargetId(element.id);
+                      }}
+                    />
+                  </TableItem>
+                </TableRow>
+              ))}
+            </tbody>
+          </TableContainer>
+
+          <Modal
+            mode="delete"
+            page={"bookings"}
+            showDeleteModal={showDeleteModal}
+            setShowDeleteModal={setShowDeleteModal}
+            itemId={targetId}
+          />
+          <Modal
+            mode="create"
+            page={"bookings"}
+            setShowCreateModal={setShowCreateModal}
+            showCreateModal={showCreateModal}
+          />
+          <Modal
+            mode="moreInfo"
+            page={"bookings"}
+            setShowNotesModal={setShowNotesModal}
+            showNotesModal={showNotesModal}
+            targetBooking={targetBooking}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Wrapper>
+            <PropagateLoader color="#407957"size={15}/>
+          </Wrapper>
+        </>
+      )
+    }
+  }
 };

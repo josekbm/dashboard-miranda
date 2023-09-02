@@ -29,6 +29,9 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import NotFound from "../notfoundpage/notfoundpage";
+import { Wrapper } from "../../Components/LayoutStyled";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 export const Users = () => {
   const dispatch = useAppDispatch();
@@ -133,121 +136,135 @@ export const Users = () => {
     }
   };
 
-  return (
-    <>
-      <TableActions>
-        <LeftActions>
-          <TableLink active={showAll} onClick={onClickHandler}>
-            All users
-          </TableLink>
-          <TableLink active={showActive} onClick={onClickHandler}>
-            Active users
-          </TableLink>
-          <TableLink active={showInactive} onClick={onClickHandler}>
-            Inactive users
-          </TableLink>
-        </LeftActions>
-        <RightActions>
-          <SearchBar>
-            <AiOutlineSearch />
-            <input
-              type="text"
-              name="users"
-              id="users"
-              onChange={onSearchInputHandler}
-              placeholder="Search By Name"
-            />
-          </SearchBar>
-          {showAll === "true" ? (
-            <Button
-              onClick={() => {
-                setShowCreateModal(true);
-              }}
-            >
-              + New{" "}
-            </Button>
-          ) : (
-            ""
-          )}
-          <CustomDropdown
-            arrowOpen={<MdOutlineKeyboardArrowUp />}
-            arrowClosed={<MdOutlineKeyboardArrowDown />}
-            options={options}
-            onChange={onChangeHandler}
-            value={orderValue}
-          />
-        </RightActions>
-      </TableActions>
-
-      <TableContainer>
-        <thead>
-          <TableTitle>
-            {tableTitles.map((element) => (
-              <th key={tableTitles.indexOf(element)}>{element}</th>
-            ))}
-          </TableTitle>
-        </thead>
-        <tbody>
-          {tableData.map((element) => (
-            <TableRow key={element.id}>
-              <TableItem>
-                <ImageItem user>
-                  <UserTableImage src={element.photo} alt="user" />
-
-                  <div>
-                    {element.name}
-                    <p>{element.id}</p>
-                  </div>
-                </ImageItem>
-              </TableItem>
-              <TableItem>
-                {dateConverter(element.startDate).date}
-                <p>{dateConverter(element.startDate).hour}</p>
-              </TableItem>
-              <TableItem>
-                <p>{element.jobDescription}</p>
-              </TableItem>
-              <TableItem>
-                <p>{element.phone}</p>
-                <p>{element.email}</p>
-              </TableItem>
-              <TableItem>
-                <StatusButton status={element.state}>
-                  {" "}
-                  {element.state}
-                </StatusButton>
-              </TableItem>
-              <TableItem>
-                <StyledLink to={`/users/${element.id}`}>
-                  <AiOutlineInfoCircle />
-                </StyledLink>
-              </TableItem>
-              <TableItem>
-                <VscTrash
-                  onClick={() => {
-                    setShowDeleteModal(true);
-                    setTargetId(element.id);
-                  }}
+  if (usersStatus === "rejected") {
+    return <NotFound />;
+  } else {
+    if (usersStatus === "fulfilled" && tableData.length > 0) {
+      return (
+        <>
+          <TableActions>
+            <LeftActions>
+              <TableLink active={showAll} onClick={onClickHandler}>
+                All users
+              </TableLink>
+              <TableLink active={showActive} onClick={onClickHandler}>
+                Active users
+              </TableLink>
+              <TableLink active={showInactive} onClick={onClickHandler}>
+                Inactive users
+              </TableLink>
+            </LeftActions>
+            <RightActions>
+              <SearchBar>
+                <AiOutlineSearch />
+                <input
+                  type="text"
+                  name="users"
+                  id="users"
+                  onChange={onSearchInputHandler}
+                  placeholder="Search By Name"
                 />
-              </TableItem>
-            </TableRow>
-          ))}
-        </tbody>
-      </TableContainer>
-      <Modal
-        mode="delete"
-        page={"users"}
-        showDeleteModal={showDeleteModal}
-        setShowDeleteModal={setShowDeleteModal}
-        itemId={targetId}
-      />
+              </SearchBar>
+              {showAll === "true" ? (
+                <Button
+                  onClick={() => {
+                    setShowCreateModal(true);
+                  }}
+                >
+                  + New{" "}
+                </Button>
+              ) : (
+                ""
+              )}
+              <CustomDropdown
+                arrowOpen={<MdOutlineKeyboardArrowUp />}
+                arrowClosed={<MdOutlineKeyboardArrowDown />}
+                options={options}
+                onChange={onChangeHandler}
+                value={orderValue}
+              />
+            </RightActions>
+          </TableActions>
 
-      <Modal
-        mode="create"
-        page={"users"}
-        setShowCreateModal={setShowCreateModal}
-        showCreateModal={showCreateModal}
-      />
-    </>
-  );
+          <TableContainer>
+            <thead>
+              <TableTitle>
+                {tableTitles.map((element) => (
+                  <th key={tableTitles.indexOf(element)}>{element}</th>
+                ))}
+              </TableTitle>
+            </thead>
+            <tbody>
+              {tableData.map((element) => (
+                <TableRow key={element.id}>
+                  <TableItem>
+                    <ImageItem user>
+                      <UserTableImage src={element.photo} alt="user" />
+
+                      <div>
+                        {element.name}
+                        <p>{element.id}</p>
+                      </div>
+                    </ImageItem>
+                  </TableItem>
+                  <TableItem>
+                    {dateConverter(element.startDate).date}
+                    <p>{dateConverter(element.startDate).hour}</p>
+                  </TableItem>
+                  <TableItem>
+                    <p>{element.jobDescription}</p>
+                  </TableItem>
+                  <TableItem>
+                    <p>{element.phone}</p>
+                    <p>{element.email}</p>
+                  </TableItem>
+                  <TableItem>
+                    <StatusButton status={element.state}>
+                      {" "}
+                      {element.state}
+                    </StatusButton>
+                  </TableItem>
+                  <TableItem>
+                    <StyledLink to={`/users/${element.id}`}>
+                      <AiOutlineInfoCircle />
+                    </StyledLink>
+                  </TableItem>
+                  <TableItem>
+                    <VscTrash
+                      onClick={() => {
+                        setShowDeleteModal(true);
+                        setTargetId(element.id);
+                      }}
+                    />
+                  </TableItem>
+                </TableRow>
+              ))}
+            </tbody>
+          </TableContainer>
+          <Modal
+            mode="delete"
+            page={"users"}
+            showDeleteModal={showDeleteModal}
+            setShowDeleteModal={setShowDeleteModal}
+            itemId={targetId}
+          />
+
+          <Modal
+            mode="create"
+            page={"users"}
+            setShowCreateModal={setShowCreateModal}
+            showCreateModal={showCreateModal}
+          />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Wrapper>
+            <PropagateLoader color="#407957" size={15} />
+          </Wrapper>
+        </>
+      );
+    }
+  }
 };

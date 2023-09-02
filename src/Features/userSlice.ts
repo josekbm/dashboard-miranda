@@ -60,14 +60,14 @@ export const getLoggedUser = createAsyncThunk<User["id"], User["id"]>(
 export interface UsersState {
   usersListData: User[];
   status: string;
-  singleUser: User | undefined;
+  singleUserData: User;
   singleUserStatus: string;
 }
 
 const initialState: UsersState = {
   usersListData: [],
   status: "idle",
-  singleUser: {
+  singleUserData: {
     photo: "",
     name: "",
     id: "",
@@ -128,7 +128,7 @@ export const usersSlice = createSlice({
 
       .addCase(getUser.fulfilled, (state, action: actionInterface) => {
         state.singleUserStatus = "fullfilled";
-        state.singleUser = action.payload;
+        state.singleUserData = action.payload;
       })
 
       .addCase(getUser.pending, (state) => {
@@ -140,7 +140,7 @@ export const usersSlice = createSlice({
         for (let i = 0; i < state.usersListData.length; i++) {
           if (state.usersListData[i].id === action.payload.id) {
             state.usersListData[i] = action.payload;
-            state.singleUser = action.payload;
+            state.singleUserData = action.payload;
             return;
           }
         }
@@ -154,8 +154,7 @@ export const usersSlice = createSlice({
 
 export const getUsersStatus = (state: RootState) => state.users.status;
 export const getUsersData = (state: RootState) => state.users.usersListData;
-export const getUsersSingle = (state: RootState) => state.users.singleUser;
-export const getSingleUserStatus = (state: RootState) =>
-  state.users.singleUserStatus;
+export const getUsersSingle = (state: RootState) => state.users.singleUserData;
+export const getSingleUserStatus = (state: RootState) => state.users.singleUserStatus;
 
 export default usersSlice.reducer;
