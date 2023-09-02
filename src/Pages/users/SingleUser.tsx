@@ -27,6 +27,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import NotFound from "../notfoundpage/notfoundpage";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import { toastWarning } from "../../Features/toastify";
 
 export const SingleUser = () => {
   const userId = useParams();
@@ -78,7 +79,7 @@ export const SingleUser = () => {
       userPhone === "" ||
       userPassword === ""
     ) {
-      setFieldError("You have to enter all inputs!");
+      toastWarning("It seems you miss enter some field!");
     } else {
       if (getUserData) {
         const user = {

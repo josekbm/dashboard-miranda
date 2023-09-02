@@ -23,6 +23,7 @@ import { Contact } from "../../interfaces";
 import NotFound from "../notfoundpage/notfoundpage";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import { toastSuccess } from "../../Features/toastify";
 
 export const Contacts = () => {
   const dispatch = useAppDispatch();
@@ -85,6 +86,7 @@ export const Contacts = () => {
     dispatch(archiveContacts(contact));
     if (showArchived === "true") {
       setTableData(contactsData.filter((contact) => contact.archived === true));
+      
     }
   };
 
@@ -135,7 +137,7 @@ export const Contacts = () => {
                     <ArchiveButton
                       archived
                       onClick={() => onClickArchiveHandler(element)}
-                    >
+                    >                      
                       Archive
                     </ArchiveButton>
                   ) : (

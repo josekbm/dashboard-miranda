@@ -26,6 +26,7 @@ import {
 import { useAppDispatch } from "../app/hooks";
 import { Booking, Contact } from "../interfaces";
 import { useNavigate } from "react-router";
+import { toastWarning, toastSuccess } from "../Features/toastify";
 
 interface ModalProps {
   mode?: string,
@@ -76,6 +77,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
     if (page === "users" && setShowDeleteModal && itemId) {
       dispatch(deleteUser(itemId)).then(()=> {
         dispatch(fetchUsers())
+        toastSuccess("User Deleted!")
       });
       navigate("/users")
       setShowDeleteModal(false);
@@ -84,6 +86,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
     if (page === "bookings" && setShowDeleteModal && itemId) {
       dispatch(deleteBooking(itemId)).then(()=> {
         dispatch(fetchBookings())
+        toastSuccess("Booking Deleted!")
       });
       navigate("/bookings")
       setShowDeleteModal(false);
@@ -92,6 +95,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
     if (page === "rooms" && setShowDeleteModal && itemId) {
       dispatch(deleteRoom(itemId)).then(()=> {
         dispatch(fetchRooms())
+        toastSuccess("Room Deleted!")
       });
       navigate("/rooms");
       dispatch(resetBookingsState());
@@ -112,7 +116,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         userPhone === "" ||
         userPassword === ""
       ) {
-        setFieldError("You have to enter all inputs!");
+        toastWarning("It seems you miss enter some field!");
       } else {
         const user = {
           id: "",
@@ -127,6 +131,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           password: userPassword,
         };
         dispatch(addUser(user))
+        toastSuccess("User created!")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
@@ -156,7 +161,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         orderDate === "" ||
         bookingRoomId === ""
       ) {
-        setFieldError("You have to enter all inputs!");
+        toastWarning("It seems you miss enter some field!");
       } else {
         const booking = {
             name: guestName,
@@ -169,6 +174,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
             status: "",
         };
         dispatch(addBooking(booking));
+        toastSuccess("Booking created!")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
@@ -194,7 +200,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         description === "" || discount === undefined
       ) {
         setDiscount(0);
-        setFieldError("You have to enter all inputs!");
+        toastWarning("It seems you miss enter some field!");
       } else {
         const room = {
           id: "",
@@ -210,6 +216,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           images: roomInfoChooser(roomType).images,
         };
         dispatch(addRoom(room));
+        toastSuccess("Room created!")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }

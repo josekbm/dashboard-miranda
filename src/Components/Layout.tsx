@@ -16,7 +16,7 @@ export const Layout = () => {
   const titleChooser = () => {
     if (location.pathname === "/") {
       title = "Dashboard";
-    } else if (location.pathname === "/contact") {
+    } else if (location.pathname === "/contacts") {
       title = "Contacts";
     } else if (location.pathname === "/rooms") {
       title = "Rooms";

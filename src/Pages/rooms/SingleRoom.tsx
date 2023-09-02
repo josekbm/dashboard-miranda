@@ -39,6 +39,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import NotFound from "../notfoundpage/notfoundpage";
+import { toastWarning } from "../../Features/toastify";
 
 export const SingleRoom = () => {
   const roomId = useParams();
@@ -84,7 +85,7 @@ export const SingleRoom = () => {
       description === "" ||
       discount === undefined
     ) {
-      setFieldError("All inputs must be written!");
+      toastWarning("It seems you miss enter some field!");
       setDiscount(0);
     } else {
       if (singleRoomData) {
