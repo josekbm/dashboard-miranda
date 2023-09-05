@@ -8,11 +8,12 @@ import {
 } from "./LastReviewsStyled";
 import { dateConverter, maxCharString } from "../Features/otherFunctions";
 import { ArchiveButton } from "./Button";
-import { archiveContacts } from "../Features/contactSlice";
+import { archiveContacts, fetchContacts } from "../Features/contactSlice";
 import { Modal } from "./Modal";
 import React, { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { Contact } from "../interfaces";
+import { toastSuccess } from "../Features/toastify";
 
 interface LastReviewsProps {
   data: Contact[] | undefined;
@@ -44,7 +45,9 @@ export const LastReviews = ({ data }: LastReviewsProps) => {
   };
 
   const onClickArchiveHandler = (contact: Contact) => {
-    dispatch(archiveContacts(contact));
+    dispatch(archiveContacts(contact))
+    toastSuccess("Contact archived!")
+      
   };
 
   return (

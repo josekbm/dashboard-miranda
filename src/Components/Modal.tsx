@@ -132,6 +132,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         };
         dispatch(addUser(user))
         toastSuccess("User created!")
+        navigate("/users")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
@@ -175,6 +176,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         };
         dispatch(addBooking(booking));
         toastSuccess("Booking created!")
+        navigate("/bookings")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
@@ -217,6 +219,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         };
         dispatch(addRoom(room));
         toastSuccess("Room created!")
+        navigate("/rooms")
         if(setShowCreateModal){
           setShowCreateModal(false);
         }
