@@ -21,7 +21,7 @@ export const SideBar = () => {
   const navigate = useNavigate();
     
     const clickHandler = () => {
-        navigate(`/users/U-0001}`);
+        navigate(`/users/U-0001`);
     };
 
   return (
