@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./Pages/Dashboard";
 import { Bookings } from "./Pages/bookings/Bookings";
 import { Contacts } from "./Pages/contacts/Contacts";
@@ -19,7 +19,7 @@ function App() {
   return (
     <>
     <LoginProvider>
-      <BrowserRouter>
+      <HashRouter>
         <RequiredAuth>
           <Routes>
             <Route element={<Layout />}>
@@ -35,7 +35,7 @@ function App() {
             <Route path="/login" element={<Login />} />
           </Routes>
         </RequiredAuth>
-      </BrowserRouter>
+      </HashRouter>
       <ToastContainer/>
     </LoginProvider>
     </>
