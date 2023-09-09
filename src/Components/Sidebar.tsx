@@ -16,8 +16,6 @@ import {
 } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
 import { useNavigate } from "react-router";
-import { useAppSelector } from "../app/hooks";
-import { getUsersSingle } from "../Features/userSlice";
 
 export const SideBar = () => {
   const navigate = useNavigate();

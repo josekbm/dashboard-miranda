@@ -2,8 +2,10 @@
   "name": "dashboard-miranda",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://josekbm.github.io/dashboard-miranda",
+  "homepage": "https://josekbm.github.io/",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-property-in-object": "^7.22.11",
     "@babel/preset-react": "^7.22.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/react": "^13.4.0",

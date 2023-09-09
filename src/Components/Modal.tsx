@@ -1,7 +1,7 @@
 import { ArchiveButton, Button } from "./Button";
 import { ModalButtonRow, ModalCloseRow, ModalContainer } from "./ModalStyled";
 import { IoClose } from "react-icons/io5";
-import { addUser, deleteUser, fetchUsers, getUsersData } from "../Features/userSlice";
+import { addUser, deleteUser, fetchUsers} from "../Features/userSlice";
 import { addBooking, deleteBooking, fetchBookings, resetBookingsState } from "../Features/bookingSlice";
 import { addRoom, deleteRoom, fetchRooms } from "../Features/roomSlice";
 import {

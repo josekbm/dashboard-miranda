@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   CardContainer,
@@ -17,7 +17,7 @@ import {
   getUser,
   getSingleUserStatus,
   getUsersSingle,
-  getUsersStatus,
+  
 } from "../../Features/userSlice";
 import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
 import { Button } from "../../Components/Button";
