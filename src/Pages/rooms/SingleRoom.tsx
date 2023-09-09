@@ -109,13 +109,14 @@ export const SingleRoom = () => {
     }
   };
 
-  if (singleRoomStatus === "rejected") {
+  if(singleRoomStatus === "pending") {
     return (
       <>
-        <NotFound />
+        <Wrapper>
+          <PropagateLoader color="#407957" size={15} />
+        </Wrapper>
       </>
-    );
-  } else {
+    )} else {
     if (singleRoomStatus === "fulfilled") {
       if (edit !== true) {
         return (
@@ -343,9 +344,7 @@ export const SingleRoom = () => {
     } else {
       return (
         <>
-          <Wrapper>
-            <PropagateLoader color="#407957" size={15} />
-          </Wrapper>
+          <NotFound />
         </>
       );
     }

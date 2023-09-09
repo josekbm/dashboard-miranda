@@ -2,6 +2,7 @@
   "name": "dashboard-miranda",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://josekbm.github.io/dashboard-miranda",
   "dependencies": {
     "@babel/preset-react": "^7.22.5",
     "@reduxjs/toolkit": "^1.9.5",
@@ -16,6 +17,7 @@
     "babel-preset-react-app": "^10.0.1",
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
+    "gh-pages": "^6.0.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -36,6 +38,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

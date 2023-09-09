@@ -45,8 +45,15 @@ export const LastReviews = ({ data }: LastReviewsProps) => {
   };
 
   const onClickArchiveHandler = (contact: Contact) => {
-    dispatch(archiveContacts(contact))
-    toastSuccess("Contact archived!")
+    dispatch(archiveContacts(contact)).then(()=> {
+      dispatch(fetchContacts())          
+    });
+    if (contact.archived === true) {
+      toastSuccess("Contact archived!")
+    } else {
+      toastSuccess("Contact unarchived!")
+    }
+    
       
   };
 

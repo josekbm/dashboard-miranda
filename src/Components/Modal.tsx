@@ -130,9 +130,12 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           jobDescription: jobDescriptionChooser(userPosition),
           password: userPassword,
         };
-        dispatch(addUser(user))
-        toastSuccess("User created!")
+        dispatch(addUser(user)).then(() => {
+          dispatch(fetchUsers())
+          toastSuccess("User created!")          
+        })
         navigate("/users")
+        
         if(setShowCreateModal){
           setShowCreateModal(false);
         }

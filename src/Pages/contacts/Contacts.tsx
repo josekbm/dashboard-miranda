@@ -88,17 +88,27 @@ export const Contacts = () => {
   const onClickArchiveHandler = (contact: Contact) => {
     dispatch(archiveContacts(contact)).then(()=> {
       dispatch(fetchContacts())
-      toastSuccess("Contact archived!")
-      
+          
     });
     if (showArchived === "true") {
       setTableData(contactsData.filter((contact) => contact.archived === true))
       
     }
+    if (contact.archived === true) {
+      toastSuccess("Contact archived!")
+    } else {
+      toastSuccess("Contact unarchived!")
+    }
   };
 
-  if (contactsStatus === "rejected") {
-    return <NotFound />;
+  if (contactsStatus === "pending") {
+    return (
+      <>
+        <Wrapper>
+          <PropagateLoader color="#407957" size={15} />
+        </Wrapper>
+      </>
+    )
   } else {
     if (tableData.length > 0) {
       return (
@@ -171,11 +181,7 @@ export const Contacts = () => {
     } else {
       
       return (
-        <>
-          <Wrapper>
-            <PropagateLoader color="#407957" size={15} />
-          </Wrapper>
-        </>
+        <NotFound />
       );
     }
   }

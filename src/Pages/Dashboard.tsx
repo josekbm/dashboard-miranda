@@ -38,10 +38,12 @@ export const Dashboard = () => {
     }
   }, [contactsData, contactsStatus, dispatch]);
 
-  if(contactsStatus === "rejected"){
+  if(contactsStatus === "pending"){
     return (
       <>
-      <NotFound/>
+        <Wrapper>
+          <PropagateLoader color="#407957"size={15}/>
+        </Wrapper>
       </>
     );
     
@@ -92,9 +94,7 @@ export const Dashboard = () => {
   }else {
     return(
       <>
-        <Wrapper>
-          <PropagateLoader color="#407957"size={15}/>
-        </Wrapper>
+      <NotFound/>
       </>
     )
   }

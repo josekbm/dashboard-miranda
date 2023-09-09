@@ -136,8 +136,14 @@ export const Users = () => {
     }
   };
 
-  if (usersStatus === "rejected") {
-    return <NotFound />;
+  if (usersStatus === "pending") {
+    return (
+      <>
+        <Wrapper>
+          <PropagateLoader color="#407957" size={15} />
+        </Wrapper>
+      </>
+    );
   } else {
     if (usersStatus === "fulfilled" && tableData.length > 0) {
       return (
@@ -258,13 +264,7 @@ export const Users = () => {
         </>
       );
     } else {
-      return (
-        <>
-          <Wrapper>
-            <PropagateLoader color="#407957" size={15} />
-          </Wrapper>
-        </>
-      );
+      return <NotFound />;
     }
   }
 };
