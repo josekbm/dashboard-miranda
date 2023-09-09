@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dashboard-miranda/static/css/main.c6a71ed0.css",
-    "main.js": "/dashboard-miranda/static/js/main.f318605b.js",
+    "main.js": "/dashboard-miranda/static/js/main.e78940f7.js",
     "static/js/787.91da03cd.chunk.js": "/dashboard-miranda/static/js/787.91da03cd.chunk.js",
     "static/media/Logo.png": "/dashboard-miranda/static/media/Logo.2b43b75f42156c006341.png",
     "static/media/slick.svg": "/dashboard-miranda/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -10,11 +10,11 @@
     "static/media/slick.woff": "/dashboard-miranda/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/dashboard-miranda/index.html",
     "main.c6a71ed0.css.map": "/dashboard-miranda/static/css/main.c6a71ed0.css.map",
-    "main.f318605b.js.map": "/dashboard-miranda/static/js/main.f318605b.js.map",
+    "main.e78940f7.js.map": "/dashboard-miranda/static/js/main.e78940f7.js.map",
     "787.91da03cd.chunk.js.map": "/dashboard-miranda/static/js/787.91da03cd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c6a71ed0.css",
-    "static/js/main.f318605b.js"
+    "static/js/main.e78940f7.js"
   ]
 }
