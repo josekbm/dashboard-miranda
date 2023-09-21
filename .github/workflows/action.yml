@@ -1,4 +1,4 @@
-name: deploy-aws
+name: deploy-aws-S3
 
 on:
   push:
