@@ -24,7 +24,7 @@ jobs:
           aws-region: eu-west-3
 
       - name: Checkout code
-        uses: actions/checkout@API---connection
+        uses: actions/checkout@master
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
