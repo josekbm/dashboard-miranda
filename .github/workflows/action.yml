@@ -8,11 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    CI: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        CI: false
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
