@@ -77,6 +77,7 @@ const initialState: UsersState = {
     jobDescription: undefined,
     state: "",
     password: "",
+    salt: "",
     position: "",
   },
   singleUserStatus: "idle",

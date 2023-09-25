@@ -35,6 +35,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import NotFound from "../notfoundpage/notfoundpage";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import { toastSuccess } from "../../Features/toastify";
 
 export const SingleBooking = () => {
   const bookingId = useParams();
@@ -96,8 +97,11 @@ export const SingleBooking = () => {
           room: roomId,
         };
         console.log(booking);
-        dispatch(editBooking(booking));
-        dispatch(getBooking(booking.id));
+        dispatch(editBooking(booking)).then (() => {
+          dispatch(getBooking(booking.id));
+          toastSuccess("Booking modified!");
+        });
+        
         setEdit(false);
         setFieldError("");
       }

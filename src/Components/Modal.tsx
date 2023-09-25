@@ -58,6 +58,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
   );
   const [userState, setUserState] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userSalt, setUserSalt] = useState("");
 
   const [guestName, setGuestName] = useState("");
   const [orderDate, setOrderDate] = useState(getTodayString());
@@ -129,6 +130,8 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
           state: userState,
           jobDescription: jobDescriptionChooser(userPosition),
           password: userPassword,
+          salt: userSalt
+          
         };
         dispatch(addUser(user)).then(() => {
           dispatch(fetchUsers())
@@ -148,6 +151,7 @@ export const Modal = ({page, itemId, setShowDeleteModal, setShowCreateModal, sho
         const form = document.getElementById('createForm') as HTMLFormElement 
         form.reset();
         setUserPassword("");
+        setUserSalt(user.salt);
         setUserPosition("Manager");
         setUserStartDate(getTodayString());
         setUserState("");

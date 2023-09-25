@@ -27,7 +27,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import NotFound from "../notfoundpage/notfoundpage";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import { toastWarning } from "../../Features/toastify";
+import { toastSuccess, toastWarning } from "../../Features/toastify";
 
 export const SingleUser = () => {
   const userId = useParams();
@@ -45,6 +45,7 @@ export const SingleUser = () => {
   const [userImage, setUserImage] = useState("");
   const [userState, setUserState] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userSalt, setUserSalt] = useState("");
 
   const [edit, setEdit] = useState(false);
 
@@ -64,6 +65,7 @@ export const SingleUser = () => {
       setUserPhone(getUserData.phone);
       setUserStartDate(getUserData.startDate);
       setUserPassword(getUserData.password);
+      setUserSalt(getUserData.salt);
     }
   }, [dispatch, getUserStatus, userId.id, getUserData]);
 
@@ -93,8 +95,12 @@ export const SingleUser = () => {
           state: userState,
           jobDescription: jobDescriptionChooser(userPosition),
           password: userPassword,
+          salt: userSalt
         };
-        dispatch(editUser(user));
+        dispatch(editUser(user)).then(() => {
+          dispatch(getUser(user.id));
+          toastSuccess("User modified!");
+        });
         dispatch(getUser(user.id));
         console.log(getUserData);
         setEdit(false);

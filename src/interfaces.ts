@@ -19,7 +19,8 @@ export interface User{
     jobDescription: string | undefined,
     state: string,
     password: string,
-    position: string
+    position: string,
+    salt: string
     
 }
 

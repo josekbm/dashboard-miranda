@@ -39,7 +39,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Wrapper } from "../../Components/LayoutStyled";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import NotFound from "../notfoundpage/notfoundpage";
-import { toastWarning } from "../../Features/toastify";
+import { toastWarning, toastSuccess } from "../../Features/toastify";
 
 export const SingleRoom = () => {
   const roomId = useParams();
@@ -102,8 +102,11 @@ export const SingleRoom = () => {
           description: description,
           images: roomInfoChooser(roomType).images,
         };
-        dispatch(editRoom(room));
-        dispatch(getRoom(room.id));
+        dispatch(editRoom(room)).then(() => {
+          dispatch(getRoom(room.id));
+          toastSuccess("Room modified!");
+        });
+        
         setEdit(false);
       }
     }
